@@ -1366,8 +1366,8 @@ namespace FIMECO
                     {
 
                     var Identif = Int32.Parse(gridView3.GetRowCellValue(gridView3.FocusedRowHandle, "mId").ToString());
-                    var nom = gridView3.GetRowCellValue(gridView3.FocusedRowHandle, "mNom").ToString();
-                    var prenoms = gridView3.GetRowCellValue(gridView3.FocusedRowHandle, "mPrenoms").ToString();
+                    var nom = gridView3.GetRowCellValue(gridView3.FocusedRowHandle, "mNomMembre").ToString();
+                    var prenoms = gridView3.GetRowCellValue(gridView3.FocusedRowHandle, "mPrenomsMembre").ToString();
                     
                     if (Identif > 0)
                     {

@@ -876,7 +876,8 @@ namespace FIMECO
                                 {
                                     if (item.mId > 0)
                                     {
-                                        requete += " DELETE FROM FEC_MembreSouscripteur WHERE Id='" + item.mId + "' " + Environment.NewLine;
+                                        requete += " UPDATE FEC_MembreSouscripteur SET IsDelete=1 WHERE Id='" + item.mId + "' " + Environment.NewLine;
+                                      //requete += " DELETE FROM FEC_MembreSouscripteur WHERE Id='" + item.mId + "' " + Environment.NewLine;
                                     }
 
                                 }
@@ -908,7 +909,8 @@ namespace FIMECO
                                         {
                                             if (item.mId > 0)
                                             {
-                                                requete += " DELETE FROM FEC_Versement WHERE Id='" + item.mId + "' " + Environment.NewLine;
+                                                requete += " UPDATE FEC_Versement SET IsDelete=1 WHERE Id='" + item.mId + "' " + Environment.NewLine;
+                                              //requete += " DELETE FROM FEC_Versement WHERE Id='" + item.mId + "' " + Environment.NewLine;
                                             }
 
                                         }
@@ -946,7 +948,8 @@ namespace FIMECO
                                                 {
                                                     if (item.mId > 0)
                                                     {
-                                                        requete += " DELETE FROM FEC_CotisationAnnuelle WHERE Id='" + item.mId + "' " + Environment.NewLine;
+                                                        requete += " UPDATE FEC_CotisationAnnuelle SET IsDelete=1 WHERE Id='" + item.mId + "' " + Environment.NewLine;
+                                                      //requete += " DELETE FROM FEC_CotisationAnnuelle WHERE Id='" + item.mId + "' " + Environment.NewLine;
                                                     }
 
                                                 }

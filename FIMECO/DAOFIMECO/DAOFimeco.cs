@@ -32,8 +32,8 @@ namespace FIMECO.DAOFIMECO
                         try
                         {
                             command.CommandText = @"INSERT INTO FEC_Souscripteur
-                        (Code, Nom, Prenoms, Statut,Sexe,DateNaissance,DateSouscription,LieuNaissance,Profession,IdClasseMetho,Telephone,Cellulaire,Email,District,CodeDistrict,Circuit,CodeCircuit,EgliseLocale,CodeEgliseLocale,DateCreation,DateLastModif,UserCreation,UserLastModif,IdProfession,IsAdulte)
-                        VALUES (@Code, @Nom, @Prenoms, @Statut,@Sexe,@DateNaissance,@DateSouscription,@LieuNaissance,@Profession,@IdClasseMetho,@Telephone,@Cellulaire,@Email,@District,@CodeDistrict,@Circuit,@CodeCircuit,@EgliseLocale,@CodeEgliseLocale,@DateCreation,@DateLastModif,@UserCreation,@UserLastModif,@IdProfession,@IsAdulte)";
+                        (Code, Nom, Prenoms, Statut,Sexe,DateNaissance,DateSouscription,LieuNaissance,Profession,IdClasseMetho,Telephone,Cellulaire,Email,District,CodeDistrict,Circuit,CodeCircuit,EgliseLocale,CodeEgliseLocale,DateCreation,DateLastModif,UserCreation,UserLastModif,IdProfession,IsAdulte,IsDelete)
+                        VALUES (@Code, @Nom, @Prenoms, @Statut,@Sexe,@DateNaissance,@DateSouscription,@LieuNaissance,@Profession,@IdClasseMetho,@Telephone,@Cellulaire,@Email,@District,@CodeDistrict,@Circuit,@CodeCircuit,@EgliseLocale,@CodeEgliseLocale,@DateCreation,@DateLastModif,@UserCreation,@UserLastModif,@IdProfession,@IsAdulte,@IsDelete)";
 
                             command.Parameters.Add(new SqlParameter("Code", conc.mCode ?? string.Empty));
                             command.Parameters.Add(new SqlParameter("Nom", conc.mNom ?? string.Empty));
@@ -61,6 +61,7 @@ namespace FIMECO.DAOFIMECO
                             command.Parameters.Add(new SqlParameter("UserLastModif", conc.mUserLastModif ?? string.Empty));
                             command.Parameters.Add(new SqlParameter("IdProfession", conc.mIdProfession));
                             command.Parameters.Add(new SqlParameter("IsAdulte", conc.mIsAdulte));
+                            command.Parameters.Add(new SqlParameter("IsDelete", conc.mIsDelete));
 
                             
                             command.ExecuteNonQuery();
@@ -175,7 +176,8 @@ namespace FIMECO.DAOFIMECO
                     {
                         try
                         {
-                            command.CommandText = @"DELETE FROM FEC_Souscripteur WHERE Id = @Id";
+                            command.CommandText = @"UPDATE FEC_Souscripteur SET IsDelete=1 WHERE Id = @Id";
+                           // command.CommandText = @"DELETE FROM FEC_Souscripteur WHERE Id = @Id";
 
                             var clientId = command.CreateParameter();
                             clientId.ParameterName = "@Id";
@@ -221,7 +223,7 @@ namespace FIMECO.DAOFIMECO
                 {
 
                     req = @" select * " +
-                    "  from FEC_Souscripteur  where Id = @Id  ";
+                    "  from FEC_Souscripteur  where Id = @Id and IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -272,7 +274,7 @@ namespace FIMECO.DAOFIMECO
                                         mDateCreation = reader["DateCreation"] == DBNull.Value ? new DateTime() : DateTime.Parse(reader["DateCreation"].ToString()),
                                         mDateLastModif = reader["DateLastModif"] == DBNull.Value ? new DateTime() : DateTime.Parse(reader["DateLastModif"].ToString()),
                                         mIdClasseMetho = reader["IdClasseMetho"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IdClasseMetho"]),
-                                        
+                                        mIsDelete = reader["IsDelete"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IsDelete"]),
                                     };
 
                                 }
@@ -309,7 +311,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_Souscripteur   ";
+                    "  from FEC_Souscripteur WHERE IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -358,7 +360,7 @@ namespace FIMECO.DAOFIMECO
                                         mIdProfession = reader["IdProfession"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IdProfession"]),
                                         mClasseMetho = GetClasseMethoLibelle(Convert.ToInt32(reader["IdClasseMetho"]), ListeCMetho),
                                         mIsAdulte = reader["IsAdulte"] == DBNull.Value ? string.Empty : reader["IsAdulte"] as string,
-
+                                        mIsDelete = reader["IsDelete"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IsDelete"]),
                                     };
 
                                     ListClientOp.Add(ClientOp);
@@ -481,7 +483,7 @@ namespace FIMECO.DAOFIMECO
                             from FEC_Souscripteur S
                             left join FEC_Versement V on S.Id=V.IdSouscripteur
                             left join FEC_CotisationAnnuelle C on C.IdSouscripteur=S.Id
-                            where YEAR(DateVersement)<=" + AnObjectif + " and Annee<="+ AnObjectif + " and YEAR(DateVersement)=Annee or C.Annee=" + AnObjectif + " " + FiltreSous+ FiltreProfession+FiltreClasseMetho+
+                            where S.IsDelete=0 AND YEAR(DateVersement)<=" + AnObjectif + " and Annee<="+ AnObjectif + " and YEAR(DateVersement)=Annee or C.Annee=" + AnObjectif + " " + FiltreSous+ FiltreProfession+FiltreClasseMetho+
                             " group by S.Id,Code,Nom,Prenoms,Annee,NumeroRecu,MontantVersement,DateVersement,MontantCotisation,S.IdClasseMetho,S.IdProfession";
 
                     if (mConnection == null) return null;
@@ -572,7 +574,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_Souscripteur   ";
+                    "  from FEC_Souscripteur WHERE IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -678,9 +680,7 @@ namespace FIMECO.DAOFIMECO
                 return ret;
             }
         }
-
-
-
+        
         public string GetClasseMethoLibelle(int IdMetho,List<CClasseMetho> LCM)
         {
             string ret = string.Empty;
@@ -698,9 +698,7 @@ namespace FIMECO.DAOFIMECO
             }
         }
 
-
-
-
+        
         //Classe Metho=================================================================
 
         //Ajouter Classe Metho
@@ -721,8 +719,8 @@ namespace FIMECO.DAOFIMECO
                         try
                         {
                             command.CommandText = @"INSERT INTO FEC_ClasseMetho
-                        (NomClasse,NomConducteur1,PrenomConducteur1,TelephoneConducteur1,EmailConducteur1,NomConducteur2,PrenomConducteur2,TelephoneConducteur2,EmailConducteur2,Quartier)
-                        VALUES (@NomClasse,@NomConducteur1,@PrenomConducteur1,@TelephoneConducteur1,@EmailConducteur1,@NomConducteur2,@PrenomConducteur2,@TelephoneConducteur2,@EmailConducteur2,@Quartier)";
+                        (NomClasse,NomConducteur1,PrenomConducteur1,TelephoneConducteur1,EmailConducteur1,NomConducteur2,PrenomConducteur2,TelephoneConducteur2,EmailConducteur2,Quartier,IsDelete)
+                        VALUES (@NomClasse,@NomConducteur1,@PrenomConducteur1,@TelephoneConducteur1,@EmailConducteur1,@NomConducteur2,@PrenomConducteur2,@TelephoneConducteur2,@EmailConducteur2,@Quartier,@IsDelete)";
 
                             command.Parameters.Add(new SqlParameter("NomClasse", conc.mNomClasse ?? string.Empty));
                             command.Parameters.Add(new SqlParameter("NomConducteur1", conc.mNomConducteur1 ?? string.Empty));
@@ -734,7 +732,8 @@ namespace FIMECO.DAOFIMECO
                             command.Parameters.Add(new SqlParameter("TelephoneConducteur2", conc.mTelephoneConducteur2 ?? string.Empty));
                             command.Parameters.Add(new SqlParameter("EmailConducteur2", conc.mEmailConducteur2 ?? string.Empty));
                             command.Parameters.Add(new SqlParameter("Quartier", conc.mQuartier ?? string.Empty));
-
+                            command.Parameters.Add(new SqlParameter("IsDelete", conc.mIsDelete));
+                            
 
                             command.ExecuteNonQuery();
 
@@ -829,7 +828,9 @@ namespace FIMECO.DAOFIMECO
                     {
                         try
                         {
-                            command.CommandText = @"DELETE FROM FEC_ClasseMetho WHERE Id = @Id";
+                           // command.CommandText = @"DELETE FROM FEC_ClasseMetho WHERE Id = @Id";
+                            command.CommandText = @"UPDATE FEC_ClasseMetho SET IsDelete=1 WHERE Id = @Id";
+
 
                             var clientId = command.CreateParameter();
                             clientId.ParameterName = "@Id";
@@ -875,7 +876,7 @@ namespace FIMECO.DAOFIMECO
                 {
 
                     req = @" select * " +
-                    "  from FEC_ClasseMetho  where Id = @Id  ";
+                    "  from FEC_ClasseMetho  where Id = @Id AND IsDelete=0 ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -950,7 +951,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_ClasseMetho   ";
+                    "  from FEC_ClasseMetho Where  IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -1028,10 +1029,11 @@ namespace FIMECO.DAOFIMECO
                         try
                         {
                             command.CommandText = @"INSERT INTO FEC_Profession
-                        (Libelle)
-                        VALUES (@Libelle)";
+                        (Libelle,IsDelete)
+                        VALUES (@Libelle,@IsDelete)";
 
                             command.Parameters.Add(new SqlParameter("Libelle", conc.mLibelle ?? string.Empty));
+                            command.Parameters.Add(new SqlParameter("IsDelete", conc.mIsDelete));
                         
                             command.ExecuteNonQuery();
 
@@ -1118,7 +1120,8 @@ namespace FIMECO.DAOFIMECO
                     {
                         try
                         {
-                            command.CommandText = @"DELETE FROM FEC_Profession WHERE Id = @Id";
+                            command.CommandText = @"UPDATE FEC_Profession SET IsDelete=1 WHERE Id = @Id";
+                           // command.CommandText = @"DELETE FROM FEC_Profession WHERE Id = @Id";
 
                             var clientId = command.CreateParameter();
                             clientId.ParameterName = "@Id";
@@ -1164,7 +1167,7 @@ namespace FIMECO.DAOFIMECO
                 {
 
                     req = @" select * " +
-                    "  from FEC_Profession  where Id = @Id  ";
+                    "  from FEC_Profession  where Id = @Id and IsDelete=0 ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -1230,7 +1233,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_Profession   ";
+                    "  from FEC_Profession WHERE IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -1303,8 +1306,8 @@ namespace FIMECO.DAOFIMECO
                         try
                         {
                             command.CommandText = @"INSERT INTO FEC_MembreSouscripteur
-                        (IdSouscripteur, NomMembre, PrenomsMembre, Statut,Sexe,DateNaissance,LieuNaissance,Profession,Telephone,Cellulaire,Email,DateCreation,DateLastModif,UserCreation,UserLastModif,IdProfession,IsAdulteMembre)
-                        VALUES (@IdSouscripteur, @NomMembre, @PrenomsMembre, @Statut,@Sexe,@DateNaissance,@LieuNaissance,@Profession,@Telephone,@Cellulaire,@Email,@DateCreation,@DateLastModif,@UserCreation,@UserLastModif,@IdProfession,@IsAdulteMembre)";
+                        (IdSouscripteur, NomMembre, PrenomsMembre, Statut,Sexe,DateNaissance,LieuNaissance,Profession,Telephone,Cellulaire,Email,DateCreation,DateLastModif,UserCreation,UserLastModif,IdProfession,IsAdulteMembre,IsDelete)
+                        VALUES (@IdSouscripteur, @NomMembre, @PrenomsMembre, @Statut,@Sexe,@DateNaissance,@LieuNaissance,@Profession,@Telephone,@Cellulaire,@Email,@DateCreation,@DateLastModif,@UserCreation,@UserLastModif,@IdProfession,@IsAdulteMembre,@IsDelete)";
 
                             command.Parameters.Add(new SqlParameter("IdSouscripteur", conc.mIdSouscripteur));
                             command.Parameters.Add(new SqlParameter("NomMembre", conc.mNomMembre ?? string.Empty));
@@ -1323,6 +1326,7 @@ namespace FIMECO.DAOFIMECO
                             command.Parameters.Add(new SqlParameter("UserLastModif", conc.mUserLastModif ?? string.Empty));
                             command.Parameters.Add(new SqlParameter("IdProfession", conc.mIdProfession));
                             command.Parameters.Add(new SqlParameter("IsAdulteMembre", conc.mIsAdulteMembre));
+                            command.Parameters.Add(new SqlParameter("IsDelete", conc.mIsDelete));
 
                             
                             command.ExecuteNonQuery();
@@ -1428,7 +1432,7 @@ namespace FIMECO.DAOFIMECO
                     {
                         try
                         {
-                            command.CommandText = @"DELETE FROM FEC_MembreSouscripteur WHERE Id = @Id";
+                            command.CommandText = @"UPDATE FEC_MembreSouscripteur SET IsDelete=1 WHERE Id = @Id";
 
                             var clientId = command.CreateParameter();
                             clientId.ParameterName = "@Id";
@@ -1524,7 +1528,7 @@ namespace FIMECO.DAOFIMECO
                 {
 
                     req = @" select * " +
-                    "  from FEC_MembreSouscripteur  where Id = @Id  ";
+                    "  from FEC_MembreSouscripteur  where Id = @Id and IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -1608,7 +1612,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_MembreSouscripteur   ";
+                    "  from FEC_MembreSouscripteur WHERE IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -1696,8 +1700,8 @@ namespace FIMECO.DAOFIMECO
                         try
                         {
                             command.CommandText = @"INSERT INTO FEC_CotisationAnnuelle
-                        (IdSouscripteur,Annee,MontantCotisation,UserCreation,UserLastModif,DateCreation,DateLastModif)
-                        VALUES (@IdSouscripteur, @Annee, @MontantCotisation, @UserCreation,@UserLastModif,@DateCreation,@DateLastModif)";
+                        (IdSouscripteur,Annee,MontantCotisation,UserCreation,UserLastModif,DateCreation,DateLastModif,IsDelete)
+                        VALUES (@IdSouscripteur, @Annee, @MontantCotisation, @UserCreation,@UserLastModif,@DateCreation,@DateLastModif,@IsDelete)";
                             
                             command.Parameters.Add(new SqlParameter("IdSouscripteur", conc.mIdSouscripteur));
                             command.Parameters.Add(new SqlParameter("Annee", conc.mAnnee));
@@ -1706,6 +1710,7 @@ namespace FIMECO.DAOFIMECO
                             command.Parameters.Add(new SqlParameter("UserLastModif", conc.mUserLastModif ?? string.Empty));
                             command.Parameters.Add(new SqlParameter("DateCreation", conc.mDateCreation));
                             command.Parameters.Add(new SqlParameter("DateLastModif", conc.mDateLastModif));
+                            command.Parameters.Add(new SqlParameter("IsDelete", conc.mIsDelete));
                        
 
                             command.ExecuteNonQuery();
@@ -1800,7 +1805,8 @@ namespace FIMECO.DAOFIMECO
                     {
                         try
                         {
-                            command.CommandText = @"DELETE FROM FEC_CotisationAnnuelle WHERE Id = @Id";
+                            command.CommandText = @"UPDATE FEC_CotisationAnnuelle SET IsDelete=1 WHERE Id = @Id";
+                         //   command.CommandText = @"DELETE FROM FEC_CotisationAnnuelle WHERE Id = @Id";
 
                             var clientId = command.CreateParameter();
                             clientId.ParameterName = "@Id";
@@ -1891,7 +1897,7 @@ namespace FIMECO.DAOFIMECO
                 {
 
                     req = @" select * " +
-                    "  from FEC_CotisationAnnuelle  where Id = @Id  ";
+                    "  from FEC_CotisationAnnuelle  where Id = @Id AND IsDelete=0 ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -1968,7 +1974,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_CotisationAnnuelle   ";
+                    "  from FEC_CotisationAnnuelle WHERE IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -2043,7 +2049,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_CotisationAnnuelle   " ;
+                    "  from FEC_CotisationAnnuelle WHERE IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -2120,7 +2126,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_CotisationAnnuelle where Annee>=@anneeDeb and  Annee<=@anneeFin ";
+                    "  from FEC_CotisationAnnuelle where Annee>=@anneeDeb and  Annee<=@anneeFin  AND IsDelete=0 ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -2203,8 +2209,8 @@ namespace FIMECO.DAOFIMECO
                         try
                         {
                             command.CommandText = @"INSERT INTO FEC_Versement
-                        (IdSouscripteur,NumeroRecu,MontantVersement,DateVersement,NomReceveur,UserCreation,UserLastModif,DateCreation,DateLastModif)
-                        VALUES (@IdSouscripteur, @NumeroRecu, @MontantVersement,@DateVersement,@NomReceveur, @UserCreation,@UserLastModif,@DateCreation,@DateLastModif)";
+                        (IdSouscripteur,NumeroRecu,MontantVersement,DateVersement,NomReceveur,UserCreation,UserLastModif,DateCreation,DateLastModif,IsDelete)
+                        VALUES (@IdSouscripteur, @NumeroRecu, @MontantVersement,@DateVersement,@NomReceveur, @UserCreation,@UserLastModif,@DateCreation,@DateLastModif,@IsDelete)";
                             
 
                             command.Parameters.Add(new SqlParameter("IdSouscripteur", conc.mIdSouscripteur));
@@ -2216,6 +2222,7 @@ namespace FIMECO.DAOFIMECO
                             command.Parameters.Add(new SqlParameter("UserLastModif", conc.mUserLastModif ?? string.Empty));
                             command.Parameters.Add(new SqlParameter("DateCreation", conc.mDateCreation));
                             command.Parameters.Add(new SqlParameter("DateLastModif", conc.mDateLastModif));
+                            command.Parameters.Add(new SqlParameter("IsDelete", conc.mIsDelete));
 
 
                             command.ExecuteNonQuery();
@@ -2313,7 +2320,8 @@ namespace FIMECO.DAOFIMECO
                     {
                         try
                         {
-                            command.CommandText = @"DELETE FROM FEC_Versement WHERE Id = @Id";
+                            command.CommandText = @"UPDATE FEC_Versement SET IsDelete=1 WHERE Id = @Id";
+                          //  command.CommandText = @"DELETE FROM FEC_Versement WHERE Id = @Id";
 
                             var clientId = command.CreateParameter();
                             clientId.ParameterName = "@Id";
@@ -2440,10 +2448,7 @@ namespace FIMECO.DAOFIMECO
             }
 
         }
-
-
-
-
+        
         //Obtenir Versement par son Id
         public CVersement GetVersementById(int Id, string chaineconnexion,List<CSouscripteur> ListSous)
         {
@@ -2459,7 +2464,7 @@ namespace FIMECO.DAOFIMECO
                 {
 
                     req = @" select * " +
-                    "  from FEC_Versement  where Id = @Id  ";
+                    "  from FEC_Versement  where Id = @Id and IsDelete=0 ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -2538,7 +2543,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_Versement   ";
+                    "  from FEC_Versement WHERE IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -2615,7 +2620,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_Versement   ";
+                    "  from FEC_Versement WHERE IsDelete=0  ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -2719,7 +2724,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_Versement V left join FEC_Souscripteur S on S.Id=V.IdSouscripteur where DateVersement>=@anneeDeb and  DateVersement<=@anneeFin "+ FiltreSous;
+                    "  from FEC_Versement V left join FEC_Souscripteur S on S.Id=V.IdSouscripteur where DateVersement>=@anneeDeb and  DateVersement<=@anneeFin AND S.IsDelete=0 "+ FiltreSous;
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -2801,7 +2806,7 @@ namespace FIMECO.DAOFIMECO
                 {
                     req = @"  select S.Nom ,S.Prenoms ,S.IsAdulte,M.NomMembre ,M.PrenomsMembre ,M.IsAdulteMembre from FEC_Souscripteur S
                             left join FEC_MembreSouscripteur M 
-                            on S.Id=M.IdSouscripteur
+                            on S.Id=M.IdSouscripteur WHERE S.isdelete=0 
                             group by S.Nom ,S.Prenoms,S.IsAdulte,M.NomMembre ,M.PrenomsMembre ,M.IsAdulteMembre";
 
                     if (mConnection == null) return null;

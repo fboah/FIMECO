@@ -28,6 +28,8 @@ namespace FIMECO.Models
 
         public string mIsAdulteMembre { get; set; }
 
+        public int mIsDelete { get; set; }
+
         public CMembreSouscripteur()
         {
             mId = 0;
@@ -52,6 +54,8 @@ namespace FIMECO.Models
             mDateLastModif = new DateTime();
 
             mIsAdulteMembre = string.Empty;
+
+            mIsDelete = 0;
         }
 
 

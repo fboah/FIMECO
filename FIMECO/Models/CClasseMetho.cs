@@ -20,6 +20,9 @@ namespace FIMECO.Models
         public string mEmailConducteur2 { get; set; }
         public string mQuartier { get; set; }
 
+        public int mIsDelete { get; set; }
+        
+
         public CClasseMetho()
         {
             mId = 0;
@@ -34,7 +37,7 @@ namespace FIMECO.Models
             mEmailConducteur2 = string.Empty;
             mQuartier = string.Empty;
 
-            
+            mIsDelete = 0;
         }
 
 

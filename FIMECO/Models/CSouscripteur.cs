@@ -47,7 +47,7 @@ namespace FIMECO.Models
 
         public string mIsAdulte { get; set; }
 
-
+        public int mIsDelete { get; set; }
 
         public CSouscripteur()
         {
@@ -86,6 +86,8 @@ namespace FIMECO.Models
             mImpayesAnPrecedentes = 0;
 
             mIsAdulte = string.Empty;
+
+            mIsDelete = 0;
 
 
     }

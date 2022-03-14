@@ -22,6 +22,8 @@ namespace FIMECO.Models
         public DateTime mDateCreation { get; set; }
         public DateTime mDateLastModif { get; set; }
 
+        public int mIsDelete { get; set; }
+
 
         public CVersement()
         {
@@ -35,6 +37,8 @@ namespace FIMECO.Models
             mDateCreation = new DateTime();
             mDateLastModif = new DateTime();
             mDateVersement = new DateTime();
+
+            mIsDelete = 0;
 
         }
 

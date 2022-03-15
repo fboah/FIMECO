@@ -483,7 +483,7 @@ namespace FIMECO.DAOFIMECO
                             from FEC_Souscripteur S
                             left join FEC_Versement V on S.Id=V.IdSouscripteur
                             left join FEC_CotisationAnnuelle C on C.IdSouscripteur=S.Id
-                            where S.IsDelete=0 AND YEAR(DateVersement)<=" + AnObjectif + " and Annee<="+ AnObjectif + " and YEAR(DateVersement)=Annee or C.Annee=" + AnObjectif + " " + FiltreSous+ FiltreProfession+FiltreClasseMetho+
+                            where S.IsDelete=0 AND V.IsDelete=0 and C.IsDelete=0 AND YEAR(DateVersement)<=" + AnObjectif + " and Annee<="+ AnObjectif + " and YEAR(DateVersement)=Annee or C.Annee=" + AnObjectif + " " + FiltreSous+ FiltreProfession+FiltreClasseMetho+
                             " group by S.Id,Code,Nom,Prenoms,Annee,NumeroRecu,MontantVersement,DateVersement,MontantCotisation,S.IdClasseMetho,S.IdProfession";
 
                     if (mConnection == null) return null;
@@ -2036,6 +2036,7 @@ namespace FIMECO.DAOFIMECO
             }
         }
 
+        
 
         public List<CCotisationAnnuelle> GetAllCotisationAnnuelle(string chaineconnexion, List<CSouscripteur> ListSous)
         {
@@ -2189,6 +2190,77 @@ namespace FIMECO.DAOFIMECO
             }
         }
 
+        public List<CCotisationAnnuelle> GetAllCotisationAnnuelleByAnMontant(string chaineconnexion, string annee)
+        {
+            List<CCotisationAnnuelle> ListClientOp = new List<CCotisationAnnuelle>();
+            try
+            {
+                string req = string.Empty;
+                string reqFINAL = string.Empty;
+
+                var mProvider = DbProviderFactories.GetFactory("System.Data.SqlClient");
+                using (var mConnection = mProvider.CreateConnection())
+                {
+                    req = @" select * " +
+                    "  from FEC_CotisationAnnuelle where Annee=@annee AND IsDelete=0 ";
+
+                    if (mConnection == null) return null;
+                    mConnection.ConnectionString = chaineconnexion;
+                    mConnection.Open();
+
+                    using (var command = mConnection.CreateCommand())
+                    {
+                        try
+                        {
+                            command.CommandText = req;
+
+                            //limite du temps de reponse 5 minute
+                            command.CommandTimeout = 300;
+
+                            command.Parameters.Add(new SqlParameter("annee", annee));
+                         
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var ClientOp = new CCotisationAnnuelle()
+                                    {
+                                        mId = reader["Id"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Id"]),
+                                        mIdSouscripteur = reader["IdSouscripteur"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IdSouscripteur"]),
+                                        mAnnee = reader["Annee"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Annee"]),
+                                        mMontantCotisation = reader["MontantCotisation"] == DBNull.Value ? 0 : Convert.ToInt32(reader["MontantCotisation"]),
+                                       
+                                        mUserCreation = reader["UserCreation"] == DBNull.Value ? string.Empty : reader["UserCreation"] as string,
+                                        mUserLastModif = reader["UserLastModif"] == DBNull.Value ? string.Empty : reader["UserLastModif"] as string,
+
+                                        mDateCreation = reader["DateCreation"] == DBNull.Value ? new DateTime() : DateTime.Parse(reader["DateCreation"].ToString()),
+                                        mDateLastModif = reader["DateLastModif"] == DBNull.Value ? new DateTime() : DateTime.Parse(reader["DateLastModif"].ToString()),
+
+
+                                    };
+
+                                    ListClientOp.Add(ClientOp);
+                                }
+
+                                return ListClientOp;
+                            }
+
+                        }
+                        finally
+                        {
+                            mConnection.Close();
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var msg = "DAOFimeco -> GetAllCotisationAnnuellebyAN -> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+                return null;
+            }
+        }
 
 
         //CVersement===================================================================================
@@ -2788,6 +2860,85 @@ namespace FIMECO.DAOFIMECO
                 return null;
             }
         }
+
+
+        public List<CVersement> GetAllVersementApercuMontant(string chaineconnexion, string annee)
+        {
+            List<CVersement> ListClientOp = new List<CVersement>();
+            try
+            {
+                string req = string.Empty;
+                string reqFINAL = string.Empty;
+                
+
+                var mProvider = DbProviderFactories.GetFactory("System.Data.SqlClient");
+                using (var mConnection = mProvider.CreateConnection())
+                {
+                    req = @" select * " +
+                    "  from FEC_Versement V left join FEC_Souscripteur S on S.Id=V.IdSouscripteur where YEAR(DateVersement)=@annee  AND S.IsDelete=0 ";
+
+                    if (mConnection == null) return null;
+                    mConnection.ConnectionString = chaineconnexion;
+                    mConnection.Open();
+
+                    using (var command = mConnection.CreateCommand())
+                    {
+                        try
+                        {
+                            command.CommandText = req;
+
+                            //limite du temps de reponse 5 minute
+                            command.CommandTimeout = 300;
+                            command.Parameters.Add(new SqlParameter("annee", annee));
+                        
+
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var ClientOp = new CVersement()
+                                    {
+                                        mId = reader["Id"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Id"]),
+                                        mIdSouscripteur = reader["IdSouscripteur"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IdSouscripteur"]),
+                                        mMontantVersement = reader["MontantVersement"] == DBNull.Value ? 0 : Convert.ToInt64(reader["MontantVersement"]),
+                                        mNomReceveur = reader["NomReceveur"] == DBNull.Value ? string.Empty : reader["NomReceveur"] as string,
+                                        mNumeroRecu = reader["NumeroRecu"] == DBNull.Value ? string.Empty : reader["NumeroRecu"] as string,
+                                       
+                                        mDateVersement = reader["DateVersement"] == DBNull.Value ? new DateTime() : DateTime.Parse(reader["DateVersement"].ToString()),
+
+                                        mUserCreation = reader["UserCreation"] == DBNull.Value ? string.Empty : reader["UserCreation"] as string,
+                                        mUserLastModif = reader["UserLastModif"] == DBNull.Value ? string.Empty : reader["UserLastModif"] as string,
+
+                                        mDateCreation = reader["DateCreation"] == DBNull.Value ? new DateTime() : DateTime.Parse(reader["DateCreation"].ToString()),
+                                        mDateLastModif = reader["DateLastModif"] == DBNull.Value ? new DateTime() : DateTime.Parse(reader["DateLastModif"].ToString()),
+
+
+                                    };
+
+                                    ListClientOp.Add(ClientOp);
+                                }
+
+                                return ListClientOp;
+                            }
+
+                        }
+                        finally
+                        {
+                            mConnection.Close();
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var msg = "DAOFimeco -> GetAllVersement -> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+                return null;
+            }
+        }
+
+
 
         //Liste des Souscripteurs et membres
 

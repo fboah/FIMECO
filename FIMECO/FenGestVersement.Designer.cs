@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenGestVersement));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.sBtnFermer = new DevExpress.XtraEditors.SimpleButton();
             this.sBtnEnregistrer = new DevExpress.XtraEditors.SimpleButton();
@@ -86,6 +87,7 @@
             this.sBtnFermer.StyleController = this.layoutControl1;
             this.sBtnFermer.TabIndex = 10;
             this.sBtnFermer.Text = "Fermer";
+            this.sBtnFermer.Click += new System.EventHandler(this.sBtnFermer_Click);
             // 
             // sBtnEnregistrer
             // 
@@ -244,6 +246,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(633, 123);
             this.Controls.Add(this.layoutControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FenGestVersement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FenGestVersement";

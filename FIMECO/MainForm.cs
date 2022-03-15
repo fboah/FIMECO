@@ -168,8 +168,9 @@ namespace FIMECO
                 
                 ListeCotationAn = ListeCotationAn.Where(c => c.mAnnee == Int32.Parse(AnObj)).ToList();
 
-              //  var Lartmp= ListeCotationAn.Select(z => z.mIdSouscripteur).Distinct();
-                var Lartmp = ListeArriereSous.Select(z => z.mIdSouscripteur).Distinct();
+              ////  var Lartmp= ListeCotationAn.Select(z => z.mIdSouscripteur).Distinct();
+              //  var Lartmp = ListeArriereSous.Select(z => z.mIdSouscripteur).Distinct();
+                var Lartmp = ListeOPACTUTMP.Select(z => z.mId).Distinct();
 
                 foreach(var it in Lartmp)
                 {
@@ -199,7 +200,7 @@ namespace FIMECO
 
                         ListeAnneeEncours = ListeArriereSous.Where(c => c.mIdSouscripteur == item.mId && c.mAnnee == Int32.Parse(AnObj)).ToList();
                         
-                        if (ListeArriereTMP!=null)
+                        if (ListeArriereTMP!=null )
                         {
                             var ListeAnWork = ListeArriereTMP.Select(z => z.mAnnee).Distinct();
 
@@ -234,7 +235,7 @@ namespace FIMECO
                             }
 
                             //Versement Année en cours
-                            if(ListeAnneeEncours!=null)
+                            if(ListeAnneeEncours!=null && ListeAnneeEncours.Count>0)
                             {
                                 if(ListeAnneeEncours.Count>0)
                                 {
@@ -276,7 +277,7 @@ namespace FIMECO
                             //reste à payer
                             item.mArriere = MTantTotalAnneeEnCours - item.mMontantVerse;
 
-                            if (item.mArriere<=0)
+                            if (item.mArriere<=0  && item.mMontantVerse>0)
                             {
                                 //On a plutot un surplus donc arriere =0
                                 var srpl = -item.mArriere;
@@ -304,6 +305,12 @@ namespace FIMECO
                 
                 gridControlSouscripteur.DataSource = ListeOPACTU;
                 //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
+
+
+                //Afficher les montants
+
+                AfficherMontants();
+
             }
             catch (Exception ex)
             {
@@ -315,6 +322,57 @@ namespace FIMECO
 
         }
         
+
+        public void AfficherMontants()
+        {
+            try
+            {
+                //Nbre souscripteurs
+                LibelleNbreSous.Text = gridView1.RowCount.ToString("n0");
+
+                //Montant Souscrit
+
+                long MontantSouscrit = 0;
+
+                var ListeSouscription = new List<CCotisationAnnuelle>();
+
+                ListeSouscription = daoReport.GetAllCotisationAnnuelleByAnMontant(ChaineConFimeco,sNumAnnee.EditValue.ToString());
+
+                if(ListeSouscription.Count>0)
+                {
+                    foreach(var elt in ListeSouscription)
+                    {
+                        MontantSouscrit += elt.mMontantCotisation;
+                    }
+                }
+
+                lblMontantSouscrit.Text = MontantSouscrit.ToString("n0")+" F CFA ";
+
+
+                //Montant Versé
+                
+                      long MontantVerse = 0;
+
+                var Listeversement = new List<CVersement>();
+
+                Listeversement = daoReport.GetAllVersementApercuMontant(ChaineConFimeco, sNumAnnee.EditValue.ToString());
+
+                if (Listeversement.Count > 0)
+                {
+                    foreach (var elt in Listeversement)
+                    {
+                        MontantVerse += elt.mMontantVersement;
+                    }
+                }
+
+                lblMontantVerse.Text = MontantVerse.ToString("n0") + " F CFA ";
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
 
         private void InitStatut(RepositoryItemImageComboBox edit)
         {
@@ -827,6 +885,8 @@ namespace FIMECO
             try
             {
                 ReloadGridSouscripteur();
+
+              
             }
             catch (Exception ex)
             {
@@ -845,7 +905,6 @@ namespace FIMECO
             {
                 if (gridView1.RowCount > 0)
                 {
-
                     var Identif = Int32.Parse(gridView1.GetRowCellValue(gridView1.FocusedRowHandle, "mId").ToString());
 
                     var nomSous = gridView1.GetRowCellValue(gridView1.FocusedRowHandle, "mNom").ToString();
@@ -1121,6 +1180,19 @@ namespace FIMECO
         {
             try
             {
+                //CAS ou on a montant versé à 0 et reste à 0 cest que l'objectif annuel n'a pas été défini
+
+                var MtantVerse = Int32.Parse(gridView1.GetRowCellValue(gridView1.FocusedRowHandle, "mMontantVerse").ToString());
+
+                var ResteApayer = Int32.Parse(gridView1.GetRowCellValue(gridView1.FocusedRowHandle, "mArriere").ToString());
+
+                if(MtantVerse==0 && ResteApayer==0)
+                {
+                    MessageBox.Show("Veuillez définir la cotisation annuelle pour ce souscripteur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+
                 var Identif = Int32.Parse(gridView1.GetRowCellValue(gridView1.FocusedRowHandle, "mId").ToString());
                 
                 IsAjoutVersement = true;
@@ -1157,6 +1229,9 @@ namespace FIMECO
                 fenAjout.ShowDialog();
 
                 ReloadGridVersement();
+
+                //MAJ de la grid des souscripteurs======================
+                ReloadGridSouscripteur();
             }
             catch(Exception ex)
             {

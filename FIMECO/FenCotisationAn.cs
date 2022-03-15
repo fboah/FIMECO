@@ -51,6 +51,9 @@ namespace FIMECO
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
                 ListeSS = daoReport.GetAllSouscripteur(ChaineConFIMECO);
 
+                //Liste des cotisations
+                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFIMECO, ListeSS);
+
                 var fenAjout = new FenGestionContribution(IsAjout, ListeCotisation, CCotisation, ChaineConFIMECO, ListeSS);
 
                 fenAjout.ShowDialog();

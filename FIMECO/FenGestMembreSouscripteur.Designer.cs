@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenGestMembreSouscripteur));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.CmbProfession = new DevExpress.XtraEditors.LookUpEdit();
             this.CmbChefFamille = new DevExpress.XtraEditors.LookUpEdit();
@@ -141,6 +142,7 @@
             this.sBtnFermer.StyleController = this.layoutControl1;
             this.sBtnFermer.TabIndex = 16;
             this.sBtnFermer.Text = "Fermer";
+            this.sBtnFermer.Click += new System.EventHandler(this.sBtnFermer_Click);
             // 
             // sBtnEnregistrer
             // 
@@ -384,6 +386,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(633, 193);
             this.Controls.Add(this.layoutControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FenGestMembreSouscripteur";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FenGestMembreSouscripteur";

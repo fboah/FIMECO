@@ -238,5 +238,10 @@ namespace FIMECO
 
             }
         }
+
+        private void sBtnFermer_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

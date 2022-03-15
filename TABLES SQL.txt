@@ -1,0 +1,192 @@
+
+
+USE [FIMECOBD]
+GO
+/****** Object:  Table [dbo].[FEC_ClasseMetho]    Script Date: 15/03/2022 15:43:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_ClasseMetho](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[NomClasse] [varchar](50) NULL,
+	[NomConducteur1] [varchar](50) NULL,
+	[PrenomConducteur1] [varchar](50) NULL,
+	[TelephoneConducteur1] [varchar](30) NULL,
+	[EmailConducteur1] [varchar](50) NULL,
+	[NomConducteur2] [varchar](50) NULL,
+	[PrenomConducteur2] [varchar](50) NULL,
+	[TelephoneConducteur2] [varchar](30) NULL,
+	[EmailConducteur2] [varchar](50) NULL,
+	[Quartier] [varchar](50) NULL,
+	[IsDelete] [int] NULL,
+ CONSTRAINT [PK_FEC_ClasseMetho] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FEC_CotisationAnnuelle]    Script Date: 15/03/2022 15:43:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_CotisationAnnuelle](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdSouscripteur] [int] NOT NULL,
+	[Annee] [int] NULL,
+	[MontantCotisation] [int] NULL,
+	[UserCreation] [varchar](100) NULL,
+	[UserLastModif] [varchar](100) NULL,
+	[DateCreation] [datetime] NULL,
+	[DateLastModif] [datetime] NULL,
+	[IsDelete] [int] NULL,
+ CONSTRAINT [PK_FEC_CotisationAnnuelle] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FEC_MembreSouscripteur]    Script Date: 15/03/2022 15:43:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_MembreSouscripteur](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdSouscripteur] [int] NOT NULL,
+	[NomMembre] [varchar](100) NULL,
+	[PrenomsMembre] [varchar](100) NULL,
+	[Statut] [varchar](20) NULL,
+	[Sexe] [varchar](1) NULL,
+	[DateNaissance] [datetime] NULL,
+	[LieuNaissance] [varchar](50) NULL,
+	[Profession] [varchar](50) NULL,
+	[Telephone] [varchar](30) NULL,
+	[Cellulaire] [varchar](30) NULL,
+	[Email] [varchar](50) NULL,
+	[UserCreation] [varchar](50) NULL,
+	[UserLastModif] [varchar](50) NULL,
+	[DateCreation] [datetime] NULL,
+	[DateLastModif] [datetime] NULL,
+	[IdProfession] [int] NULL,
+	[IsAdulteMembre] [varchar](100) NULL,
+	[IsDelete] [int] NULL,
+ CONSTRAINT [PK_FEC_CMembreSouscripteur] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FEC_Profession]    Script Date: 15/03/2022 15:43:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_Profession](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Libelle] [varchar](50) NOT NULL,
+	[IsDelete] [int] NULL,
+ CONSTRAINT [PK_FEC_Profession] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FEC_Souscripteur]    Script Date: 15/03/2022 15:43:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_Souscripteur](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Code] [varchar](50) NULL,
+	[Nom] [varchar](100) NULL,
+	[Prenoms] [varchar](100) NULL,
+	[Statut] [varchar](20) NULL,
+	[Sexe] [varchar](1) NULL,
+	[DateNaissance] [datetime] NULL,
+	[LieuNaissance] [varchar](50) NULL,
+	[Profession] [varchar](50) NULL,
+	[IdClasseMetho] [int] NULL,
+	[Telephone] [varchar](30) NULL,
+	[Cellulaire] [varchar](30) NULL,
+	[Email] [varchar](50) NULL,
+	[District] [varchar](50) NULL,
+	[CodeDistrict] [varchar](50) NULL,
+	[Circuit] [varchar](50) NULL,
+	[CodeCircuit] [varchar](50) NULL,
+	[EgliseLocale] [varchar](50) NULL,
+	[CodeEgliseLocale] [varchar](50) NULL,
+	[DateCreation] [datetime] NULL,
+	[DateLastModif] [datetime] NULL,
+	[UserCreation] [varchar](50) NULL,
+	[UserLastModif] [varchar](50) NULL,
+	[DateSouscription] [datetime] NULL,
+	[IdProfession] [int] NULL,
+	[IsAdulte] [varchar](100) NULL,
+	[IsDelete] [int] NULL,
+ CONSTRAINT [PK_FEC_Souscripteur_1] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FEC_Versement]    Script Date: 15/03/2022 15:43:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_Versement](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdSouscripteur] [int] NOT NULL,
+	[NumeroRecu] [varchar](50) NULL,
+	[MontantVersement] [int] NULL,
+	[DateVersement] [datetime] NULL,
+	[NomReceveur] [varchar](50) NULL,
+	[UserCreation] [varchar](100) NULL,
+	[UserLastModif] [varchar](100) NULL,
+	[DateCreation] [datetime] NULL,
+	[DateLastModif] [datetime] NULL,
+	[IsDelete] [int] NULL,
+ CONSTRAINT [PK_FEC_Versement] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+ALTER TABLE [dbo].[FEC_CotisationAnnuelle]  WITH CHECK ADD  CONSTRAINT [FK_FEC_CotisationAnnuelle_FEC_CotisationAnnuelle] FOREIGN KEY([Id])
+REFERENCES [dbo].[FEC_CotisationAnnuelle] ([Id])
+GO
+ALTER TABLE [dbo].[FEC_CotisationAnnuelle] CHECK CONSTRAINT [FK_FEC_CotisationAnnuelle_FEC_CotisationAnnuelle]
+GO

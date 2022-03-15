@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenGestProfession));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.sBtnFermer = new DevExpress.XtraEditors.SimpleButton();
             this.sBtnEnregistrer = new DevExpress.XtraEditors.SimpleButton();
@@ -132,6 +133,7 @@
             this.ClientSize = new System.Drawing.Size(621, 50);
             this.Controls.Add(this.layoutControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FenGestProfession";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FenGestProfession";

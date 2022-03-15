@@ -46,6 +46,14 @@ namespace FIMECO
             bool res = false;
             try
             {
+                if(txtNom.Text.Trim()==string.Empty || txtPrenoms.Text == string.Empty)
+                {
+                    MessageBox.Show("Veuillez renseigner un nom et un prénom!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    return;
+                }
+
+
                 if (myObjectAjout && myObjectMembreSouscripteur == null)
                 {
                     //Tester qu'on a pas un doublon
@@ -258,6 +266,11 @@ namespace FIMECO
             {
 
             }
+        }
+
+        private void sBtnFermer_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

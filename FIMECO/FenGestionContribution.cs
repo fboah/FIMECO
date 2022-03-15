@@ -179,13 +179,10 @@ namespace FIMECO
 
                 if (!myObjectAjout)//Modification
                 {
-
                     sNumAnnee.Value = myObjectCot.mAnnee;
                     sNumMontant.Value = myObjectCot.mMontantCotisation;
                     CmbSouscripteurCot.EditValue = myObjectCot.mIdSouscripteur;
-
-
-
+                    
                 }
 
             }

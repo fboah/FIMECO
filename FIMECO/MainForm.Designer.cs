@@ -36,6 +36,12 @@
             this.gestionDesVersementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionDesProfessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.lblMontantVerse = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+            this.lblMontantSouscrit = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.LibelleNbreSous = new DevExpress.XtraEditors.LabelControl();
+            this.lblNbreSouscripteur = new DevExpress.XtraEditors.LabelControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
@@ -250,6 +256,12 @@
             // 
             this.panelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelControl1.Controls.Add(this.lblMontantVerse);
+            this.panelControl1.Controls.Add(this.labelControl4);
+            this.panelControl1.Controls.Add(this.lblMontantSouscrit);
+            this.panelControl1.Controls.Add(this.labelControl2);
+            this.panelControl1.Controls.Add(this.LibelleNbreSous);
+            this.panelControl1.Controls.Add(this.lblNbreSouscripteur);
             this.panelControl1.Controls.Add(this.xtraTabControl1);
             this.panelControl1.Controls.Add(this.gCPeriode);
             this.panelControl1.Location = new System.Drawing.Point(0, 27);
@@ -257,15 +269,78 @@
             this.panelControl1.Size = new System.Drawing.Size(1126, 125);
             this.panelControl1.TabIndex = 1;
             // 
+            // lblMontantVerse
+            // 
+            this.lblMontantVerse.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblMontantVerse.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.lblMontantVerse.Appearance.ForeColor = System.Drawing.Color.Green;
+            this.lblMontantVerse.Location = new System.Drawing.Point(1028, 78);
+            this.lblMontantVerse.Name = "lblMontantVerse";
+            this.lblMontantVerse.Size = new System.Drawing.Size(7, 14);
+            this.lblMontantVerse.TabIndex = 29;
+            this.lblMontantVerse.Text = "0";
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelControl4.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.labelControl4.Appearance.ForeColor = System.Drawing.Color.Green;
+            this.labelControl4.Location = new System.Drawing.Point(897, 78);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(127, 14);
+            this.labelControl4.TabIndex = 28;
+            this.labelControl4.Text = "Montant Versé       : ";
+            // 
+            // lblMontantSouscrit
+            // 
+            this.lblMontantSouscrit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblMontantSouscrit.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.lblMontantSouscrit.Appearance.ForeColor = System.Drawing.Color.Purple;
+            this.lblMontantSouscrit.Location = new System.Drawing.Point(1028, 47);
+            this.lblMontantSouscrit.Name = "lblMontantSouscrit";
+            this.lblMontantSouscrit.Size = new System.Drawing.Size(7, 14);
+            this.lblMontantSouscrit.TabIndex = 27;
+            this.lblMontantSouscrit.Text = "0";
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelControl2.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.labelControl2.Appearance.ForeColor = System.Drawing.Color.Purple;
+            this.labelControl2.Location = new System.Drawing.Point(897, 46);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(128, 14);
+            this.labelControl2.TabIndex = 26;
+            this.labelControl2.Text = "Montant Souscrit   : ";
+            // 
+            // LibelleNbreSous
+            // 
+            this.LibelleNbreSous.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.LibelleNbreSous.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.LibelleNbreSous.Location = new System.Drawing.Point(1028, 15);
+            this.LibelleNbreSous.Name = "LibelleNbreSous";
+            this.LibelleNbreSous.Size = new System.Drawing.Size(7, 14);
+            this.LibelleNbreSous.TabIndex = 25;
+            this.LibelleNbreSous.Text = "0";
+            // 
+            // lblNbreSouscripteur
+            // 
+            this.lblNbreSouscripteur.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblNbreSouscripteur.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.lblNbreSouscripteur.Location = new System.Drawing.Point(897, 14);
+            this.lblNbreSouscripteur.Name = "lblNbreSouscripteur";
+            this.lblNbreSouscripteur.Size = new System.Drawing.Size(128, 14);
+            this.lblNbreSouscripteur.TabIndex = 24;
+            this.lblNbreSouscripteur.Text = "Nbre Souscripteurs : ";
+            // 
             // xtraTabControl1
             // 
-            this.xtraTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.xtraTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.xtraTabControl1.Location = new System.Drawing.Point(201, 5);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(925, 98);
+            this.xtraTabControl1.Size = new System.Drawing.Size(690, 98);
             this.xtraTabControl1.TabIndex = 23;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -275,7 +350,7 @@
             // 
             this.xtraTabPage1.Controls.Add(this.groupControl1);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(919, 70);
+            this.xtraTabPage1.Size = new System.Drawing.Size(684, 70);
             this.xtraTabPage1.Text = "Souscripteurs";
             // 
             // groupControl1
@@ -293,7 +368,7 @@
             this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl1.Location = new System.Drawing.Point(0, 0);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(919, 70);
+            this.groupControl1.Size = new System.Drawing.Size(684, 70);
             this.groupControl1.TabIndex = 22;
             this.groupControl1.Text = "Souscripteurs";
             // 
@@ -392,7 +467,7 @@
             this.xtraTabPage2.Controls.Add(this.groupControl3);
             this.xtraTabPage2.Controls.Add(this.groupControl2);
             this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(919, 70);
+            this.xtraTabPage2.Size = new System.Drawing.Size(684, 70);
             this.xtraTabPage2.Text = "Classes - Professions";
             // 
             // groupControl3
@@ -402,16 +477,16 @@
             this.groupControl3.CaptionImage = ((System.Drawing.Image)(resources.GetObject("groupControl3.CaptionImage")));
             this.groupControl3.Controls.Add(this.chkTousProfession);
             this.groupControl3.Controls.Add(this.chkCmbMultiProfession);
-            this.groupControl3.Location = new System.Drawing.Point(486, 0);
+            this.groupControl3.Location = new System.Drawing.Point(348, 0);
             this.groupControl3.Name = "groupControl3";
-            this.groupControl3.Size = new System.Drawing.Size(438, 70);
+            this.groupControl3.Size = new System.Drawing.Size(341, 70);
             this.groupControl3.TabIndex = 1;
             this.groupControl3.Text = "Profession";
             // 
             // chkTousProfession
             // 
             this.chkTousProfession.EditValue = true;
-            this.chkTousProfession.Location = new System.Drawing.Point(380, 32);
+            this.chkTousProfession.Location = new System.Drawing.Point(255, 32);
             this.chkTousProfession.Name = "chkTousProfession";
             this.chkTousProfession.Properties.Caption = "Tous";
             this.chkTousProfession.Size = new System.Drawing.Size(48, 19);
@@ -426,7 +501,7 @@
             this.chkCmbMultiProfession.Name = "chkCmbMultiProfession";
             this.chkCmbMultiProfession.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.chkCmbMultiProfession.Size = new System.Drawing.Size(361, 20);
+            this.chkCmbMultiProfession.Size = new System.Drawing.Size(236, 20);
             this.chkCmbMultiProfession.TabIndex = 43;
             this.chkCmbMultiProfession.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.chkCmbMultiProfession_Closed);
             // 
@@ -437,14 +512,14 @@
             this.groupControl2.Controls.Add(this.chkCmbMultClasseMetho);
             this.groupControl2.Location = new System.Drawing.Point(0, 0);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(485, 70);
+            this.groupControl2.Size = new System.Drawing.Size(347, 70);
             this.groupControl2.TabIndex = 0;
             this.groupControl2.Text = "Classes Méthodistes";
             // 
             // chkTousClasseMetho
             // 
             this.chkTousClasseMetho.EditValue = true;
-            this.chkTousClasseMetho.Location = new System.Drawing.Point(384, 32);
+            this.chkTousClasseMetho.Location = new System.Drawing.Point(292, 32);
             this.chkTousClasseMetho.Name = "chkTousClasseMetho";
             this.chkTousClasseMetho.Properties.Caption = "Tous";
             this.chkTousClasseMetho.Size = new System.Drawing.Size(48, 19);
@@ -459,7 +534,7 @@
             this.chkCmbMultClasseMetho.Name = "chkCmbMultClasseMetho";
             this.chkCmbMultClasseMetho.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.chkCmbMultClasseMetho.Size = new System.Drawing.Size(361, 20);
+            this.chkCmbMultClasseMetho.Size = new System.Drawing.Size(268, 20);
             this.chkCmbMultClasseMetho.TabIndex = 41;
             this.chkCmbMultClasseMetho.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.chkCmbMultClasseMetho_Closed);
             // 
@@ -1369,15 +1444,19 @@
             this.Controls.Add(this.panelControl2);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainForm";
+            this.Text = "FIMECO";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
+            this.panelControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
@@ -1551,5 +1630,11 @@
         private DevExpress.XtraEditors.SimpleButton sBtnExportExcel;
         private System.Windows.Forms.SaveFileDialog sFDExcel;
         private DevExpress.XtraEditors.SimpleButton sBtnExcelVersement;
+        private DevExpress.XtraEditors.LabelControl LibelleNbreSous;
+        private DevExpress.XtraEditors.LabelControl lblNbreSouscripteur;
+        private DevExpress.XtraEditors.LabelControl lblMontantVerse;
+        private DevExpress.XtraEditors.LabelControl labelControl4;
+        private DevExpress.XtraEditors.LabelControl lblMontantSouscrit;
+        private DevExpress.XtraEditors.LabelControl labelControl2;
     }
 }

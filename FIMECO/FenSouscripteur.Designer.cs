@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenSouscripteur));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.CmbProfession = new DevExpress.XtraEditors.LookUpEdit();
             this.sBtnFermer = new DevExpress.XtraEditors.SimpleButton();
@@ -574,6 +575,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(633, 290);
             this.Controls.Add(this.layoutControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FenSouscripteur";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Souscripteur";

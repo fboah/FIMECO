@@ -179,8 +179,6 @@ C:\Users\Administrateur\Documents\Visual Studio 2015\Projects\FIMECO\FIMECO\obj\
 C:\Users\Administrateur\Documents\Visual Studio 2015\Projects\FIMECO\FIMECO\obj\Debug\FIMECO.pdb
 C:\Users\Administrateur\Documents\Visual Studio 2015\Projects\FIMECO\FIMECO\obj\Debug\FIMECO.csprojResolveAssemblyReference.cache
 C:\Users\Franck\Desktop\FIMECO\FIMECO\bin\Debug\FIMECO.exe.config
-C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.exe
-C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.pdb
 C:\Users\Franck\Desktop\FIMECO\FIMECO\bin\Debug\FIMECO.exe
 C:\Users\Franck\Desktop\FIMECO\FIMECO\bin\Debug\FIMECO.pdb
 C:\Users\Franck\Desktop\FIMECO\FIMECO\bin\Debug\DevExpress.Charts.v15.1.Core.dll
@@ -342,7 +340,6 @@ C:\Users\Franck\Desktop\FIMECO\FIMECO\bin\Debug\de\DevExpress.Xpo.v15.1.resource
 C:\Users\Franck\Desktop\FIMECO\FIMECO\bin\Debug\es\DevExpress.Xpo.v15.1.resources.dll
 C:\Users\Franck\Desktop\FIMECO\FIMECO\bin\Debug\ja\DevExpress.Xpo.v15.1.resources.dll
 C:\Users\Franck\Desktop\FIMECO\FIMECO\bin\Debug\ru\DevExpress.Xpo.v15.1.resources.dll
-C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.csprojResolveAssemblyReference.cache
 C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.Etats.XtraReportSousMembre.resources
 C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.FenClasseMetho.resources
 C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.FenCotisationAn.resources
@@ -358,3 +355,5 @@ C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.MainForm.resources
 C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.Properties.Resources.resources
 C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.csproj.GenerateResource.Cache
 C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.exe.licenses
+C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.exe
+C:\Users\Franck\Desktop\FIMECO\FIMECO\obj\Debug\FIMECO.pdb

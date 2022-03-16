@@ -198,7 +198,7 @@ namespace FIMECO
                         //ListeVersement de l'année considérée
                         List<CArriereSouscripteur> ListeAnneeEncours = new List<CArriereSouscripteur>();
 
-                        ListeAnneeEncours = ListeArriereSous.Where(c => c.mIdSouscripteur == item.mId && c.mAnnee == Int32.Parse(AnObj)).ToList();
+                        ListeAnneeEncours = ListeArriereSous.Where(c => c.mIdSouscripteur == item.mId && c.mAnnee == Int32.Parse(AnObj) && c.mIsDeleteCotisation==0).ToList();
                         
                         if (ListeArriereTMP!=null )
                         {
@@ -305,8 +305,7 @@ namespace FIMECO
                 
                 gridControlSouscripteur.DataSource = ListeOPACTU;
                 //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-
-
+                
                 //Afficher les montants
 
                 AfficherMontants();
@@ -885,8 +884,7 @@ namespace FIMECO
             try
             {
                 ReloadGridSouscripteur();
-
-              
+                
             }
             catch (Exception ex)
             {
@@ -1381,6 +1379,9 @@ namespace FIMECO
                 fenAjout.ShowDialog();
 
                 ReloadGridVersement();
+
+                //MAJ de la grid des souscripteurs======================
+                ReloadGridSouscripteur();
             }
             catch(Exception ex)
             {
@@ -1412,6 +1413,9 @@ namespace FIMECO
                                 MessageBox.Show("Versement supprimé avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                 ReloadGridVersement();
+
+                                //MAJ de la grid des souscripteurs======================
+                                ReloadGridSouscripteur();
                             }
                             else
                             {

@@ -479,12 +479,12 @@ namespace FIMECO.DAOFIMECO
                 var mProvider = DbProviderFactories.GetFactory("System.Data.SqlClient");
                 using (var mConnection = mProvider.CreateConnection())
                 {
-                    req = @" select S.Id,Code,Nom,Prenoms,NumeroRecu,MontantVersement,DateVersement,Annee,MontantCotisation,S.IdClasseMetho,S.IdProfession 
+                    req = @" select S.Id,Code,Nom,Prenoms,NumeroRecu,MontantVersement,DateVersement,Annee,MontantCotisation,S.IdClasseMetho,S.IdProfession ,V.IsDelete as IsDeleteVersement,S.IsDelete as IsDeleteSouscripteur,C.IsDelete as IsDeleteCotisation
                             from FEC_Souscripteur S
                             left join FEC_Versement V on S.Id=V.IdSouscripteur
                             left join FEC_CotisationAnnuelle C on C.IdSouscripteur=S.Id
                             where S.IsDelete=0 AND V.IsDelete=0 and C.IsDelete=0 AND YEAR(DateVersement)<=" + AnObjectif + " and Annee<="+ AnObjectif + " and YEAR(DateVersement)=Annee or C.Annee=" + AnObjectif + " " + FiltreSous+ FiltreProfession+FiltreClasseMetho+
-                            " group by S.Id,Code,Nom,Prenoms,Annee,NumeroRecu,MontantVersement,DateVersement,MontantCotisation,S.IdClasseMetho,S.IdProfession";
+                            " group by S.Id,Code,Nom,Prenoms,Annee,NumeroRecu,MontantVersement,DateVersement,MontantCotisation,S.IdClasseMetho,S.IdProfession ,V.IsDelete ,S.IsDelete ,C.IsDelete";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;
@@ -513,10 +513,15 @@ namespace FIMECO.DAOFIMECO
                                         mMontantVersement = reader["MontantVersement"] == DBNull.Value ? 0 : Convert.ToInt64(reader["MontantVersement"]),
                                         mMontantCotisationObjectif = reader["MontantCotisation"] == DBNull.Value ? 0 : Convert.ToInt32(reader["MontantCotisation"]),
                                         mAnnee = reader["Annee"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Annee"]),
+                                        mIsDeleteCotisation = reader["IsDeleteCotisation"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IsDeleteCotisation"]),
+                                        mIsDeleteSouscripteur = reader["IsDeleteSouscripteur"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IsDeleteSouscripteur"]),
+                                        mIsDeleteVersement = reader["IsDeleteVersement"] == DBNull.Value ? 0 : Convert.ToInt32(reader["IsDeleteVersement"]),
                                         
                                     };
 
-                                    ListClientOp.Add(ClientOp);
+                                    if(ClientOp.mIsDeleteVersement!=1) ListClientOp.Add(ClientOp);
+
+
                                 }
 
                                 return ListClientOp;
@@ -2875,7 +2880,7 @@ namespace FIMECO.DAOFIMECO
                 using (var mConnection = mProvider.CreateConnection())
                 {
                     req = @" select * " +
-                    "  from FEC_Versement V left join FEC_Souscripteur S on S.Id=V.IdSouscripteur where YEAR(DateVersement)=@annee  AND S.IsDelete=0 ";
+                    "  from FEC_Versement V left join FEC_Souscripteur S on S.Id=V.IdSouscripteur where YEAR(DateVersement)=@annee  AND S.IsDelete=0 and V.IsDelete=0 ";
 
                     if (mConnection == null) return null;
                     mConnection.ConnectionString = chaineconnexion;

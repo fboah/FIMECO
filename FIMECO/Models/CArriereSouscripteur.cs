@@ -18,6 +18,11 @@ namespace FIMECO.Models
         public DateTime DateVersement { get; set; }
         public long mMontantCotisationObjectif { get; set; }
 
+        //Delete
+        public int mIsDeleteSouscripteur { get; set; }
+        public int mIsDeleteVersement { get; set; }
+        public int mIsDeleteCotisation { get; set; }
+
         public CArriereSouscripteur()
         {
             mIdSouscripteur = 0;
@@ -30,7 +35,11 @@ namespace FIMECO.Models
             DateVersement = new DateTime();
             mMontantCotisationObjectif = 0;
 
-        }
+            mIsDeleteSouscripteur = 0;
+            mIsDeleteVersement = 0;
+            mIsDeleteCotisation = 0;
+
+    }
 
 
     }

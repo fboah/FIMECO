@@ -147,7 +147,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FenProfession";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FenProfession";
+            this.Text = "Gestion des Professions";
             this.Load += new System.EventHandler(this.FenProfession_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();

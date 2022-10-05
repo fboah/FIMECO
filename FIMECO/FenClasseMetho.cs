@@ -28,6 +28,8 @@ namespace FIMECO
         //Chaine de connexion FIMECO
         private string ChaineConFIMECO;
 
+        public string Appli = "FIMECO";
+
         //Tester si on ajoute ou modif 
         private bool IsAjout;
 
@@ -45,16 +47,20 @@ namespace FIMECO
                 ClasseMetho = null;
 
                 var fenAjout = new FenGestionClasseMetho(IsAjout, ListeClasseMetho, ClasseMetho, ChaineConFIMECO);
-
+                fenAjout.Text = "Ajouter une Classe METHO";
                 fenAjout.ShowDialog();
 
                 RefreshGrid(ChaineConFIMECO);
             }
             catch(Exception ex)
             {
-
+                var msg = "FenClasseMetho -> sBtnAjoutClasse_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
+
+
+      
 
         private void FenClasseMetho_Load(object sender, EventArgs e)
         {
@@ -77,10 +83,13 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "FenClasseMetho -> sBtnAjoutClasse_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+     
         private void RefreshGrid(string Chaine)
         {
             try
@@ -93,10 +102,14 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "FenClasseMetho -> RefreshGrid-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+
+      
         private void sBtnModifClasse_Click(object sender, EventArgs e)
         {
             try
@@ -120,7 +133,7 @@ namespace FIMECO
                  //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
 
                     var fenAjout = new FenGestionClasseMetho(IsAjout, ListeClasseMetho, ClientOp, ChaineConFIMECO);
-
+                    fenAjout.Text = "Modifier une Classe METHO";
                     fenAjout.ShowDialog();
 
                     RefreshGrid(ChaineConFIMECO);
@@ -129,17 +142,20 @@ namespace FIMECO
                 else
                 {
                  //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                    MessageBox.Show("Veuillez sélectionner un élément à modifier!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Veuillez sélectionner un élément à modifier!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
 
             }
             catch(Exception ex)
             {
-
+                var msg = "FenClasseMetho -> sBtnModifClasse_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+  
         private void sBtnSupprClasse_Click(object sender, EventArgs e)
         {
             bool res = false;
@@ -150,7 +166,7 @@ namespace FIMECO
 
                 if (Identif > 0)
                 {
-                    var rep = MessageBox.Show("Voulez-vous supprimer la classe selectionnée ?", "FIMECO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var rep = MessageBox.Show("Voulez-vous supprimer la classe selectionnée ?", Appli, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (rep == DialogResult.Yes)
                     {
@@ -159,7 +175,26 @@ namespace FIMECO
                         if (res)
                         {
                             //if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                            MessageBox.Show("Classe supprimée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Classe supprimée avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            #region Tracabilité
+
+                            CTracabilite Ct = new CTracabilite();
+
+                            string content = "Id de la classe Métho: " + Identif.ToString();
+
+                            Ct.mContenu = content;
+
+                            Ct.mTypeOperation = "Suppression_ClasseMetho";
+                            Ct.mDateAction = DateTime.Now;
+                            Ct.mMachineAction = Environment.UserDomainName + "\\" + Environment.UserName;
+
+                            bool ret = false;
+
+                            ret = daoReport.AddTrace(Ct, ChaineConFIMECO);
+
+
+                            #endregion
 
                             RefreshGrid(ChaineConFIMECO);
                             
@@ -167,7 +202,7 @@ namespace FIMECO
                         else
                         {
                            // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                            MessageBox.Show("Une erreur est survenue lors de la suppression de l'opération!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue lors de la suppression de l'opération!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
                         
@@ -176,7 +211,8 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenClasseMetho -> sBtnSupprClasse_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
     }

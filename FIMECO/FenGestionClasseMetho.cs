@@ -1,5 +1,6 @@
 ﻿using FIMECO.DAOFIMECO;
 using FIMECO.Models;
+using FIMECO.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,8 @@ namespace FIMECO
         private List<CClasseMetho> myObjectListeClasseMetho;
         private CClasseMetho myObjectClasseMetho;
 
+        private string Appli = "FIMECO";
+
         public FenGestionClasseMetho()
         {
             InitializeComponent();
@@ -36,6 +39,8 @@ namespace FIMECO
 
         }
 
+
+       
         private void sBtnEnregistrer_Click(object sender, EventArgs e)
         {
             bool res = false;
@@ -68,12 +73,12 @@ namespace FIMECO
 
                             if (res)
                             {
-                                MessageBox.Show("Classe ajoutée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Classe ajoutée avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Close();
                             }
                             else
                             {
-                                MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Une erreur est survenue!",Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
                         }
@@ -81,7 +86,7 @@ namespace FIMECO
                         {
                             //Objet déjà existant
 
-                            MessageBox.Show("Cette Classe existe déjà ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Cette Classe existe déjà ! Veuillez vérifier vos données", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         }
 
@@ -114,12 +119,37 @@ namespace FIMECO
 
                                 if (res)
                                 {
-                                    MessageBox.Show("Classe modifiée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    #region Tracabilité
+
+                                    CTracabilite Ct = new CTracabilite();
+
+                                    string content = "NomClasse:" + myObjectClasseMetho.mNomClasse + "_" + "mNomConducteur1:" + myObjectClasseMetho.mNomConducteur1 + "_" + "mPrenomConducteur1:" + myObjectClasseMetho.mPrenomConducteur1+
+                                        "mEmailConducteur1:" + myObjectClasseMetho.mEmailConducteur1 + "_" + "mTelephoneConducteur1:" + myObjectClasseMetho.mTelephoneConducteur1 +
+                                        "mNomConducteur2:" + myObjectClasseMetho.mNomConducteur2 + "_" + "mPrenomConducteur2:" + myObjectClasseMetho.mPrenomConducteur2 +
+                                        "mEmailConducteur2:" + myObjectClasseMetho.mEmailConducteur2 + "_" + "mTelephoneConducteur2:" + myObjectClasseMetho.mTelephoneConducteur2 +
+                                        "mQuartier:" + myObjectClasseMetho.mQuartier;
+
+                                    Ct.mContenu = content;
+
+                                    Ct.mTypeOperation = "Modification_ClasseMetho";
+                                    Ct.mDateAction = DateTime.Now;
+                                    Ct.mMachineAction = Environment.UserDomainName + "\\" + Environment.UserName;
+
+                                    bool ret = false;
+
+                                    ret = daoReport.AddTrace(Ct, myObjectChaineConFimeco);
+
+
+                                    #endregion
+
+
+                                    MessageBox.Show("Classe modifiée avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     Close();
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Une erreur est survenue!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                 }
                             }
@@ -127,7 +157,7 @@ namespace FIMECO
                             {
                                 //Objet déjà existant
 
-                                MessageBox.Show("Cette Classe existe déjà ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("Cette Classe existe déjà ! Veuillez vérifier vos données", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                             }
 
@@ -138,14 +168,15 @@ namespace FIMECO
                 {
                     //Renseigner au moins ces éléments
 
-                    MessageBox.Show("Veuillez renseigner au moins le nom de la classe ,le quartier ,le nom ,prenom et telephone du conducteur 1!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Veuillez renseigner au moins le nom de la classe ,le quartier ,le nom ,prenom et telephone du conducteur 1!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
 
             }
             catch(Exception ex)
             {
-
+                var msg = "FenGestionClasseMetho -> sBtnEnregistrer_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
@@ -172,7 +203,8 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "FenGestionClasseMetho -> FenGestionClasseMetho_Load-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
@@ -184,7 +216,8 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "FenGestionClasseMetho -> sBtnFermer_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using FIMECO.DAOFIMECO;
 using FIMECO.Models;
+using FIMECO.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,8 @@ namespace FIMECO
         private List<CProfession> myObjectListeProf;
         private CProfession myObjectCProf;
 
+        private string Appli = "FIMECO";
+
         public FenGestProfession()
         {
             InitializeComponent();
@@ -37,6 +40,8 @@ namespace FIMECO
 
         }
 
+
+      
         private void sBtnEnregistrer_Click(object sender, EventArgs e)
         {
             bool res = false;
@@ -56,12 +61,12 @@ namespace FIMECO
 
                         if (res)
                         {
-                            MessageBox.Show("Profession ajoutée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Profession ajoutée avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Close();
                         }
                         else
                         {
-                            MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
                     }
@@ -69,7 +74,7 @@ namespace FIMECO
                     {
                         //Objet déjà existant
 
-                        MessageBox.Show("Cette Profession existe déjà ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Cette Profession existe déjà ! Veuillez vérifier vos données", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     }
 
@@ -95,12 +100,34 @@ namespace FIMECO
 
                             if (res)
                             {
-                                MessageBox.Show("Profession modifiée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                                #region Tracabilité
+
+                                CTracabilite Ct = new CTracabilite();
+
+                                string content = "mLibelle:" + myObjectCProf.mLibelle ;
+
+                                Ct.mContenu = content;
+
+                                Ct.mTypeOperation = "Modification_Profession";
+                                Ct.mDateAction = DateTime.Now;
+                                Ct.mMachineAction = Environment.UserDomainName + "\\" + Environment.UserName;
+
+                                bool ret = false;
+
+                                ret = daoReport.AddTrace(Ct, myObjectChaineConFimeco);
+
+
+                                #endregion
+
+
+                                MessageBox.Show("Profession modifiée avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Close();
                             }
                             else
                             {
-                                MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Une erreur est survenue!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
                         }
@@ -108,7 +135,7 @@ namespace FIMECO
                         {
                             //Objet déjà existant
 
-                            MessageBox.Show("Cette Profession existe déjà ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Cette Profession existe déjà ! Veuillez vérifier vos données", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         }
 
@@ -118,7 +145,8 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenGestProfession -> sBtnEnregistrer_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
 
         }
@@ -135,6 +163,8 @@ namespace FIMECO
             }
         }
 
+
+      
         private void FenGestProfession_Load(object sender, EventArgs e)
         {
             try
@@ -149,7 +179,8 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenGestProfession -> FenGestProfession_Load-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
     }

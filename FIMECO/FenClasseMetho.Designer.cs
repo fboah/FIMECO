@@ -238,7 +238,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FenClasseMetho";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FenClasseMetho";
+            this.Text = "Gestion Classe Métho";
             this.Load += new System.EventHandler(this.FenClasseMetho_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();

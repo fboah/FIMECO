@@ -31,11 +31,17 @@ namespace FIMECO
         //Tester si on ajoute ou modif 
         private bool IsAjout;
 
-        public FenCotisationAn()
+        private int IdAppli;
+
+        public FenCotisationAn(int idta)
         {
             InitializeComponent();
+
+            this.IdAppli = idta;
         }
 
+
+       
         private void sBtnAjoutContribution_Click(object sender, EventArgs e)
         {
             try
@@ -52,19 +58,21 @@ namespace FIMECO
                 ListeSS = daoReport.GetAllSouscripteur(ChaineConFIMECO);
 
                 //Liste des cotisations
-                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFIMECO, ListeSS);
+                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFIMECO, ListeSS,IdAppli.ToString());
 
-                var fenAjout = new FenGestionContribution(IsAjout, ListeCotisation, CCotisation, ChaineConFIMECO, ListeSS);
-
+                var fenAjout = new FenGestionContribution(IsAjout, ListeCotisation, CCotisation, ChaineConFIMECO, ListeSS, IdAppli);
+                fenAjout.Text = "Ajouter un Objectif Annuel";
                 fenAjout.ShowDialog();
 
                 RefreshGrid(ChaineConFIMECO);
             }
             catch(Exception ex)
             {
-
+                var msg = "FenCotisationAn -> sBtnAjoutContribution_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
+
 
         private void FenCotisationAn_Load(object sender, EventArgs e)
         {
@@ -91,9 +99,12 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenCotisationAn -> FenCotisationAn_Load-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
+
+
 
         private void RefreshGrid(string Chaine)
         {
@@ -111,9 +122,9 @@ namespace FIMECO
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
                 ListeSS = daoReport.GetAllSouscripteur(ChaineConFIMECO);
 
-                ListeCotApercu = daoReport.GetAllCotisationAnnuelleByAn(ChaineConFIMECO, andeb, anfin, ListeSS);
+                ListeCotApercu = daoReport.GetAllCotisationAnnuelleByAn(ChaineConFIMECO, andeb, anfin, ListeSS,IdAppli.ToString());
 
-                gridControlCotisationAn.DataSource = ListeCotApercu;
+                gridControlCotisationAn.DataSource = ListeCotApercu.OrderBy(c=>c.mNom);
 
                 ////Liste des souscripteurs
 
@@ -129,10 +140,14 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenCotisationAn -> RefreshGrid-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+
+    
         private void sBtnApercu_Click(object sender, EventArgs e)
         {
             try
@@ -149,22 +164,24 @@ namespace FIMECO
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
                 ListeSS = daoReport.GetAllSouscripteur(ChaineConFIMECO);
 
-                ListeCotApercu = daoReport.GetAllCotisationAnnuelleByAn(ChaineConFIMECO, andeb, anfin, ListeSS);
+                ListeCotApercu = daoReport.GetAllCotisationAnnuelleByAn(ChaineConFIMECO, andeb, anfin, ListeSS, IdAppli.ToString());
 
-                gridControlCotisationAn.DataSource = ListeCotApercu;
+                gridControlCotisationAn.DataSource = ListeCotApercu.OrderBy(c=>c.mNom);
                 
             }
             catch(Exception ex)
             {
-
+                var msg = "FenCotisationAn -> sBtnApercu_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+   
         private void sBtnModifierContribution_Click(object sender, EventArgs e)
         {
             try
             {
-
                 IsAjout = false;
 
                 CCotisationAnnuelle ClientOp = new CCotisationAnnuelle();
@@ -182,13 +199,13 @@ namespace FIMECO
                     //if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
                     List<CCotisationAnnuelle> ListeOPACTU = new List<CCotisationAnnuelle>();
 
-                    ListeOPACTU = daoReport.GetAllCotisationAnnuelle (ChaineConFIMECO,ListeSS);
+                    ListeOPACTU = daoReport.GetAllCotisationAnnuelle (ChaineConFIMECO,ListeSS,IdAppli.ToString());
 
                     ClientOp = ListeOPACTU.FirstOrDefault(c => c.mId == Identif);
                     //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
 
-                    var fenAjout = new FenGestionContribution(IsAjout, ListeOPACTU, ClientOp, ChaineConFIMECO, ListeSS);
-
+                    var fenAjout = new FenGestionContribution(IsAjout, ListeOPACTU, ClientOp, ChaineConFIMECO, ListeSS,IdAppli);
+                    fenAjout.Text = "Modifier un Objectif Annuel";
                     fenAjout.ShowDialog();
 
                     RefreshGrid(ChaineConFIMECO);
@@ -204,10 +221,13 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenCotisationAn -> sBtnModifierContribution_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+       
         private void sBtnSupprimerContribution_Click(object sender, EventArgs e)
         {
             bool res = false;
@@ -226,6 +246,26 @@ namespace FIMECO
 
                         if (res)
                         {
+
+                            #region Tracabilité
+
+                            CTracabilite Ct = new CTracabilite();
+
+                            string content = "Id de la Contribution: " + Identif.ToString();
+
+                            Ct.mContenu = content;
+
+                            Ct.mTypeOperation = "Suppression_ContributionAnnuelle";
+                            Ct.mDateAction = DateTime.Now;
+                            Ct.mMachineAction = Environment.UserDomainName + "\\" + Environment.UserName;
+
+                            bool ret = false;
+
+                            ret = daoReport.AddTrace(Ct, ChaineConFIMECO);
+
+
+                            #endregion
+
                             //if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
                             MessageBox.Show("Cotisation supprimée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -244,7 +284,8 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenCotisationAn -> sBtnSupprimerContribution_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
     }

@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenGestVersement));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.CmbReceveur = new DevExpress.XtraEditors.LookUpEdit();
             this.sBtnFermer = new DevExpress.XtraEditors.SimpleButton();
             this.sBtnEnregistrer = new DevExpress.XtraEditors.SimpleButton();
-            this.txtReceveur = new DevExpress.XtraEditors.TextEdit();
             this.txtNumeroRecu = new DevExpress.XtraEditors.TextEdit();
             this.dateVersement = new DevExpress.XtraEditors.DateEdit();
             this.sNumMontant = new DevExpress.XtraEditors.SpinEdit();
@@ -42,12 +42,12 @@
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtReceveur.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CmbReceveur.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNumeroRecu.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateVersement.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateVersement.Properties)).BeginInit();
@@ -58,16 +58,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutControl1
             // 
+            this.layoutControl1.Controls.Add(this.CmbReceveur);
             this.layoutControl1.Controls.Add(this.sBtnFermer);
             this.layoutControl1.Controls.Add(this.sBtnEnregistrer);
-            this.layoutControl1.Controls.Add(this.txtReceveur);
             this.layoutControl1.Controls.Add(this.txtNumeroRecu);
             this.layoutControl1.Controls.Add(this.dateVersement);
             this.layoutControl1.Controls.Add(this.sNumMontant);
@@ -78,6 +78,20 @@
             this.layoutControl1.Size = new System.Drawing.Size(654, 143);
             this.layoutControl1.TabIndex = 0;
             this.layoutControl1.Text = "layoutControl1";
+            // 
+            // CmbReceveur
+            // 
+            this.CmbReceveur.Location = new System.Drawing.Point(92, 84);
+            this.CmbReceveur.Name = "CmbReceveur";
+            this.CmbReceveur.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.CmbReceveur.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("mId", "Id", 20, DevExpress.Utils.FormatType.None, "", false, DevExpress.Utils.HorzAlignment.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("mNom", "Nom Receveur")});
+            this.CmbReceveur.Properties.ReadOnly = true;
+            this.CmbReceveur.Size = new System.Drawing.Size(550, 20);
+            this.CmbReceveur.StyleController = this.layoutControl1;
+            this.CmbReceveur.TabIndex = 11;
             // 
             // sBtnFermer
             // 
@@ -98,14 +112,6 @@
             this.sBtnEnregistrer.TabIndex = 9;
             this.sBtnEnregistrer.Text = "Enregistrer";
             this.sBtnEnregistrer.Click += new System.EventHandler(this.sBtnEnregistrer_Click);
-            // 
-            // txtReceveur
-            // 
-            this.txtReceveur.Location = new System.Drawing.Point(92, 84);
-            this.txtReceveur.Name = "txtReceveur";
-            this.txtReceveur.Size = new System.Drawing.Size(550, 20);
-            this.txtReceveur.StyleController = this.layoutControl1;
-            this.txtReceveur.TabIndex = 8;
             // 
             // txtNumeroRecu
             // 
@@ -139,6 +145,11 @@
             this.sNumMontant.Name = "sNumMontant";
             this.sNumMontant.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.sNumMontant.Properties.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.sNumMontant.Properties.IsFloatValue = false;
             this.sNumMontant.Properties.Mask.EditMask = "N00";
             this.sNumMontant.Size = new System.Drawing.Size(232, 20);
@@ -156,6 +167,7 @@
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("mNom", 30, "Nom"),
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("mPrenoms", 30, "Prenoms")});
             this.CmbSouscripteur.Properties.NullText = "";
+            this.CmbSouscripteur.Properties.ReadOnly = true;
             this.CmbSouscripteur.Size = new System.Drawing.Size(550, 20);
             this.CmbSouscripteur.StyleController = this.layoutControl1;
             this.CmbSouscripteur.TabIndex = 4;
@@ -169,9 +181,9 @@
             this.layoutControlItem2,
             this.layoutControlItem3,
             this.layoutControlItem4,
-            this.layoutControlItem5,
             this.layoutControlItem6,
-            this.layoutControlItem7});
+            this.layoutControlItem7,
+            this.layoutControlItem8});
             this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "layoutControlGroup1";
             this.layoutControlGroup1.Size = new System.Drawing.Size(654, 143);
@@ -213,15 +225,6 @@
             this.layoutControlItem4.Text = "Numéro Reçu";
             this.layoutControlItem4.TextSize = new System.Drawing.Size(77, 13);
             // 
-            // layoutControlItem5
-            // 
-            this.layoutControlItem5.Control = this.txtReceveur;
-            this.layoutControlItem5.Location = new System.Drawing.Point(0, 72);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(634, 24);
-            this.layoutControlItem5.Text = "Receveur";
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(77, 13);
-            // 
             // layoutControlItem6
             // 
             this.layoutControlItem6.Control = this.sBtnEnregistrer;
@@ -240,6 +243,15 @@
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextVisible = false;
             // 
+            // layoutControlItem8
+            // 
+            this.layoutControlItem8.Control = this.CmbReceveur;
+            this.layoutControlItem8.Location = new System.Drawing.Point(0, 72);
+            this.layoutControlItem8.Name = "layoutControlItem8";
+            this.layoutControlItem8.Size = new System.Drawing.Size(634, 24);
+            this.layoutControlItem8.Text = "Receveur";
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(77, 13);
+            // 
             // FenGestVersement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,7 +267,7 @@
             this.Load += new System.EventHandler(this.FenGestVersement_Load);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.txtReceveur.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CmbReceveur.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNumeroRecu.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateVersement.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateVersement.Properties)).EndInit();
@@ -266,9 +278,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -279,7 +291,6 @@
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraEditors.SimpleButton sBtnFermer;
         private DevExpress.XtraEditors.SimpleButton sBtnEnregistrer;
-        private DevExpress.XtraEditors.TextEdit txtReceveur;
         private DevExpress.XtraEditors.TextEdit txtNumeroRecu;
         private DevExpress.XtraEditors.DateEdit dateVersement;
         private DevExpress.XtraEditors.SpinEdit sNumMontant;
@@ -288,8 +299,9 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
+        private DevExpress.XtraEditors.LookUpEdit CmbReceveur;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
     }
 }

@@ -159,6 +159,7 @@
             // 
             this.txtNomConducteur2.Location = new System.Drawing.Point(124, 108);
             this.txtNomConducteur2.Name = "txtNomConducteur2";
+            this.txtNomConducteur2.Properties.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNomConducteur2.Size = new System.Drawing.Size(437, 20);
             this.txtNomConducteur2.StyleController = this.layoutControl1;
             this.txtNomConducteur2.TabIndex = 9;
@@ -191,6 +192,7 @@
             // 
             this.txtNomConducteur1.Location = new System.Drawing.Point(124, 36);
             this.txtNomConducteur1.Name = "txtNomConducteur1";
+            this.txtNomConducteur1.Properties.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNomConducteur1.Size = new System.Drawing.Size(437, 20);
             this.txtNomConducteur1.StyleController = this.layoutControl1;
             this.txtNomConducteur1.TabIndex = 5;
@@ -199,6 +201,7 @@
             // 
             this.txtNomClasse.Location = new System.Drawing.Point(124, 12);
             this.txtNomClasse.Name = "txtNomClasse";
+            this.txtNomClasse.Properties.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNomClasse.Size = new System.Drawing.Size(437, 20);
             this.txtNomClasse.StyleController = this.layoutControl1;
             this.txtNomClasse.TabIndex = 4;

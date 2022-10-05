@@ -51,6 +51,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>FIM_JOURDAIN-ConvertImage.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Charts.v15.1.Core, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -69,6 +72,7 @@
     <Reference Include="DevExpress.XtraPrinting.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v15.1.Extensions, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -87,12 +91,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentification\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Authentification\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Authentification\MAJMDP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Authentification\MAJMDP.Designer.cs">
+      <DependentUpon>MAJMDP.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAOFIMECO\DAOFimeco.cs" />
+    <Compile Include="Etats\XtraReportSouscripteurVersement.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Etats\XtraReportSouscripteurVersement.Designer.cs">
+      <DependentUpon>XtraReportSouscripteurVersement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Etats\XtraReportSousMembre.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Etats\XtraReportSousMembre.Designer.cs">
       <DependentUpon>XtraReportSousMembre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Etats\XtraReportSousMembreVersement.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Etats\XtraReportSousMembreVersement.Designer.cs">
+      <DependentUpon>XtraReportSousMembreVersement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Etats\XtraReportVersementDetails.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Etats\XtraReportVersementDetails.Designer.cs">
+      <DependentUpon>XtraReportVersementDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FenChoixAppli.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FenChoixAppli.Designer.cs">
+      <DependentUpon>FenChoixAppli.cs</DependentUpon>
     </Compile>
     <Compile Include="FenClasseMetho.cs">
       <SubType>Form</SubType>
@@ -130,6 +170,12 @@
     <Compile Include="FenGestProfession.Designer.cs">
       <DependentUpon>FenGestProfession.cs</DependentUpon>
     </Compile>
+    <Compile Include="FenGestProfil.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FenGestProfil.Designer.cs">
+      <DependentUpon>FenGestProfil.cs</DependentUpon>
+    </Compile>
     <Compile Include="FenGestVersement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,19 +206,47 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\CApplication.cs" />
     <Compile Include="Models\CArriereSouscripteur.cs" />
     <Compile Include="Models\CClasseMetho.cs" />
     <Compile Include="Models\CCotisationAnnuelle.cs" />
+    <Compile Include="Models\CEtatSouscriptClasseMontant.cs" />
     <Compile Include="Models\CEtatSouscriptMembre.cs" />
+    <Compile Include="Models\CEtatSouscriptVersement.cs" />
+    <Compile Include="Models\CFiltre.cs" />
     <Compile Include="Models\CMembreSouscripteur.cs" />
     <Compile Include="Models\CProfession.cs" />
+    <Compile Include="Models\CProfil.cs" />
     <Compile Include="Models\CSouscripteur.cs" />
+    <Compile Include="Models\CTracabilite.cs" />
+    <Compile Include="Models\CUser.cs" />
+    <Compile Include="Models\CUserProfil.cs" />
+    <Compile Include="Models\CUserProfilData.cs" />
     <Compile Include="Models\CVersement.cs" />
+    <Compile Include="Models\CVersementSHORT.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CAlias.cs" />
+    <EmbeddedResource Include="Authentification\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Authentification\MAJMDP.resx">
+      <DependentUpon>MAJMDP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Etats\XtraReportSouscripteurVersement.resx">
+      <DependentUpon>XtraReportSouscripteurVersement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Etats\XtraReportSousMembre.resx">
       <DependentUpon>XtraReportSousMembre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Etats\XtraReportSousMembreVersement.resx">
+      <DependentUpon>XtraReportSousMembreVersement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Etats\XtraReportVersementDetails.resx">
+      <DependentUpon>XtraReportVersementDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FenChoixAppli.resx">
+      <DependentUpon>FenChoixAppli.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FenClasseMetho.resx">
       <DependentUpon>FenClasseMetho.cs</DependentUpon>
@@ -191,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FenGestProfession.resx">
       <DependentUpon>FenGestProfession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FenGestProfil.resx">
+      <DependentUpon>FenGestProfil.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FenGestVersement.resx">
       <DependentUpon>FenGestVersement.cs</DependentUpon>
@@ -218,7 +295,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Properties\DataSources\FIMECO.Models.CEtatSouscriptClasseMontant.datasource" />
     <None Include="Properties\DataSources\FIMECO.Models.CEtatSouscriptMembre.datasource" />
+    <None Include="Properties\DataSources\FIMECO.Models.CEtatSouscriptVersement.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -246,6 +325,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="FIM_JOURDAIN-ConvertImage.ico" />
     <Content Include="Images\RougeTrN.png" />
     <Content Include="Images\VertTrN.png" />
   </ItemGroup>

@@ -57,15 +57,43 @@ namespace FIMECO
         //Liste des classes métho
         private List<CClasseMetho> ListeClasseMetho = new List<CClasseMetho>();
 
+        //Liste des users
+        private List<CUser> ListeUser = new List<CUser>();
+
         private readonly CAlias daoMain = new CAlias();
 
         private readonly DAOFimeco daoReport = new DAOFimeco();
 
-        public MainForm()
+        private List<CUserProfilData> myListeUserProfil;
+        private int myIdLoginUser;
+        private string myLoginUser;
+
+        private int myIdTypeAppli;
+
+        public string Appli = "FIMECO";
+
+        //public MainForm()
+        //{
+        //    InitializeComponent();
+
+        //    InitStatut(RepositoryItemImageComboBoxSt);
+        //}
+
+        public MainForm(List<CUserProfilData> LUP, string Log, int IdLog, string CH, bool IsCandidat,int IdTypeAppli)
         {
             InitializeComponent();
-            
+
             InitStatut(RepositoryItemImageComboBoxSt);
+
+            this.myIdLoginUser = IdLog;
+            this.myListeUserProfil = LUP;
+            this.myLoginUser = Log;
+
+            this.ChaineConFimeco = CH;
+
+            this.myIdTypeAppli = IdTypeAppli;
+
+
         }
 
         private void gestionDesClassesMethoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -85,7 +113,7 @@ namespace FIMECO
         {
             try
             {
-                var fen = new FenCotisationAn();
+                var fen = new FenCotisationAn(myIdTypeAppli);
                 fen.ShowDialog();
             }
             catch (Exception ex)
@@ -94,6 +122,8 @@ namespace FIMECO
             }
         }
 
+
+     
         private void sBtnAjouterSouscripteur_Click(object sender, EventArgs e)
         {
             try
@@ -116,7 +146,7 @@ namespace FIMECO
 
                 //var fenAjout = new FenSouscripteur(LRev, ChaineConAITSOFTWARE, IsAjout, null, ListeOPACTU);
                 var fenAjout = new FenSouscripteur(IsAjout, ListeOPACTU, null, ChaineConFimeco, ListeProf);
-
+                fenAjout.Text = "Ajouter un Souscripteur";
                 fenAjout.ShowDialog();
 
                 ReloadGridSouscripteur();
@@ -125,11 +155,14 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "MainForm -> sBtnAjouterSouscripteur_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
 
+
+       
         public void ReloadGridSouscripteur()
         {
             string AnObj = string.Empty;
@@ -138,35 +171,37 @@ namespace FIMECO
                 List<CSouscripteur> ListeOPACTUTMP = new List<CSouscripteur>();
                 // if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
 
-                ListeOPACTUTMP = daoReport.GetAllSouscripteur(ChaineConFimeco, ListeClasseMetho);
 
+                if (ListNomLESouscripteurDE == string.Empty || ListNomLESouscripteurDE == null)
+                {
+                    ListNomLESouscripteurDE = CmbSouscripteurDE.Text;
+                }
+
+                if (ListNomLESouscripteurA == string.Empty || ListNomLESouscripteurA == null)
+                {
+                    ListNomLESouscripteurA = CmbSouscripteurA.Text;
+                }
+                
+                // ListeOPACTUTMP = daoReport.GetAllSouscripteur(ChaineConFimeco, ListeClasseMetho);
+                ListeOPACTUTMP = daoReport.GetAllSouscripteurFILTRE(ChaineConFimeco, ListeClasseMetho, SMulSouscripteur.Checked, chkTousSouscripteur.Checked, ListNomLESouscripteurDE, ListNomLESouscripteurA, ListNomMultiSouscripteurs, ListPrenomMultiSouscripteurs, chkTousClasseMetho.Checked, ListIdClasseMtho, chkTousProfession.Checked, ListIdProfession);
+              
                 //Recupérer tous les arriérés
 
                 AnObj = sNumAnnee.EditValue.ToString();
 
                 List<CArriereSouscripteur> ListeArriereSous = new List<CArriereSouscripteur>();
-
-                if(ListNomLESouscripteurDE==string.Empty || ListNomLESouscripteurDE==null)
-                {
-                    ListNomLESouscripteurDE = CmbSouscripteurDE.Text;
-                }
-                
-                if (ListNomLESouscripteurA == string.Empty || ListNomLESouscripteurA==null)
-                {
-                    ListNomLESouscripteurA= CmbSouscripteurA.Text;
-                }
-                
-                ListeArriereSous = daoReport.GetAllArriereApercu(ChaineConFimeco, AnObj, SMulSouscripteur.Checked, chkTousSouscripteur.Checked, ListNomLESouscripteurDE, ListNomLESouscripteurA, ListNomMultiSouscripteurs,ListPrenomMultiSouscripteurs,chkTousClasseMetho.Checked,ListIdClasseMtho,chkTousProfession.Checked,ListIdProfession);
+               
+                ListeArriereSous = daoReport.GetAllArriereApercu(ChaineConFimeco, AnObj, SMulSouscripteur.Checked, chkTousSouscripteur.Checked, ListNomLESouscripteurDE, ListNomLESouscripteurA, ListNomMultiSouscripteurs,ListPrenomMultiSouscripteurs,chkTousClasseMetho.Checked,ListIdClasseMtho,chkTousProfession.Checked,ListIdProfession,myIdTypeAppli.ToString());
 
                 //Recuperer ceux qui ont des souscriptions Dans l'année (Cotisation annuelle)
 
                 List<CCotisationAnnuelle> ListeCotationAn = new List<CCotisationAnnuelle>();
 
-                ListeCotationAn = daoReport.GetAllCotisationAnnuelleApercu(ChaineConFimeco, ListeOPACTUTMP);
+                ListeCotationAn = daoReport.GetAllCotisationAnnuelleApercu(ChaineConFimeco, ListeOPACTUTMP, myIdTypeAppli.ToString());
 
                 List<CSouscripteur> ListeOPACTU = new List<CSouscripteur>();
                 
-                ListeCotationAn = ListeCotationAn.Where(c => c.mAnnee == Int32.Parse(AnObj)).ToList();
+                ListeCotationAn = ListeCotationAn.Where(c => c.mAnnee == Int32.Parse(AnObj) && c.mIdTypeAppli==myIdTypeAppli).ToList();
 
               ////  var Lartmp= ListeCotationAn.Select(z => z.mIdSouscripteur).Distinct();
               //  var Lartmp = ListeArriereSous.Select(z => z.mIdSouscripteur).Distinct();
@@ -190,7 +225,15 @@ namespace FIMECO
                         //Année en cours
                         long MTantTotalVersementEnCours = 0;
                         long MTantTotalAnneeEnCours = 0;
-                        
+
+                        //Montant Souscrit Année en cours=====================
+
+                        var CotAn = ListeCotationAn.FirstOrDefault(s => s.mIdSouscripteur == item.mId);
+
+                        if(CotAn!=null) item.mMontantSouscritAnnuel = CotAn.mMontantCotisation;
+
+                        //====================================================
+
                         List<CArriereSouscripteur> ListeArriereTMP = new List<CArriereSouscripteur>();
 
                         ListeArriereTMP = ListeArriereSous.Where(c => c.mIdSouscripteur == item.mId && c.mAnnee<Int32.Parse(AnObj)).ToList();
@@ -254,6 +297,8 @@ namespace FIMECO
                                         {
                                             MTantTotalVersementEnCours += 0;
                                             MTantTotalAnneeEnCours = ind.mMontantCotisation;
+                                           
+                                          
                                         }
                                     }
                                 }
@@ -276,6 +321,8 @@ namespace FIMECO
 
                             //reste à payer
                             item.mArriere = MTantTotalAnneeEnCours - item.mMontantVerse;
+
+                            if (MTantTotalAnneeEnCours == 0 && item.mMontantVerse == 0) item.mArriere = item.mMontantSouscritAnnuel;
 
                             if (item.mArriere<=0  && item.mMontantVerse>0)
                             {
@@ -303,73 +350,112 @@ namespace FIMECO
                 }
 
                 
-                gridControlSouscripteur.DataSource = ListeOPACTU;
+                gridControlSouscripteur.DataSource = ListeOPACTU.OrderBy(c=>c.mNom);
                 //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
                 
                 //Afficher les montants
 
-                AfficherMontants();
+                AfficherMontants(ListeOPACTU);
 
             }
             catch (Exception ex)
             {
                 // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "AITSERIAL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                var msg = "MainForm -> ReloadOperation -> TypeErreur: " + ex.Message; ;
+                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var msg = "MainForm -> ReloadGridSouscripteur-> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
 
         }
-        
 
-        public void AfficherMontants()
+      
+        public void AfficherMontants(List<CSouscripteur>LS)
         {
             try
             {
                 //Nbre souscripteurs
-                LibelleNbreSous.Text = gridView1.RowCount.ToString("n0");
+              //  LibelleNbreSous.Text = gridView1.RowCount.ToString("n0");
+                LibelleNbreSous.Text = LS.Count.ToString("n0");
 
-                //Montant Souscrit
-
-                long MontantSouscrit = 0;
-
-                var ListeSouscription = new List<CCotisationAnnuelle>();
-
-                ListeSouscription = daoReport.GetAllCotisationAnnuelleByAnMontant(ChaineConFimeco,sNumAnnee.EditValue.ToString());
-
-                if(ListeSouscription.Count>0)
+                if(LS.Count>0)
                 {
-                    foreach(var elt in ListeSouscription)
+                  
+                    //Montant Souscrit
+
+                    long MontantSouscrit = 0;
+
+                    var ListeSouscriptionTMP = new List<CCotisationAnnuelle>();
+
+                    var ListeSouscription = new List<CCotisationAnnuelle>();
+
+                    ListeSouscriptionTMP = daoReport.GetAllCotisationAnnuelleByAnMontant(ChaineConFimeco, sNumAnnee.EditValue.ToString(),myIdTypeAppli.ToString());
+
+                    foreach(var it in LS)
                     {
-                        MontantSouscrit += elt.mMontantCotisation;
+                        var CCotAn = new CCotisationAnnuelle();
+
+                        CCotAn = ListeSouscriptionTMP.FirstOrDefault(c => c.mIdSouscripteur == it.mId);
+
+                     if(CCotAn!=null)   ListeSouscription.Add(CCotAn);
                     }
+                    
+
+                    if (ListeSouscription.Count > 0)
+                    {
+                        foreach (var elt in ListeSouscription)
+                        {
+                            MontantSouscrit += elt.mMontantCotisation;
+                        }
+                    }
+                   
+                    lblMontantSouscrit.Text = MontantSouscrit.ToString("n0") + " F CFA ";
+
+
+                    //Montant Versé
+
+                    long MontantVerse = 0;
+
+                    var ListeversementTMP = new List<CVersement>();
+                    var Listeversement = new List<CVersement>();
+
+                    ListeversementTMP = daoReport.GetAllVersementApercuMontant(ChaineConFimeco, sNumAnnee.EditValue.ToString(),myIdTypeAppli.ToString());
+
+                    foreach (var it in LS)
+                    {
+                        var LCCotV = new List<CVersement>();
+
+                        LCCotV = ListeversementTMP.Where(c => c.mIdSouscripteur == it.mId && c.mIdTypeAppli==myIdTypeAppli).ToList();
+
+                        if(LCCotV.Count>0)
+                        {
+                            Listeversement.AddRange(LCCotV);
+                        }
+                        
+                    }
+                    
+                    if (Listeversement.Count > 0)
+                    {
+                        foreach (var elt in Listeversement)
+                        {
+                            MontantVerse += elt.mMontantVersement;
+                        }
+                    }
+
+                    lblMontantVerse.Text = MontantVerse.ToString("n0") + " F CFA ";
+                }
+                else
+                {
+                    lblMontantSouscrit.Text = "0 F CFA ";
+
+                    lblMontantVerse.Text = "0 F CFA ";
                 }
 
-                lblMontantSouscrit.Text = MontantSouscrit.ToString("n0")+" F CFA ";
-
-
-                //Montant Versé
-                
-                      long MontantVerse = 0;
-
-                var Listeversement = new List<CVersement>();
-
-                Listeversement = daoReport.GetAllVersementApercuMontant(ChaineConFimeco, sNumAnnee.EditValue.ToString());
-
-                if (Listeversement.Count > 0)
-                {
-                    foreach (var elt in Listeversement)
-                    {
-                        MontantVerse += elt.mMontantVersement;
-                    }
-                }
-
-                lblMontantVerse.Text = MontantVerse.ToString("n0") + " F CFA ";
 
             }
             catch(Exception ex)
             {
-
+                var msg = "MainForm -> AfficherMontants-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
@@ -393,14 +479,15 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Une erreur est survenue! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur est survenue! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 var msg = "MainForm -> InitStatut -> TypeErreur: " + ex.Message; ;
                 CAlias.Log(msg);
             }
         }
 
-        
 
+     
+       
         public void ReloadGridMembreSouscripteur()
         {
             try
@@ -423,13 +510,14 @@ namespace FIMECO
             {
                 // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
                 MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "AITSERIAL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                var msg = "MainForm -> ReloadGridMembreSouscripteur -> TypeErreur: " + ex.Message; ;
+                var msg = "MainForm -> ReloadGridMembreSouscripteur-> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
 
         }
 
 
+   
         public void ReloadGridVersement()
         {
             try
@@ -446,7 +534,7 @@ namespace FIMECO
                     List<CVersement> ListeOPACTU = new List<CVersement>();
                     // if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
 
-                    ListeOPACTU = daoReport.GetAllVersement(ChaineConFimeco,ListeSS);
+                    ListeOPACTU = daoReport.GetAllVersement(ChaineConFimeco,ListeSS,myIdTypeAppli.ToString());
 
                     var IdSous = Int32.Parse(gridView1.GetRowCellValue(gridView1.FocusedRowHandle, "mId").ToString());
 
@@ -464,27 +552,44 @@ namespace FIMECO
             {
                 // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
                 MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "AITSERIAL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                var msg = "MainForm -> ReloadGridVersement -> TypeErreur: " + ex.Message; ;
+                var msg = "MainForm -> ReloadGridVersement-> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
 
         }
 
+
+     
         private void MainForm_Load(object sender, EventArgs e)
         {
             try
             {
-                //Chaine Connexion AITSOFTWARE
-                List<CAlias> ListChaineAIT = new List<CAlias>();
+                ////Chaine Connexion AITSOFTWARE
+                //List<CAlias> ListChaineAIT = new List<CAlias>();
 
-                ListChaineAIT = daoMain.GetAliasFIMECO();
+                //ListChaineAIT = daoMain.GetAliasFIMECO();
 
-                var ChooseAIT = ListChaineAIT.FirstOrDefault(c => c.IsAbidjan == true);
+                //var ChooseAIT = ListChaineAIT.FirstOrDefault(c => c.IsAbidjan == true);
 
-                if (ChooseAIT != null)
-                {
-                    ChaineConFimeco = ChooseAIT.mAliasName;
-                }
+                //if (ChooseAIT != null)
+                //{
+                //    ChaineConFimeco = ChooseAIT.mAliasName;
+                //}
+
+
+                AttributeAcces();
+
+                //Charger Liste Application====================
+
+                FillApplication();
+
+                //Choix de l'application
+                CmbApplication.ItemIndex = myIdTypeAppli-1;
+
+                //Charger Liste des Users===============
+
+                ListeUser = daoReport.getAllUsers(ChaineConFimeco);
+                
 
                 //charger classe metho
 
@@ -518,7 +623,8 @@ namespace FIMECO
 
                 ListeCMetho = daoReport.GetAllClasseMetho(ChaineConFimeco);
                 
-                chkCmbMultSouscripteur.Properties.DataSource = ListeCMetho;
+                chkCmbMultSouscripteur.Properties.DataSource = ListeCMetho.OrderBy(c=>c.mNomClasse);
+             
                 FillMultiCheckComboClasseMetho(chkCmbMultClasseMetho, ListeCMetho);
 
                 //==========Charger combo Profession===========================
@@ -526,8 +632,10 @@ namespace FIMECO
 
                 ListeCProfession = daoReport.GetAllProfession(ChaineConFimeco);
 
-                chkCmbMultiProfession.Properties.DataSource = ListeCProfession;
+                chkCmbMultiProfession.Properties.DataSource = ListeCProfession.OrderBy(c => c.mLibelle); ;
                 FillMultiCheckComboProfession(chkCmbMultiProfession, ListeCProfession);
+
+
 
                 //+++++++++Mettre à jour les Statut Adulte au cas où on a de nouveaux Adultes/enfants++++++++
 
@@ -546,7 +654,7 @@ namespace FIMECO
                             ListeIdSouscripteurEnfant += it.mId + ",";
                         }
 
-                        if ((it.mIsAdulte == "Enfant" || it.mIsAdulte == string.Empty) && age > 18)
+                        if ((it.mIsAdulte == "Enfant" || it.mIsAdulte == "Jeune"|| it.mIsAdulte == string.Empty) && age > 18)
                         {
                             //Mezttre a Adulte
                             ListeIdSouscripteurAdulte += it.mId + ",";
@@ -563,7 +671,7 @@ namespace FIMECO
 
                         if(!ret)
                         {
-                            MessageBox.Show("Une erreur est survenue Lors de la MAJ des souscripteurs! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue Lors de la MAJ des souscripteurs! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }
@@ -578,7 +686,7 @@ namespace FIMECO
 
                         if (!ret)
                         {
-                            MessageBox.Show("Une erreur est survenue Lors de la MAJ des souscripteurs! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue Lors de la MAJ des souscripteurs! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     
@@ -621,7 +729,7 @@ namespace FIMECO
 
                         if (!ret)
                         {
-                            MessageBox.Show("Une erreur est survenue Lors de la MAJ des Membres souscripteurs! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue Lors de la MAJ des Membres souscripteurs! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }
@@ -636,7 +744,7 @@ namespace FIMECO
 
                         if (!ret)
                         {
-                            MessageBox.Show("Une erreur est survenue Lors de la MAJ des Membres souscripteurs! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue Lors de la MAJ des Membres souscripteurs! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
 
@@ -645,7 +753,8 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "MainForm -> MainForm_Load-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
@@ -726,7 +835,7 @@ namespace FIMECO
             catch (Exception ex)
             {
               //  if (splashScreenManager2.IsSplashFormVisible) splashScreenManager2.CloseWaitForm();
-                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 var msg = "MainForm ->FillMultiCheckComboSouscripteur -> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
@@ -774,7 +883,7 @@ namespace FIMECO
             catch (Exception ex)
             {
                 //  if (splashScreenManager2.IsSplashFormVisible) splashScreenManager2.CloseWaitForm();
-                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 var msg = "MainForm ->FillMultiCheckComboSouscripteur -> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
@@ -821,7 +930,7 @@ namespace FIMECO
             catch (Exception ex)
             {
                 //  if (splashScreenManager2.IsSplashFormVisible) splashScreenManager2.CloseWaitForm();
-                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 var msg = "MainForm ->FillMultiCheckComboSouscripteur -> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
@@ -830,7 +939,7 @@ namespace FIMECO
         }
 
 
-
+       
         private void sBtnModifierSouscripteur_Click(object sender, EventArgs e)
         {
             try
@@ -859,7 +968,7 @@ namespace FIMECO
                     ListeProf = daoReport.GetAllProfession(ChaineConFimeco);
 
                     var fenAjout = new FenSouscripteur(IsAjout, ListeOPACTU, ClientOp, ChaineConFimeco, ListeProf);
-
+                    fenAjout.Text = "Modifier un Souscripteur";
                     fenAjout.ShowDialog();
 
                     ReloadGridSouscripteur();
@@ -868,14 +977,15 @@ namespace FIMECO
                 else
                 {
                     //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                    MessageBox.Show("Veuillez sélectionner un élément à modifier!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Veuillez sélectionner un élément à modifier!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
 
             }
             catch (Exception ex)
             {
-
+                var msg = "MainForm -> sBtnModifierSouscripteur_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
@@ -892,6 +1002,8 @@ namespace FIMECO
             }
         }
 
+
+       
         private void sBtnSupprimerSouscripteur_Click(object sender, EventArgs e)
         {
             bool res = false;
@@ -911,7 +1023,7 @@ namespace FIMECO
 
                     if (Identif > 0)
                     {
-                        var rep = MessageBox.Show("Voulez-vous supprimer le souscripteur " + nomSous + " " + prenomSous + " selectionné ?" + Environment.NewLine + " Attention,cela entraînera la suppression de tous les membres associés et des versements!", "FIMECO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        var rep = MessageBox.Show("Voulez-vous supprimer le souscripteur " + nomSous + " " + prenomSous + " selectionné ?" + Environment.NewLine + " Attention,cela entraînera la suppression de tous les membres associés et des versements!", Appli, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                         if (rep == DialogResult.Yes)
                         {
@@ -995,7 +1107,7 @@ namespace FIMECO
 
                                             LSSouscrip = daoReport.GetAllSouscripteur(ChaineConFimeco);
 
-                                            LCotSouscripteur = daoReport.GetAllCotisationAnnuelle(ChaineConFimeco, LSSouscrip);
+                                            LCotSouscripteur = daoReport.GetAllCotisationAnnuelle(ChaineConFimeco, LSSouscrip,myIdTypeAppli.ToString());
 
                                             LtempCot = LCotSouscripteur.Where(c => c.mIdSouscripteur == Identif).ToList();
 
@@ -1029,7 +1141,7 @@ namespace FIMECO
                                                     if (res)
                                                     {
                                                         //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                                        MessageBox.Show("Souscripteur supprimé avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                                        MessageBox.Show("Souscripteur supprimé avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                                         ReloadGridSouscripteur();
                                                         gridControlMembre.DataSource = null;
@@ -1038,13 +1150,13 @@ namespace FIMECO
                                                     else
                                                     {
                                                         // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                                        MessageBox.Show("Une erreur est survenue lors de la suppression du souscripteur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                        MessageBox.Show("Une erreur est survenue lors de la suppression du souscripteur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    MessageBox.Show("Une erreur est survenue lors de la suppression des cotisations annuelles!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                    MessageBox.Show("Une erreur est survenue lors de la suppression des cotisations annuelles!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                                 }
 
@@ -1055,7 +1167,7 @@ namespace FIMECO
                                         {
                                             //Erreur de suppression numserie
                                             //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                            MessageBox.Show("Une erreur est survenue lors de la suppression des versements du souscripteur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            MessageBox.Show("Une erreur est survenue lors de la suppression des versements du souscripteur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                         }
 
@@ -1070,7 +1182,7 @@ namespace FIMECO
                                     if (res)
                                     {
                                         //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                        MessageBox.Show("Souscripteur supprimé avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        MessageBox.Show("Souscripteur supprimé avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                         ReloadGridSouscripteur();
                                         gridControlMembre.DataSource = null;
@@ -1079,7 +1191,7 @@ namespace FIMECO
                                     else
                                     {
                                         // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                        MessageBox.Show("Une erreur est survenue lors de la suppression de l'opération!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show("Une erreur est survenue lors de la suppression de l'opération!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                     }
                                 }
@@ -1090,7 +1202,7 @@ namespace FIMECO
                         else
                         {
                             //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                            MessageBox.Show("Veuillez sélectionner un élément à supprimer!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Veuillez sélectionner un élément à supprimer!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
                     }
@@ -1100,8 +1212,8 @@ namespace FIMECO
             catch (Exception ex)
             {
                 //if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                var msg = "MainForm -> sBtnSupprimerOperation_Click -> TypeErreur: " + ex.Message; ;
+                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var msg = "MainForm -> sBtnSupprimerSouscripteur_Click-> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
 
@@ -1134,6 +1246,9 @@ namespace FIMECO
         
         }
 
+
+
+    
         private void sBtnAjouterMembre_Click(object sender, EventArgs e)
         {
             try
@@ -1170,10 +1285,13 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "MainForm -> sBtnAjouterMembre_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+  
         private void sBtnAjouterVersement_Click(object sender, EventArgs e)
         {
             try
@@ -1186,7 +1304,7 @@ namespace FIMECO
 
                 if(MtantVerse==0 && ResteApayer==0)
                 {
-                    MessageBox.Show("Veuillez définir la cotisation annuelle pour ce souscripteur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Veuillez définir la cotisation annuelle pour ce souscripteur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -1207,7 +1325,7 @@ namespace FIMECO
                 List<CVersement> ListeVersement = new List<CVersement>();
 
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
-                ListeVersement = daoReport.GetAllVersement(ChaineConFimeco,ListeSS);
+                ListeVersement = daoReport.GetAllVersement(ChaineConFimeco,ListeSS,myIdTypeAppli.ToString());
 
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
 
@@ -1219,10 +1337,10 @@ namespace FIMECO
                 List<CCotisationAnnuelle> ListeCotisation = new List<CCotisationAnnuelle>();
 
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
-                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFimeco, ListeSS);
-                
+                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFimeco, ListeSS,myIdTypeAppli.ToString());
+               
                 //var fenAjout = new FenSouscripteur(LRev, ChaineConAITSOFTWARE, IsAjout, null, ListeOPACTU);
-                var fenAjout = new FenGestVersement(IsAjoutVersement, ListeVersement, null, ChaineConFimeco, Identif, ListeSS,false, ListeCotisation);
+                var fenAjout = new FenGestVersement(IsAjoutVersement, ListeVersement, null, ChaineConFimeco, Identif, ListeSS,false, ListeCotisation,ListeUser, myIdLoginUser,myIdTypeAppli);
                
                 fenAjout.ShowDialog();
 
@@ -1233,10 +1351,13 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "MainForm -> sBtnAjouterVersement_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+  
         private void sBtnModifierMembre_Click(object sender, EventArgs e)
         {
             try
@@ -1279,10 +1400,13 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "MainForm -> sBtnModifierMembre_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+     
         private void gridControlSouscripteur_Click(object sender, EventArgs e)
         {
             List<CMembreSouscripteur> ListNum = new List<CMembreSouscripteur>();
@@ -1314,14 +1438,14 @@ namespace FIMECO
 
                         //Versement(Tenir compte aussi de l'année objectif)
 
-                        var ListeV = daoReport.GetAllVersement(ChaineConFimeco, ListeSS);
+                        var ListeV = daoReport.GetAllVersement(ChaineConFimeco, ListeSS,myIdTypeAppli.ToString());
 
                         ListVers = ListeV.Where(c => c.mIdSouscripteur == Identif && c.mDateVersement.Year==Int32.Parse(sNumAnnee.EditValue.ToString())).ToList();
 
                         List<CVersement> Lvide = new List<CVersement>();
 
                         gridControlVersement.DataSource = Lvide;
-                        gridControlVersement.DataSource = ListVers;
+                        gridControlVersement.DataSource = ListVers.OrderByDescending(c=>c.mDateVersement);
                     }
                 }
 
@@ -1330,11 +1454,13 @@ namespace FIMECO
             {
                // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
                 MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "AITSERIAL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                var msg = "MainForm -> gridControlClientSerial_Click -> TypeErreur: " + ex.Message; ;
+                var msg = "MainForm -> gridControlSouscripteur_Click-> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
         }
 
+
+  
         private void sBtnModifierVersement_Click(object sender, EventArgs e)
         {
             try
@@ -1359,7 +1485,7 @@ namespace FIMECO
                 List<CVersement> ListeOPACTU = new List<CVersement>();
 
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
-                ListeOPACTU = daoReport.GetAllVersement(ChaineConFimeco, ListeSS);
+                ListeOPACTU = daoReport.GetAllVersement(ChaineConFimeco, ListeSS,myIdTypeAppli.ToString());
                 // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
 
                 var CToModif = ListeOPACTU.FirstOrDefault(c => c.mId == IdModif);
@@ -1369,12 +1495,10 @@ namespace FIMECO
                 List<CCotisationAnnuelle> ListeCotisation = new List<CCotisationAnnuelle>();
 
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
-                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFimeco, ListeSS);
-
-
-
+                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFimeco, ListeSS,myIdTypeAppli.ToString());
+                
                 //var fenAjout = new FenSouscripteur(LRev, ChaineConAITSOFTWARE, IsAjout, null, ListeOPACTU);
-                var fenAjout = new FenGestVersement(IsAjoutVersement, ListeOPACTU, CToModif, ChaineConFimeco, Identif, ListeSS,false, ListeCotisation);
+                var fenAjout = new FenGestVersement(IsAjoutVersement, ListeOPACTU, CToModif, ChaineConFimeco, Identif, ListeSS,false, ListeCotisation, ListeUser, myIdLoginUser,myIdTypeAppli);
 
                 fenAjout.ShowDialog();
 
@@ -1385,10 +1509,13 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "MainForm -> sBtnModifierVersement_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+    
         private void sBtnDeleteVersement_Click(object sender, EventArgs e)
         {
             bool res = false;
@@ -1401,7 +1528,7 @@ namespace FIMECO
 
                     if (Identif > 0)
                     {
-                        var rep = MessageBox.Show("Voulez-vous supprimer le versement selectionné ?", "FIMECO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        var rep = MessageBox.Show("Voulez-vous supprimer le versement selectionné ?", Appli, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                         if (rep == DialogResult.Yes)
                         {
@@ -1409,8 +1536,28 @@ namespace FIMECO
 
                             if (res)
                             {
+                                #region Tracabilité
+
+                                CTracabilite Ct = new CTracabilite();
+
+                                string content = "Id du Versement: " + Identif.ToString();
+
+                                Ct.mContenu = content;
+
+                                Ct.mTypeOperation = "Suppression_Versement";
+                                Ct.mDateAction = DateTime.Now;
+                                Ct.mMachineAction = Environment.UserDomainName + "\\" + Environment.UserName;
+
+                                bool ret = false;
+
+                                ret = daoReport.AddTrace(Ct, ChaineConFimeco);
+
+
+                                #endregion
+
+
                                 //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                MessageBox.Show("Versement supprimé avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Versement supprimé avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                 ReloadGridVersement();
 
@@ -1420,7 +1567,7 @@ namespace FIMECO
                             else
                             {
                                 //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                MessageBox.Show("Une erreur est survenue lors de la suppression du Numéro de serie!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Une erreur est survenue lors de la suppression du Numéro de serie!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
 
@@ -1433,11 +1580,12 @@ namespace FIMECO
             catch (Exception ex)
             {
                // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                var msg = "MainForm -> sBtnDelete_Click -> TypeErreur: " + ex.Message; ;
+                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var msg = "MainForm -> sBtnDeleteVersement_Click-> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
         }
+
 
         private void sBtnDeleteMembre_Click(object sender, EventArgs e)
         {
@@ -1453,7 +1601,7 @@ namespace FIMECO
                     
                     if (Identif > 0)
                     {
-                        var rep = MessageBox.Show("Voulez-vous supprimer le membre " + nom + " " + prenoms + " selectionné ?", "FIMECO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        var rep = MessageBox.Show("Voulez-vous supprimer le membre " + nom + " " + prenoms + " selectionné ?", Appli, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                         if (rep == DialogResult.Yes)
                         {
@@ -1462,14 +1610,14 @@ namespace FIMECO
                             if (res)
                             {
                                 //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                MessageBox.Show("Membre supprimé avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Membre supprimé avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                 ReloadGridMembreSouscripteur();
                             }
                             else
                             {
                                 //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                                MessageBox.Show("Une erreur est survenue lors de la suppression du Membre!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Une erreur est survenue lors de la suppression du Membre!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
 
@@ -1483,10 +1631,11 @@ namespace FIMECO
                 catch (Exception ex)
                 {
                     // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                    MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    var msg = "MainForm -> sBtnDelete_Click -> TypeErreur: " + ex.Message; ;
-                    CAlias.Log(msg);
-                }
+                    MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                var msg = "MainForm -> sBtnDeleteMembre_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+            }
             }
 
         private void gestionDesProfessionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1508,7 +1657,7 @@ namespace FIMECO
         {
             try
             {
-                var fen = new FenVersement();
+                var fen = new FenVersement(ListeUser,myIdLoginUser,myIdTypeAppli);
                 fen.ShowDialog();
                 
             }
@@ -1528,6 +1677,12 @@ namespace FIMECO
                 gridControlMembre.DataSource = Lempty;
                 gridControlSouscripteur.DataSource = Lempty;
                 gridControlVersement.DataSource = Lempty;
+
+                LibelleNbreSous.Text = "0";
+
+                lblMontantSouscrit.Text = "0 F CFA ";
+
+                lblMontantVerse.Text = "0 F CFA ";
             }
             catch(Exception ex)
             {
@@ -1587,7 +1742,6 @@ namespace FIMECO
                     lblRevA.Visible = false;
                     lblRevDe.Visible = false;
         
-
                 }
                 else
                 {
@@ -1612,6 +1766,9 @@ namespace FIMECO
             }
         }
 
+
+
+      
         private void chkCmbMultSouscripteur_Closed(object sender, ClosedEventArgs e)
         {
             try
@@ -1669,7 +1826,7 @@ namespace FIMECO
              //   if (splashScreenManager2.IsSplashFormVisible) splashScreenManager2.CloseWaitForm();
                 MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FORECASTCOM", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                var msg = "MainForm -> chkCmbMultCom_Closed -> TypeErreur: " + ex.Message; ;
+                var msg = "MainForm -> chkCmbMultSouscripteur_Closed-> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
         }
@@ -1770,6 +1927,8 @@ namespace FIMECO
 
                 if (ListIdClasseMtho.Length > 0) ListIdClasseMtho = ListIdClasseMtho.Substring(0, ListIdClasseMtho.Length - 1);
 
+                CleanGrid();
+
             }
             catch(Exception ex)
             {
@@ -1800,6 +1959,7 @@ namespace FIMECO
                 
                 if (ListIdProfession.Length > 0) ListIdProfession = ListIdProfession.Substring(0, ListIdProfession.Length - 1);
 
+                CleanGrid();
             }
             catch (Exception ex)
             {
@@ -1807,6 +1967,8 @@ namespace FIMECO
             }
         }
 
+
+     
         private void sBtnImprimer_Click(object sender, EventArgs e)
         {
             try
@@ -1815,13 +1977,40 @@ namespace FIMECO
 
                 List<CEtatSouscriptMembre> ListeEtatSousMembre = new List<CEtatSouscriptMembre>();
 
+                if (ListNomLESouscripteurDE == string.Empty || ListNomLESouscripteurDE == null)
+                {
+                    ListNomLESouscripteurDE = CmbSouscripteurDE.Text;
+                }
+
+                if (ListNomLESouscripteurA == string.Empty || ListNomLESouscripteurA == null)
+                {
+                    ListNomLESouscripteurA = CmbSouscripteurA.Text;
+                }
+
+                #region Filtre
+
+                var Filtre = new CFiltre();
+
+                Filtre.mSouscripteurA = CmbSouscripteurA.Text;
+
+                Filtre.mSouscripteurDE= CmbSouscripteurDE.Text;
+
+                Filtre.mTousSouscripteurs = chkTousSouscripteur.Checked;
+
+                Filtre.mListeClasseMetho = chkCmbMultClasseMetho.Text;
+                Filtre.mTousClasseMetho = chkTousClasseMetho.Checked;
+
+                Filtre.mListeProfession = chkCmbMultiProfession.Text;
+                Filtre.mTousProfession = chkTousProfession.Checked;
+                
+                #endregion
+
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
-                ListeEtatSousMembre = daoReport.GetEtatSouscripteurMembre(ChaineConFimeco);
+                ListeEtatSousMembre = daoReport.GetEtatSouscripteurMembre(ChaineConFimeco, SMulSouscripteur.Checked, chkTousSouscripteur.Checked, ListNomLESouscripteurDE, ListNomLESouscripteurA, ListNomMultiSouscripteurs, ListPrenomMultiSouscripteurs, chkTousClasseMetho.Checked, ListIdClasseMtho, chkTousProfession.Checked, ListIdProfession);
                 
                 if(ListeEtatSousMembre.Count>0)
                 {
-
-                    var FenReport = new XtraReportSousMembre(ListeEtatSousMembre);
+                    var FenReport = new XtraReportSousMembre(ListeEtatSousMembre,Filtre);
 
                     var pt = new ReportPrintTool(FenReport);
                     pt.AutoShowParametersPanel = true;
@@ -1830,15 +2019,17 @@ namespace FIMECO
                     //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
                     pt.ShowPreviewDialog();
                 }
-
-
+                
             }
             catch (Exception ex)
             {
-
+                var msg = "MainForm -> sBtnImprimer_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+   
         private void sBtnExportExcel_Click(object sender, EventArgs e)
         {
             try
@@ -1867,11 +2058,13 @@ namespace FIMECO
                 //if (splashScreenManager2.IsSplashFormVisible) splashScreenManager2.CloseWaitForm();
                 MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "AITSTOCK", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                var msg = "MainForm ->simpleButton2_Click -> TypeErreur: " + ex.Message;
+                var msg = "MainForm -> sBtnExportExcel_Click-> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
         }
 
+
+      
         private void sBtnExcelVersement_Click(object sender, EventArgs e)
         {
             if (gridView2.RowCount > 0)//On a des numéros de series associés à la facture
@@ -1971,11 +2164,387 @@ namespace FIMECO
                 {
                 //aucun numero de serie associé donc pas besoin de creer un excel
              //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                MessageBox.Show("Votre grille est vide!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Votre grille est vide!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
               }
         }
 
+        private void sNumAnnee_EditValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                CleanGrid();
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+
+   
+        private void sBtnEtatSouscVersement_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Ramener liste des souscripteurs et leur versement
+
+                List<CEtatSouscriptVersement> ListeEtatMembreVersement = new List<CEtatSouscriptVersement>();
+
+                //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
+
+
+                #region Filtre
+
+                var Filtre = new CFiltre();
+
+                Filtre.mSouscripteurA = CmbSouscripteurA.Text;
+
+                Filtre.mSouscripteurDE = CmbSouscripteurDE.Text;
+
+                Filtre.mTousSouscripteurs = chkTousSouscripteur.Checked;
+
+                Filtre.mListeClasseMetho = chkCmbMultClasseMetho.Text;
+                Filtre.mTousClasseMetho = chkTousClasseMetho.Checked;
+
+                Filtre.mListeProfession = chkCmbMultiProfession.Text;
+                Filtre.mTousProfession = chkTousProfession.Checked;
+
+                #endregion
+
+
+                string AnObjectif = sNumAnnee.EditValue.ToString();
+
+                if (ListNomLESouscripteurDE == string.Empty || ListNomLESouscripteurDE == null)
+                {
+                    ListNomLESouscripteurDE = CmbSouscripteurDE.Text;
+                }
+
+                if (ListNomLESouscripteurA == string.Empty || ListNomLESouscripteurA == null)
+                {
+                    ListNomLESouscripteurA = CmbSouscripteurA.Text;
+                }
+                
+
+                ListeEtatMembreVersement = daoReport.GetEtatSouscripteurVersement(ChaineConFimeco, AnObjectif, SMulSouscripteur.Checked, chkTousSouscripteur.Checked, ListNomLESouscripteurDE, ListNomLESouscripteurA, ListNomMultiSouscripteurs, ListPrenomMultiSouscripteurs, chkTousClasseMetho.Checked, ListIdClasseMtho, chkTousProfession.Checked, ListIdProfession,myIdTypeAppli.ToString());
+
+                if (ListeEtatMembreVersement.Count > 0)
+                {
+                    var FenReport = new XtraReportSouscripteurVersement(ListeEtatMembreVersement, AnObjectif,Filtre,myIdTypeAppli);
+
+                    var pt = new ReportPrintTool(FenReport);
+                    pt.AutoShowParametersPanel = true;
+
+                    pt.PreviewForm.PrintControl.ShowPageMargins = false;
+                    //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
+                    pt.ShowPreviewDialog();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                var msg = "MainForm -> sBtnEtatSouscVersement_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+            }
+        }
+
+
+    
+        private void sBtnEtatSouscVersementDetails_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Ramener liste des souscripteurs et leur versement
+
+                List<CEtatSouscriptVersement> ListeEtatMembreVersement = new List<CEtatSouscriptVersement>();
+
+                //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
+
+                string AnObjectif = sNumAnnee.EditValue.ToString();
+
+                if (ListNomLESouscripteurDE == string.Empty || ListNomLESouscripteurDE == null)
+                {
+                    ListNomLESouscripteurDE = CmbSouscripteurDE.Text;
+                }
+
+                if (ListNomLESouscripteurA == string.Empty || ListNomLESouscripteurA == null)
+                {
+                    ListNomLESouscripteurA = CmbSouscripteurA.Text;
+                }
+
+
+                #region Filtre
+
+                var Filtre = new CFiltre();
+
+                Filtre.mSouscripteurA = CmbSouscripteurA.Text;
+
+                Filtre.mSouscripteurDE = CmbSouscripteurDE.Text;
+
+                Filtre.mTousSouscripteurs = chkTousSouscripteur.Checked;
+
+                Filtre.mListeClasseMetho = chkCmbMultClasseMetho.Text;
+                Filtre.mTousClasseMetho = chkTousClasseMetho.Checked;
+
+                Filtre.mListeProfession = chkCmbMultiProfession.Text;
+                Filtre.mTousProfession = chkTousProfession.Checked;
+
+                #endregion
+
+                
+                ListeEtatMembreVersement = daoReport.GetEtatSouscripteurVersementDetails(ChaineConFimeco, AnObjectif, SMulSouscripteur.Checked, chkTousSouscripteur.Checked, ListNomLESouscripteurDE, ListNomLESouscripteurA, ListNomMultiSouscripteurs, ListPrenomMultiSouscripteurs, chkTousClasseMetho.Checked, ListIdClasseMtho, chkTousProfession.Checked, ListIdProfession,myIdTypeAppli.ToString());
+
+                if (ListeEtatMembreVersement.Count > 0)
+                {
+                    var FenReport = new XtraReportVersementDetails(ListeEtatMembreVersement,Filtre,myIdTypeAppli);
+
+                    var pt = new ReportPrintTool(FenReport);
+                    pt.AutoShowParametersPanel = true;
+
+                    pt.PreviewForm.PrintControl.ShowPageMargins = false;
+                    //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
+                    pt.ShowPreviewDialog();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                var msg = "MainForm -> sBtnEtatSouscVersementDetails_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+            }
+        }
+
+
+        public void AttributeAcces()
+        {
+            try
+            {
+                //Cas où on a pas spécifié des droits
+
+                var trouveNODROITS = myListeUserProfil.Exists(c => c.mIdProfil == 0);
+
+                if(trouveNODROITS)
+                {
+                    MessageBox.Show("Aucun droit n'a été trouvé pour cet utilisateur!" + Environment.NewLine + "Veuillez contacter votre Administrateur!"+Environment.NewLine+"Le Logiciel va se fermer!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
+                    Application.Exit();
+                }
+
+
+                //SA==1 donc on ne met aucune restriction
+
+                var trouveSA = myListeUserProfil.Exists(c => c.mIdProfil == 1);
+
+                if(trouveSA)
+                {
+
+                }
+                else
+                {
+                    //Utilisateur
+                    var trouveUtilisateur = myListeUserProfil.Exists(c => c.mIdProfil == 2);
+
+                    if (trouveUtilisateur)
+                    {
+                        gestionProfilsToolStripMenuItem.Visible = false;
+                    }
+                    else
+                    {
+                        //Consultant
+                        var trouveConsultant = myListeUserProfil.Exists(c => c.mIdProfil == 3);
+
+                        if (trouveConsultant)
+                        {
+                            gestionProfilsToolStripMenuItem.Visible = false;
+
+                            menuToolStripMenuItem.Visible = false;
+                            
+                           //SOUSCRIPTEUR++++++++++++++++++++++++++++++
+                            sBtnAjouterSouscripteur.Visible = false;
+                            sBtnModifierSouscripteur.Visible = false;
+                            sBtnSupprimerSouscripteur.Visible = false;
+
+                            //MEMBRE+++++++++++++++++++++++++++++++++++
+                            sBtnAjouterMembre.Visible = false;
+                            sBtnModifierMembre.Visible = false;
+                            sBtnDeleteMembre.Visible = false;
+
+                            //VERSEMENT+++++++++++++++++++++++++++++++++++
+                            sBtnAjouterVersement.Visible = false;
+                            sBtnModifierVersement.Visible = false;
+                            sBtnDeleteVersement.Visible = false;
+
+                        }
+                       
+
+                    }
+                }
+
+               
+
+            }
+            catch (Exception ex)
+            {
+                var msg = "MainForm -> AttributeAcces-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+            }
+        }
+
+
+        public void FillApplication()
+        {
+            try
+            {
+                var ListeAppli = new List<CApplication>();
+
+                var C1 = new CApplication();
+
+                C1.mId = 1;
+                C1.mApplication = "FIMECO";
+
+                var C2 = new CApplication();
+
+                C2.mId = 2;
+                C2.mApplication = "MOISSON";
+
+                ListeAppli.Add(C1);
+                ListeAppli.Add(C2);
+
+                CmbApplication.Properties.DataSource = ListeAppli;
+
+                CmbApplication.Properties.DisplayMember = "mApplication";
+                
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+        }
+
+
+
      
+        private void sBtnSousMembreMtant_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Ramener liste des souscripteurs
+
+                List<CEtatSouscriptClasseMontant> ListeEtatSousMembre = new List<CEtatSouscriptClasseMontant>();
+
+                if (ListNomLESouscripteurDE == string.Empty || ListNomLESouscripteurDE == null)
+                {
+                    ListNomLESouscripteurDE = CmbSouscripteurDE.Text;
+                }
+
+                if (ListNomLESouscripteurA == string.Empty || ListNomLESouscripteurA == null)
+                {
+                    ListNomLESouscripteurA = CmbSouscripteurA.Text;
+                }
+
+                string AnObjectif = sNumAnnee.EditValue.ToString();
+
+                #region Filtre
+
+                var Filtre = new CFiltre();
+
+                Filtre.mSouscripteurA = CmbSouscripteurA.Text;
+
+                Filtre.mSouscripteurDE = CmbSouscripteurDE.Text;
+
+                Filtre.mTousSouscripteurs = chkTousSouscripteur.Checked;
+
+                Filtre.mListeClasseMetho = chkCmbMultClasseMetho.Text;
+                Filtre.mTousClasseMetho = chkTousClasseMetho.Checked;
+
+                Filtre.mListeProfession = chkCmbMultiProfession.Text;
+                Filtre.mTousProfession = chkTousProfession.Checked;
+
+                #endregion
+
+                //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
+                ListeEtatSousMembre = daoReport.GetEtatSouscripteurMembreClasseVersement(ChaineConFimeco, AnObjectif, SMulSouscripteur.Checked, chkTousSouscripteur.Checked, ListNomLESouscripteurDE, ListNomLESouscripteurA, ListNomMultiSouscripteurs, ListPrenomMultiSouscripteurs, chkTousClasseMetho.Checked, ListIdClasseMtho, chkTousProfession.Checked, ListIdProfession,myIdTypeAppli.ToString());
+
+                var ListeVersement = daoReport.GetAllVersementSHORT(ChaineConFimeco, AnObjectif,myIdTypeAppli.ToString());
+                
+
+                var ListeIdClaseMetho = ListeEtatSousMembre.Select(z => z.mIdClasseMetho).Distinct();
+
+                long MontantVersementTotalClasse = 0;
+
+                foreach(var f in ListeIdClaseMetho)
+                {
+                    MontantVersementTotalClasse = 0;
+
+                    var ListeVersClasseMetho = ListeVersement.Where(x => x.mIdClasseMetho == f).ToList();
+
+                    foreach(var element in ListeVersClasseMetho)
+                    {
+                        MontantVersementTotalClasse += element.mMontantVersement;
+                    }
+
+
+                    foreach(var gg in ListeEtatSousMembre)
+                    {
+                        if (gg.mIdClasseMetho == f) gg.mMontantTotalVerse = MontantVersementTotalClasse;
+                    }
+
+                }
+
+
+
+                if (ListeEtatSousMembre.Count > 0)
+                {
+                    var FenReport = new XtraReportSousMembreVersement(ListeEtatSousMembre, Filtre,myIdTypeAppli);
+
+                    var pt = new ReportPrintTool(FenReport);
+                    pt.AutoShowParametersPanel = true;
+
+                    pt.PreviewForm.PrintControl.ShowPageMargins = false;
+                    //  if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
+                    pt.ShowPreviewDialog();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var msg = "MainForm -> sBtnSousMembreMtant_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+            }
+        }
+
+        private void gestionProfilsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var FenGestP = new FenGestProfil(ChaineConFimeco);
+
+               // FenGestP.MdiParent = this;
+
+                FenGestP.Show();
+
+            }
+            catch (Exception ex)
+            {
+                var msg = "MainForm -> gestionProfilsToolStripMenuItem_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                var msg = "MainForm -> MainForm_FormClosing-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
+            }
+        }
     }
 }

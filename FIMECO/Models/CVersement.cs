@@ -23,6 +23,9 @@ namespace FIMECO.Models
         public DateTime mDateLastModif { get; set; }
 
         public int mIsDelete { get; set; }
+        public int mIdReceveur { get; set; }
+
+        public int mIdTypeAppli { get; set; }
 
 
         public CVersement()
@@ -39,6 +42,9 @@ namespace FIMECO.Models
             mDateVersement = new DateTime();
 
             mIsDelete = 0;
+            mIdReceveur = 0;
+
+            mIdTypeAppli = 0;
 
         }
 

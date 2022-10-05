@@ -19,6 +19,9 @@ namespace FIMECO.Models
         public DateTime mDateCreation { get; set; }
         public DateTime mDateLastModif { get; set; }
 
+        public int mIdTypeAppli { get; set; }
+
+
         public int mIsDelete { get; set; }
 
         public CCotisationAnnuelle()
@@ -35,6 +38,8 @@ namespace FIMECO.Models
             mDateLastModif = new DateTime();
 
             mIsDelete = 0;
+
+            mIdTypeAppli = 0;
         }
 
     }

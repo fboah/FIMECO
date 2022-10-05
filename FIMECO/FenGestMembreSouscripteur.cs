@@ -1,5 +1,6 @@
 ﻿using FIMECO.DAOFIMECO;
 using FIMECO.Models;
+using FIMECO.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,11 +24,14 @@ namespace FIMECO
         private List<CProfession> myObjectListeProfession;
         private int myObjectIdSouscripteur;
 
+        private string Appli = "FIMECO";
+
         public FenGestMembreSouscripteur()
         {
             InitializeComponent();
         }
 
+    
         public FenGestMembreSouscripteur(bool IsAjout, List<CMembreSouscripteur> ListeMembreSouscripteur, CMembreSouscripteur CSous, string chainefimeco,int IdSouscripteur,List<CSouscripteur>ListeChefFamille, List<CProfession> ListeProfession)
         {
             InitializeComponent();
@@ -41,6 +45,8 @@ namespace FIMECO
             this.myObjectListeProfession = ListeProfession;
         }
 
+
+      
         private void sBtnEnregistrer_Click(object sender, EventArgs e)
         {
             bool res = false;
@@ -48,7 +54,7 @@ namespace FIMECO
             {
                 if(txtNom.Text.Trim()==string.Empty || txtPrenoms.Text == string.Empty)
                 {
-                    MessageBox.Show("Veuillez renseigner un nom et un prénom!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Veuillez renseigner un nom et un prénom!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     return;
                 }
@@ -86,12 +92,12 @@ namespace FIMECO
 
                         if (res)
                         {
-                            MessageBox.Show("Membre créé avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Membre créé avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Close();
                         }
                         else
                         {
-                            MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
                     }
@@ -99,7 +105,7 @@ namespace FIMECO
                     {
                         //Objet déjà existant
 
-                        MessageBox.Show("Ce Membre existe déjà ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Ce Membre existe déjà ! Veuillez vérifier vos données", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     }
 
@@ -139,12 +145,12 @@ namespace FIMECO
 
                             if (res)
                             {
-                                MessageBox.Show("Membre  modifié avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Membre  modifié avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Close();
                             }
                             else
                             {
-                                MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Une erreur est survenue!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
                         }
@@ -152,7 +158,7 @@ namespace FIMECO
                         {
                             //Objet déjà existant
 
-                            MessageBox.Show("Ce Membre existe déjà ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Ce Membre existe déjà ! Veuillez vérifier vos données", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         }
 
@@ -161,7 +167,8 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenGestMembreSouscripteur -> sBtnEnregistrer_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
@@ -177,13 +184,22 @@ namespace FIMECO
 
                     var age = nbrejrs.Days / 365;
 
-                    if (age >= 18)
-                    {
-                        ret = "Adulte";
-                    }
-                    else
+                    //Enfant 0 a 14
+                    if (age >= 0 && age<=14)
                     {
                         ret = "Enfant";
+                    }
+
+                    //Jeunes 
+                    if (age >= 15 && age<=18 )
+                    {
+                        ret = "Jeune";
+                    }
+
+                    //Adulte
+                    if (age > 18)
+                    {
+                        ret = "Adulte";
                     }
 
                     return ret;
@@ -201,7 +217,7 @@ namespace FIMECO
         }
 
 
-
+      
         private void FenGestMembreSouscripteur_Load(object sender, EventArgs e)
         {
             try
@@ -264,7 +280,8 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "FenGestMembreSouscripteur -> FenGestMembreSouscripteur_Load-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 

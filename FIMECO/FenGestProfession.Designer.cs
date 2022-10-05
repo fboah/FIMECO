@@ -82,6 +82,7 @@
             // 
             this.txtLibelle.Location = new System.Drawing.Point(44, 12);
             this.txtLibelle.Name = "txtLibelle";
+            this.txtLibelle.Properties.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtLibelle.Size = new System.Drawing.Size(584, 20);
             this.txtLibelle.StyleController = this.layoutControl1;
             this.txtLibelle.TabIndex = 4;
@@ -134,6 +135,7 @@
             this.Controls.Add(this.layoutControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FenGestProfession";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FenGestProfession";

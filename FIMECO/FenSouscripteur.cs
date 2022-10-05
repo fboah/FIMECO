@@ -1,5 +1,6 @@
 ﻿using FIMECO.DAOFIMECO;
 using FIMECO.Models;
+using FIMECO.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,8 @@ namespace FIMECO
         private CSouscripteur myObjectSouscripteur;
 
         private List<CProfession> myObjectListeProfession;
+
+        public string Appli = "FIMECO";
 
         public FenSouscripteur()
         {
@@ -49,6 +52,8 @@ namespace FIMECO
 
             }
         }
+
+    
 
         private void sBtnEnregistrer_Click(object sender, EventArgs e)
         {
@@ -100,12 +105,12 @@ namespace FIMECO
 
                             if (res)
                             {
-                                MessageBox.Show("Souscripteur créé avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Souscripteur créé avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Close();
                             }
                             else
                             {
-                                MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Une erreur est survenue!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
                         }
@@ -113,7 +118,7 @@ namespace FIMECO
                         {
                             //Objet déjà existant
 
-                            MessageBox.Show("Ce souscripteur existe déjà ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Ce souscripteur existe déjà ! Veuillez vérifier vos données", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         }
 
@@ -166,12 +171,12 @@ namespace FIMECO
 
                                 if (res)
                                 {
-                                    MessageBox.Show("Souscripteur  modifiée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show("Souscripteur  modifiée avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     Close();
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Une erreur est survenue!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                 }
                             }
@@ -179,7 +184,7 @@ namespace FIMECO
                             {
                                 //Objet déjà existant
 
-                                MessageBox.Show("Ce Souscripteur existe déjà ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("Ce Souscripteur existe déjà ! Veuillez vérifier vos données", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                             }
 
@@ -190,7 +195,7 @@ namespace FIMECO
                 {
                     //Renseigner Nom ,prenom ,code ,cellulaire obigatoirement
 
-                    MessageBox.Show("Veuillez renseigner obligatoirement le nom,prenoms ,Identifiant et Cellulaire", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Veuillez renseigner obligatoirement le nom,prenoms ,Identifiant et Cellulaire", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
 
@@ -198,11 +203,14 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "FenSouscripteur -> sBtnEnregistrer_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
 
+
+      
         private string CalculAge(DateTime datenaissance,DateTime Mtn)
         {
             string ret = string.Empty;
@@ -233,10 +241,11 @@ namespace FIMECO
             }
             catch(Exception ex )
             {
+                var msg = "FenSouscripteur -> CalculAge-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
                 return ret;
             }
         }
-
 
 
         private void FenSouscripteur_Load(object sender, EventArgs e)
@@ -313,7 +322,8 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "FenSouscripteur -> FenSouscripteur_Load-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
             
         }

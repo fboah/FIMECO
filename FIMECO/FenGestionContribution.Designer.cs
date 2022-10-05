@@ -99,6 +99,11 @@
             this.sNumMontant.Name = "sNumMontant";
             this.sNumMontant.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.sNumMontant.Properties.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.sNumMontant.Properties.IsFloatValue = false;
             this.sNumMontant.Properties.Mask.EditMask = "N00";
             this.sNumMontant.Size = new System.Drawing.Size(210, 20);
@@ -214,6 +219,7 @@
             this.Controls.Add(this.layoutControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FenGestionContribution";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FenGestContribution";

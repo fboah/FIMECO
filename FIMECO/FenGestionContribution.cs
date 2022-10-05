@@ -21,12 +21,14 @@ namespace FIMECO
         private CCotisationAnnuelle myObjectCot;
         private List<CSouscripteur> myObjectListeChefFamille;
 
+        private int idAppli;
+
         public FenGestionContribution()
         {
             InitializeComponent();
         }
 
-        public FenGestionContribution(bool IsAjout, List<CCotisationAnnuelle> ListeCotisation, CCotisationAnnuelle CCot, string chainefimeco,List<CSouscripteur>ListeSouscripteur)
+        public FenGestionContribution(bool IsAjout, List<CCotisationAnnuelle> ListeCotisation, CCotisationAnnuelle CCot, string chainefimeco,List<CSouscripteur>ListeSouscripteur,int idap)
         {
             InitializeComponent();
 
@@ -35,6 +37,8 @@ namespace FIMECO
             this.myObjectCot = CCot;
             this.myObjectChaineConFimeco = chainefimeco;
             this.myObjectListeChefFamille = ListeSouscripteur;
+
+            this.idAppli = idap;
         }
 
         private void sBtnEnregistrer_Click(object sender, EventArgs e)
@@ -47,7 +51,7 @@ namespace FIMECO
                     if (myObjectAjout && myObjectCot == null)
                     {
                         //Tester qu'on a pas un doublon(Unicité d'un objectif pour une année donnée)
-                        var IsExist = myObjectListeCot.Exists(c => c.mIdSouscripteur == Int32.Parse(CmbSouscripteurCot.EditValue.ToString()) && c.mAnnee == Int32.Parse(sNumAnnee.Value.ToString()) );
+                        var IsExist = myObjectListeCot.Exists(c => c.mIdSouscripteur == Int32.Parse(CmbSouscripteurCot.EditValue.ToString()) && c.mAnnee == Int32.Parse(sNumAnnee.Value.ToString()) && c.mIdTypeAppli==idAppli );
 
                         if (!IsExist)
                         {
@@ -61,10 +65,31 @@ namespace FIMECO
                             COp.mUserCreation = Environment.UserDomainName + "\\" + Environment.UserName;
                             COp.mUserLastModif = Environment.UserDomainName + "\\" + Environment.UserName;
 
+                            COp.mIdTypeAppli = idAppli;
+
                             res = daoReport.AddCotisationAnnuelle(COp, myObjectChaineConFimeco);
 
                             if (res)
                             {
+                                #region Tracabilité
+
+                                CTracabilite Ct = new CTracabilite();
+
+                                string content = "mIdTypeAppli:" + COp.mIdTypeAppli + "_" + "mId:" + COp.mIdSouscripteur + "_" + "Souscripteur:" + CmbSouscripteurCot.Text + "_" + "mAnneeSouscription:" + COp.mAnnee + "_" + "Montant:" + COp.mMontantCotisation.ToString("n0");
+                                  
+
+                                Ct.mContenu = content;
+                               
+                                Ct.mTypeOperation = "Ajout_ContributionAnnuelle";
+                                Ct.mDateAction = DateTime.Now;
+                                Ct.mMachineAction = Environment.UserDomainName + "\\" + Environment.UserName;
+
+                                bool ret = false;
+
+                                ret = daoReport.AddTrace(Ct, myObjectChaineConFimeco);
+                                
+                                #endregion
+                                
                                 MessageBox.Show("Contribution Annuelle ajoutée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Close();
                             }
@@ -92,7 +117,7 @@ namespace FIMECO
                         {
                             //Tester qu'on a pas un doublon
                             //Tester qu'on a pas un doublon
-                            var IsExist = myObjectListeCot.Exists(c => c.mIdSouscripteur == Int32.Parse(CmbSouscripteurCot.EditValue.ToString()) && c.mAnnee == Int32.Parse(sNumAnnee.Value.ToString()) && c.mMontantCotisation == Int32.Parse(sNumMontant.Value.ToString()));
+                            var IsExist = myObjectListeCot.Exists(c => c.mIdSouscripteur == Int32.Parse(CmbSouscripteurCot.EditValue.ToString()) && c.mAnnee == Int32.Parse(sNumAnnee.Value.ToString()) && c.mMontantCotisation == Int32.Parse(sNumMontant.Value.ToString()) && c.mIdTypeAppli == idAppli);
 
                             if (!IsExist)
                             {
@@ -106,11 +131,32 @@ namespace FIMECO
                                 // myObjectCot.mUserCreation = Environment.UserDomainName + "\\" + Environment.UserName;
                                 myObjectCot.mUserLastModif = Environment.UserDomainName + "\\" + Environment.UserName;
 
+                                myObjectCot.mIdTypeAppli = idAppli;
 
                                 res = daoReport.UpdateCotisationAnnuelle(myObjectCot, myObjectChaineConFimeco);
 
                                 if (res)
                                 {
+                                    #region Tracabilité
+
+                                    CTracabilite Ct = new CTracabilite();
+
+                                    string content = "mIdTypeAppli:" + myObjectCot.mIdTypeAppli + "_" + "mId:" + myObjectCot.mIdSouscripteur + "_" + "Souscripteur:" + CmbSouscripteurCot.Text + "_" + "mAnneeSouscription:" + myObjectCot.mAnnee + "_" + "Montant:" + myObjectCot.mMontantCotisation.ToString("n0");
+
+
+                                    Ct.mContenu = content;
+
+                                    Ct.mTypeOperation = "Modification_ContributionAnnuelle";
+                                    Ct.mDateAction = DateTime.Now;
+                                    Ct.mMachineAction = Environment.UserDomainName + "\\" + Environment.UserName;
+
+                                    bool ret = false;
+
+                                    ret = daoReport.AddTrace(Ct, myObjectChaineConFimeco);
+
+
+                                    #endregion
+                                    
                                     MessageBox.Show("Contribution Annuelle modifiée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     Close();
                                 }
@@ -165,7 +211,7 @@ namespace FIMECO
                 if (myObjectListeChefFamille.Count > 0)
                 {
                     //Remplir Combo ClasseMetho
-                    CmbSouscripteurCot.Properties.DataSource = myObjectListeChefFamille;
+                    CmbSouscripteurCot.Properties.DataSource = myObjectListeChefFamille.OrderBy(c=>c.mNom) ;
                     CmbSouscripteurCot.Properties.DisplayMember = "mNom";
                     CmbSouscripteurCot.Properties.ValueMember = "mId";
                     //Choisir les premières valeurs

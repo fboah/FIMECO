@@ -17,6 +17,14 @@ namespace FIMECO.Models
         public string mPrenomsMembre { get; set; }
         public string mStatutAgeMembre { get; set; }
 
+        public string mClasse { get; set; }
+
+        public int mIdClasseMetho { get; set; }
+
+        public int mIdProfession { get; set; }
+
+        
+
 
         public CEtatSouscriptMembre()
         {
@@ -27,6 +35,10 @@ namespace FIMECO.Models
             mNomMembre = string.Empty;
             mPrenomsMembre = string.Empty;
             mStatutAgeMembre = string.Empty;
+
+            mClasse = string.Empty;
+            mIdClasseMetho = 0;
+            mIdProfession = 0;
 
         }
 

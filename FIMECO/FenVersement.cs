@@ -38,18 +38,31 @@ namespace FIMECO
         //Chaine de connexion FIMECO
         private string ChaineConFIMECO;
 
+        private List<CUser> myListeUser;
+        private int myIdLoginUser;
+        private int idAppli;
+
         //Tester si on ajoute ou modif 
         private bool IsAjout;
 
-        public FenVersement()
+        public string Appli = "FIMECO";
+
+        public FenVersement(List<CUser> Lus,int idlog,int idap)
         {
             InitializeComponent();
+
+            this.myListeUser = Lus;
+
+            this.myIdLoginUser = idlog;
+
+            this.idAppli = idap;
+
         }
 
 
 
 
-
+      
         private void sBtnAjoutVersement_Click(object sender, EventArgs e)
         {
             try
@@ -70,29 +83,30 @@ namespace FIMECO
                 List<CVersement> ListeVersement = new List<CVersement>();
 
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
-                ListeVersement = daoReport.GetAllVersement(ChaineConFIMECO, ListeSS);
+                ListeVersement = daoReport.GetAllVersement(ChaineConFIMECO, ListeSS, idAppli.ToString());
 
                 //Recuperer la liste des souscription annuelles
 
                 List<CCotisationAnnuelle> ListeCotisation = new List<CCotisationAnnuelle>();
 
                 //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
-                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFIMECO, ListeSS);
+                ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFIMECO, ListeSS,idAppli.ToString());
 
 
-                var fenAjout = new FenGestVersement(IsAjout, ListeVersement, Cvers, ChaineConFIMECO,0, ListeSS,true, ListeCotisation);
-
+                var fenAjout = new FenGestVersement(IsAjout, ListeVersement, Cvers, ChaineConFIMECO,0, ListeSS,true, ListeCotisation, myListeUser,myIdLoginUser,idAppli);
+                fenAjout.Text = "Ajouter un Versement";
                 fenAjout.ShowDialog();
 
                 RefreshGrid(ChaineConFIMECO);
             }
             catch (Exception ex)
             {
-
+                var msg = "FenVersement -> sBtnAjoutVersement_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
-       
+     
         private void RefreshGrid(string Chaine)
         {
             try
@@ -128,10 +142,13 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenVersement -> RefreshGrid-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+  
         private void FenVersement_Load(object sender, EventArgs e)
         {
             try
@@ -179,7 +196,8 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenVersement -> FenVersement_Load-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
@@ -235,7 +253,7 @@ namespace FIMECO
             catch (Exception ex)
             {
                 //  if (splashScreenManager2.IsSplashFormVisible) splashScreenManager2.CloseWaitForm();
-                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 var msg = "MainForm ->FillMultiCheckComboSouscripteur -> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
@@ -243,7 +261,7 @@ namespace FIMECO
 
         }
 
-
+      
         private void sBtnModifVersement_Click(object sender, EventArgs e)
         {
             try
@@ -270,7 +288,7 @@ namespace FIMECO
                     //if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
                     List<CVersement> ListeOPACTU = new List<CVersement>();
 
-                    ListeOPACTU = daoReport.GetAllVersement(ChaineConFIMECO,ListeSS);
+                    ListeOPACTU = daoReport.GetAllVersement(ChaineConFIMECO,ListeSS,idAppli.ToString());
 
                     ClientOp = ListeOPACTU.FirstOrDefault(c => c.mId == Identif);
                     //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
@@ -281,11 +299,11 @@ namespace FIMECO
                     List<CCotisationAnnuelle> ListeCotisation = new List<CCotisationAnnuelle>();
 
                     //   if (!splashScreenManager1.IsSplashFormVisible) splashScreenManager1.ShowWaitForm();
-                    ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFIMECO, ListeSS);
+                    ListeCotisation = daoReport.GetAllCotisationAnnuelle(ChaineConFIMECO, ListeSS,idAppli.ToString());
 
 
-                    var fenAjout = new FenGestVersement(IsAjout, ListeOPACTU, ClientOp, ChaineConFIMECO, IdSouscripteur, ListeSS,true, ListeCotisation);
-
+                    var fenAjout = new FenGestVersement(IsAjout, ListeOPACTU, ClientOp, ChaineConFIMECO, IdSouscripteur, ListeSS,true, ListeCotisation, myListeUser, myIdLoginUser, idAppli);
+                    fenAjout.Text = "Modifier un Versement";
                     fenAjout.ShowDialog();
 
                     RefreshGrid(ChaineConFIMECO);
@@ -294,17 +312,20 @@ namespace FIMECO
                 else
                 {
                     //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                    MessageBox.Show("Veuillez sélectionner un élément à modifier!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Veuillez sélectionner un élément à modifier!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
 
             }
             catch (Exception ex)
             {
-
+                var msg = "FenVersement -> sBtnModifVersement_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+    
         private void sBtnSupprVersement_Click(object sender, EventArgs e)
         {
             bool res = false;
@@ -315,7 +336,7 @@ namespace FIMECO
 
                 if (Identif > 0)
                 {
-                    var rep = MessageBox.Show("Voulez-vous supprimer le versement selectionné ?", "FIMECO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var rep = MessageBox.Show("Voulez-vous supprimer le versement selectionné ?", Appli, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (rep == DialogResult.Yes)
                     {
@@ -323,8 +344,28 @@ namespace FIMECO
 
                         if (res)
                         {
+
+                            #region Tracabilité
+
+                            CTracabilite Ct = new CTracabilite();
+
+                            string content = "Id du Versement: " + Identif.ToString();
+
+                            Ct.mContenu = content;
+
+                            Ct.mTypeOperation = "Suppression_Versement";
+                            Ct.mDateAction = DateTime.Now;
+                            Ct.mMachineAction = Environment.UserDomainName + "\\" + Environment.UserName;
+
+                            bool ret = false;
+
+                            ret = daoReport.AddTrace(Ct, ChaineConFIMECO);
+
+
+                            #endregion
+
                             //if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                            MessageBox.Show("Versement supprimé avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Versement supprimé avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             RefreshGrid(ChaineConFIMECO);
 
@@ -332,7 +373,7 @@ namespace FIMECO
                         else
                         {
                             // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                            MessageBox.Show("Une erreur est survenue lors de la suppression du versement!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue lors de la suppression du versement!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
 
@@ -341,10 +382,13 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenVersement -> sBtnSupprVersement_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
+
+      
         private void sBtnApercu_Click(object sender, EventArgs e)
         {
             try
@@ -377,7 +421,8 @@ namespace FIMECO
             }
             catch(Exception ex)
             {
-
+                var msg = "FenVersement -> sBtnApercu_Click-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 
@@ -424,7 +469,7 @@ namespace FIMECO
             catch (Exception ex)
             {
                 // if (splashScreenManager2.IsSplashFormVisible) splashScreenManager2.CloseWaitForm();
-                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", "FORECASTCOM", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur est survenue ! Veuillez contacter votre Administrateur!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 var msg = "MainForm -> chkTousCom_CheckStateChanged -> TypeErreur: " + ex.Message; ;
                 CAlias.Log(msg);
@@ -473,6 +518,8 @@ namespace FIMECO
             }
         }
 
+
+  
         private void chkCmbMultSouscripteur_Closed(object sender, DevExpress.XtraEditors.Controls.ClosedEventArgs e)
         {
             try
@@ -502,7 +549,8 @@ namespace FIMECO
             }
             catch (Exception ex)
             {
-
+                var msg = "FenVersement -> chkCmbMultSouscripteur_Closed-> TypeErreur: " + ex.Message;
+                CAlias.Log(msg);
             }
         }
 

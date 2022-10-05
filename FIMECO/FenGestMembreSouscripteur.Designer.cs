@@ -236,6 +236,7 @@
             // 
             this.txtNom.Location = new System.Drawing.Point(89, 12);
             this.txtNom.Name = "txtNom";
+            this.txtNom.Properties.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNom.Size = new System.Drawing.Size(552, 20);
             this.txtNom.StyleController = this.layoutControl1;
             this.txtNom.TabIndex = 4;
@@ -388,6 +389,7 @@
             this.Controls.Add(this.layoutControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FenGestMembreSouscripteur";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FenGestMembreSouscripteur";

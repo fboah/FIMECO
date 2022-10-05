@@ -2,7 +2,7 @@
 
 USE [FIMECOBD]
 GO
-/****** Object:  Table [dbo].[FEC_ClasseMetho]    Script Date: 15/03/2022 15:43:28 ******/
+/****** Object:  Table [dbo].[FEC_ClasseMetho]    Script Date: 05/10/2022 10:09:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -31,7 +31,7 @@ CREATE TABLE [dbo].[FEC_ClasseMetho](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FEC_CotisationAnnuelle]    Script Date: 15/03/2022 15:43:28 ******/
+/****** Object:  Table [dbo].[FEC_CotisationAnnuelle]    Script Date: 05/10/2022 10:09:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -48,6 +48,7 @@ CREATE TABLE [dbo].[FEC_CotisationAnnuelle](
 	[DateCreation] [datetime] NULL,
 	[DateLastModif] [datetime] NULL,
 	[IsDelete] [int] NULL,
+	[Type_Gestion] [int] NULL,
  CONSTRAINT [PK_FEC_CotisationAnnuelle] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -57,7 +58,7 @@ CREATE TABLE [dbo].[FEC_CotisationAnnuelle](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FEC_MembreSouscripteur]    Script Date: 15/03/2022 15:43:28 ******/
+/****** Object:  Table [dbo].[FEC_MembreSouscripteur]    Script Date: 05/10/2022 10:09:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -93,7 +94,7 @@ CREATE TABLE [dbo].[FEC_MembreSouscripteur](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FEC_Profession]    Script Date: 15/03/2022 15:43:28 ******/
+/****** Object:  Table [dbo].[FEC_Profession]    Script Date: 05/10/2022 10:09:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,7 +114,8 @@ CREATE TABLE [dbo].[FEC_Profession](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FEC_Souscripteur]    Script Date: 15/03/2022 15:43:28 ******/
+
+/****** Object:  Table [dbo].[FEC_Souscripteur]    Script Date: 05/10/2022 10:09:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -157,7 +159,56 @@ CREATE TABLE [dbo].[FEC_Souscripteur](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FEC_Versement]    Script Date: 15/03/2022 15:43:28 ******/
+/****** Object:  Table [dbo].[FEC_Tracabilite]    Script Date: 05/10/2022 10:09:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_Tracabilite](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TypeOperation] [varchar](50) NULL,
+	[MachineAction] [varchar](100) NULL,
+	[Contenu] [varchar](5000) NULL,
+	[DateAction] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FEC_User]    Script Date: 05/10/2022 10:09:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_User](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nom] [varchar](200) NULL,
+	[Login] [varchar](100) NULL,
+	[Password] [varchar](100) NULL,
+	[Email] [varchar](100) NULL,
+	[IsDelete] [int] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FEC_UserProfil]    Script Date: 05/10/2022 10:09:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FEC_UserProfil](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdUser] [int] NULL,
+	[IdProfil] [int] NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[FEC_Versement]    Script Date: 05/10/2022 10:09:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,6 +227,8 @@ CREATE TABLE [dbo].[FEC_Versement](
 	[DateCreation] [datetime] NULL,
 	[DateLastModif] [datetime] NULL,
 	[IsDelete] [int] NULL,
+	[IdReceveur] [int] NULL,
+	[Type_Gestion] [int] NULL,
  CONSTRAINT [PK_FEC_Versement] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -190,3 +243,40 @@ REFERENCES [dbo].[FEC_CotisationAnnuelle] ([Id])
 GO
 ALTER TABLE [dbo].[FEC_CotisationAnnuelle] CHECK CONSTRAINT [FK_FEC_CotisationAnnuelle_FEC_CotisationAnnuelle]
 GO
+
+
+--TABLE des droits
+
+USE [FIMECOBD]
+GO
+/****** Object:  Table [dbo].[FEC_Profil]    Script Date: 05/10/2022 10:10:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[FEC_Profil](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Libelle] [varchar](100) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET IDENTITY_INSERT [dbo].[FEC_Profil] ON 
+
+GO
+INSERT [dbo].[FEC_Profil] ([Id], [Libelle]) VALUES (1, N'Super Administrateur')
+GO
+INSERT [dbo].[FEC_Profil] ([Id], [Libelle]) VALUES (2, N'Utilisateur')
+GO
+INSERT [dbo].[FEC_Profil] ([Id], [Libelle]) VALUES (3, N'Consultant')
+GO
+INSERT [dbo].[FEC_Profil] ([Id], [Libelle]) VALUES (4, N'FIMECO')
+GO
+INSERT [dbo].[FEC_Profil] ([Id], [Libelle]) VALUES (5, N'MOISSON')
+GO
+SET IDENTITY_INSERT [dbo].[FEC_Profil] OFF
+GO
+

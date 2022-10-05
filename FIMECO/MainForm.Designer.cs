@@ -35,7 +35,9 @@
             this.gestionDesCotisationsAnnuellesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionDesVersementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionDesProfessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gestionProfilsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.CmbApplication = new DevExpress.XtraEditors.LookUpEdit();
             this.lblMontantVerse = new DevExpress.XtraEditors.LabelControl();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.lblMontantSouscrit = new DevExpress.XtraEditors.LabelControl();
@@ -62,12 +64,15 @@
             this.gCPeriode = new DevExpress.XtraEditors.GroupControl();
             this.sNumAnnee = new DevExpress.XtraEditors.SpinEdit();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
+            this.sBtnVisualiser = new DevExpress.XtraEditors.SimpleButton();
+            this.sBtnAjouterSouscripteur = new DevExpress.XtraEditors.SimpleButton();
+            this.sBtnModifierSouscripteur = new DevExpress.XtraEditors.SimpleButton();
+            this.sBtnSupprimerSouscripteur = new DevExpress.XtraEditors.SimpleButton();
+            this.sBtnEtatSouscVersementDetails = new DevExpress.XtraEditors.SimpleButton();
             this.sBtnExportExcel = new DevExpress.XtraEditors.SimpleButton();
             this.sBtnImprimer = new DevExpress.XtraEditors.SimpleButton();
-            this.sBtnSupprimerSouscripteur = new DevExpress.XtraEditors.SimpleButton();
-            this.sBtnModifierSouscripteur = new DevExpress.XtraEditors.SimpleButton();
-            this.sBtnAjouterSouscripteur = new DevExpress.XtraEditors.SimpleButton();
-            this.sBtnVisualiser = new DevExpress.XtraEditors.SimpleButton();
+            this.sBtnEtatSouscVersement = new DevExpress.XtraEditors.SimpleButton();
+            this.sBtnSousMembreMtant = new DevExpress.XtraEditors.SimpleButton();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.pBoutonsMembre = new DevExpress.XtraEditors.PanelControl();
             this.label4 = new System.Windows.Forms.Label();
@@ -120,6 +125,7 @@
             this.colmPrenoms = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colmStatutCotisation = new DevExpress.XtraGrid.Columns.GridColumn();
             this.RepositoryItemImageComboBoxSt = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
+            this.colMtantAnnuel = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colmMontantVerse = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colmArriere = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colmSurplus = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -154,6 +160,7 @@
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CmbApplication.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
@@ -206,10 +213,11 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem});
+            this.menuToolStripMenuItem,
+            this.gestionProfilsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1126, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1252, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -252,10 +260,18 @@
             this.gestionDesProfessionsToolStripMenuItem.Text = "Gestion des Professions";
             this.gestionDesProfessionsToolStripMenuItem.Click += new System.EventHandler(this.gestionDesProfessionsToolStripMenuItem_Click);
             // 
+            // gestionProfilsToolStripMenuItem
+            // 
+            this.gestionProfilsToolStripMenuItem.Name = "gestionProfilsToolStripMenuItem";
+            this.gestionProfilsToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
+            this.gestionProfilsToolStripMenuItem.Text = "Gestion Profils";
+            this.gestionProfilsToolStripMenuItem.Click += new System.EventHandler(this.gestionProfilsToolStripMenuItem_Click);
+            // 
             // panelControl1
             // 
             this.panelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelControl1.Controls.Add(this.CmbApplication);
             this.panelControl1.Controls.Add(this.lblMontantVerse);
             this.panelControl1.Controls.Add(this.labelControl4);
             this.panelControl1.Controls.Add(this.lblMontantSouscrit);
@@ -266,8 +282,26 @@
             this.panelControl1.Controls.Add(this.gCPeriode);
             this.panelControl1.Location = new System.Drawing.Point(0, 27);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1126, 125);
+            this.panelControl1.Size = new System.Drawing.Size(1252, 125);
             this.panelControl1.TabIndex = 1;
+            // 
+            // CmbApplication
+            // 
+            this.CmbApplication.Enabled = false;
+            this.CmbApplication.Location = new System.Drawing.Point(1097, 9);
+            this.CmbApplication.Name = "CmbApplication";
+            this.CmbApplication.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.CmbApplication.Properties.Appearance.ForeColor = System.Drawing.Color.Red;
+            this.CmbApplication.Properties.Appearance.Options.UseFont = true;
+            this.CmbApplication.Properties.Appearance.Options.UseForeColor = true;
+            this.CmbApplication.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.CmbApplication.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("mId", "Id", 20, DevExpress.Utils.FormatType.None, "", false, DevExpress.Utils.HorzAlignment.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("mApplication", "Application")});
+            this.CmbApplication.Properties.NullText = "";
+            this.CmbApplication.Size = new System.Drawing.Size(150, 22);
+            this.CmbApplication.TabIndex = 30;
             // 
             // lblMontantVerse
             // 
@@ -376,7 +410,7 @@
             // 
             this.CmbSouscripteurA.EditValue = "";
             this.CmbSouscripteurA.Enabled = false;
-            this.CmbSouscripteurA.Location = new System.Drawing.Point(272, 32);
+            this.CmbSouscripteurA.Location = new System.Drawing.Point(271, 32);
             this.CmbSouscripteurA.Name = "CmbSouscripteurA";
             this.CmbSouscripteurA.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -391,7 +425,7 @@
             // 
             this.CmbSouscripteurDE.EditValue = "";
             this.CmbSouscripteurDE.Enabled = false;
-            this.CmbSouscripteurDE.Location = new System.Drawing.Point(26, 32);
+            this.CmbSouscripteurDE.Location = new System.Drawing.Point(27, 32);
             this.CmbSouscripteurDE.Name = "CmbSouscripteurDE";
             this.CmbSouscripteurDE.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -404,11 +438,13 @@
             // 
             // SMulSouscripteur
             // 
+            this.SMulSouscripteur.Enabled = false;
             this.SMulSouscripteur.Location = new System.Drawing.Point(551, 34);
             this.SMulSouscripteur.Name = "SMulSouscripteur";
             this.SMulSouscripteur.Properties.Caption = "Choix Multiple";
             this.SMulSouscripteur.Size = new System.Drawing.Size(86, 19);
             this.SMulSouscripteur.TabIndex = 39;
+            this.SMulSouscripteur.Visible = false;
             this.SMulSouscripteur.CheckStateChanged += new System.EventHandler(this.SMulSouscripteur_CheckStateChanged);
             // 
             // chkCmbMultSouscripteur
@@ -576,86 +612,25 @@
             0});
             this.sNumAnnee.Size = new System.Drawing.Size(127, 20);
             this.sNumAnnee.TabIndex = 0;
+            this.sNumAnnee.EditValueChanged += new System.EventHandler(this.sNumAnnee_EditValueChanged);
             // 
             // panelControl2
             // 
             this.panelControl2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelControl2.Controls.Add(this.sBtnVisualiser);
+            this.panelControl2.Controls.Add(this.sBtnAjouterSouscripteur);
+            this.panelControl2.Controls.Add(this.sBtnModifierSouscripteur);
+            this.panelControl2.Controls.Add(this.sBtnSupprimerSouscripteur);
+            this.panelControl2.Controls.Add(this.sBtnEtatSouscVersementDetails);
             this.panelControl2.Controls.Add(this.sBtnExportExcel);
             this.panelControl2.Controls.Add(this.sBtnImprimer);
-            this.panelControl2.Controls.Add(this.sBtnSupprimerSouscripteur);
-            this.panelControl2.Controls.Add(this.sBtnModifierSouscripteur);
-            this.panelControl2.Controls.Add(this.sBtnAjouterSouscripteur);
-            this.panelControl2.Controls.Add(this.sBtnVisualiser);
+            this.panelControl2.Controls.Add(this.sBtnEtatSouscVersement);
+            this.panelControl2.Controls.Add(this.sBtnSousMembreMtant);
             this.panelControl2.Location = new System.Drawing.Point(1, 127);
             this.panelControl2.Name = "panelControl2";
-            this.panelControl2.Size = new System.Drawing.Size(1125, 27);
+            this.panelControl2.Size = new System.Drawing.Size(1251, 27);
             this.panelControl2.TabIndex = 2;
-            // 
-            // sBtnExportExcel
-            // 
-            this.sBtnExportExcel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.sBtnExportExcel.Appearance.ForeColor = System.Drawing.Color.Black;
-            this.sBtnExportExcel.Appearance.Options.UseForeColor = true;
-            this.sBtnExportExcel.Image = ((System.Drawing.Image)(resources.GetObject("sBtnExportExcel.Image")));
-            this.sBtnExportExcel.Location = new System.Drawing.Point(543, 0);
-            this.sBtnExportExcel.Name = "sBtnExportExcel";
-            this.sBtnExportExcel.Size = new System.Drawing.Size(102, 25);
-            this.sBtnExportExcel.TabIndex = 13;
-            this.sBtnExportExcel.Text = "Export Excel";
-            this.sBtnExportExcel.Click += new System.EventHandler(this.sBtnExportExcel_Click);
-            // 
-            // sBtnImprimer
-            // 
-            this.sBtnImprimer.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.sBtnImprimer.Appearance.ForeColor = System.Drawing.Color.Black;
-            this.sBtnImprimer.Appearance.Options.UseForeColor = true;
-            this.sBtnImprimer.Image = ((System.Drawing.Image)(resources.GetObject("sBtnImprimer.Image")));
-            this.sBtnImprimer.Location = new System.Drawing.Point(646, 0);
-            this.sBtnImprimer.Name = "sBtnImprimer";
-            this.sBtnImprimer.Size = new System.Drawing.Size(120, 25);
-            this.sBtnImprimer.TabIndex = 12;
-            this.sBtnImprimer.Text = "Imprimer";
-            this.sBtnImprimer.Click += new System.EventHandler(this.sBtnImprimer_Click);
-            // 
-            // sBtnSupprimerSouscripteur
-            // 
-            this.sBtnSupprimerSouscripteur.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.sBtnSupprimerSouscripteur.Appearance.ForeColor = System.Drawing.Color.Black;
-            this.sBtnSupprimerSouscripteur.Appearance.Options.UseForeColor = true;
-            this.sBtnSupprimerSouscripteur.Image = ((System.Drawing.Image)(resources.GetObject("sBtnSupprimerSouscripteur.Image")));
-            this.sBtnSupprimerSouscripteur.Location = new System.Drawing.Point(399, 0);
-            this.sBtnSupprimerSouscripteur.Name = "sBtnSupprimerSouscripteur";
-            this.sBtnSupprimerSouscripteur.Size = new System.Drawing.Size(142, 25);
-            this.sBtnSupprimerSouscripteur.TabIndex = 11;
-            this.sBtnSupprimerSouscripteur.Text = "Supprimer Souscripteur";
-            this.sBtnSupprimerSouscripteur.Click += new System.EventHandler(this.sBtnSupprimerSouscripteur_Click);
-            // 
-            // sBtnModifierSouscripteur
-            // 
-            this.sBtnModifierSouscripteur.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.sBtnModifierSouscripteur.Appearance.ForeColor = System.Drawing.Color.Black;
-            this.sBtnModifierSouscripteur.Appearance.Options.UseForeColor = true;
-            this.sBtnModifierSouscripteur.Image = ((System.Drawing.Image)(resources.GetObject("sBtnModifierSouscripteur.Image")));
-            this.sBtnModifierSouscripteur.Location = new System.Drawing.Point(259, 0);
-            this.sBtnModifierSouscripteur.Name = "sBtnModifierSouscripteur";
-            this.sBtnModifierSouscripteur.Size = new System.Drawing.Size(139, 25);
-            this.sBtnModifierSouscripteur.TabIndex = 10;
-            this.sBtnModifierSouscripteur.Text = "Modifier Souscripteur";
-            this.sBtnModifierSouscripteur.Click += new System.EventHandler(this.sBtnModifierSouscripteur_Click);
-            // 
-            // sBtnAjouterSouscripteur
-            // 
-            this.sBtnAjouterSouscripteur.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.sBtnAjouterSouscripteur.Appearance.ForeColor = System.Drawing.Color.Black;
-            this.sBtnAjouterSouscripteur.Appearance.Options.UseForeColor = true;
-            this.sBtnAjouterSouscripteur.Image = ((System.Drawing.Image)(resources.GetObject("sBtnAjouterSouscripteur.Image")));
-            this.sBtnAjouterSouscripteur.Location = new System.Drawing.Point(130, 0);
-            this.sBtnAjouterSouscripteur.Name = "sBtnAjouterSouscripteur";
-            this.sBtnAjouterSouscripteur.Size = new System.Drawing.Size(127, 25);
-            this.sBtnAjouterSouscripteur.TabIndex = 9;
-            this.sBtnAjouterSouscripteur.Text = "Ajouter Souscripteur";
-            this.sBtnAjouterSouscripteur.Click += new System.EventHandler(this.sBtnAjouterSouscripteur_Click);
             // 
             // sBtnVisualiser
             // 
@@ -670,6 +645,110 @@
             this.sBtnVisualiser.Text = "Aperçu";
             this.sBtnVisualiser.Click += new System.EventHandler(this.sBtnVisualiser_Click);
             // 
+            // sBtnAjouterSouscripteur
+            // 
+            this.sBtnAjouterSouscripteur.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.sBtnAjouterSouscripteur.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.sBtnAjouterSouscripteur.Appearance.Options.UseForeColor = true;
+            this.sBtnAjouterSouscripteur.Image = ((System.Drawing.Image)(resources.GetObject("sBtnAjouterSouscripteur.Image")));
+            this.sBtnAjouterSouscripteur.Location = new System.Drawing.Point(130, 0);
+            this.sBtnAjouterSouscripteur.Name = "sBtnAjouterSouscripteur";
+            this.sBtnAjouterSouscripteur.Size = new System.Drawing.Size(132, 24);
+            this.sBtnAjouterSouscripteur.TabIndex = 9;
+            this.sBtnAjouterSouscripteur.Text = "Ajouter Souscripteur";
+            this.sBtnAjouterSouscripteur.Click += new System.EventHandler(this.sBtnAjouterSouscripteur_Click);
+            // 
+            // sBtnModifierSouscripteur
+            // 
+            this.sBtnModifierSouscripteur.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.sBtnModifierSouscripteur.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.sBtnModifierSouscripteur.Appearance.Options.UseForeColor = true;
+            this.sBtnModifierSouscripteur.Image = ((System.Drawing.Image)(resources.GetObject("sBtnModifierSouscripteur.Image")));
+            this.sBtnModifierSouscripteur.Location = new System.Drawing.Point(264, 0);
+            this.sBtnModifierSouscripteur.Name = "sBtnModifierSouscripteur";
+            this.sBtnModifierSouscripteur.Size = new System.Drawing.Size(145, 24);
+            this.sBtnModifierSouscripteur.TabIndex = 10;
+            this.sBtnModifierSouscripteur.Text = "Modifier Souscripteur";
+            this.sBtnModifierSouscripteur.Click += new System.EventHandler(this.sBtnModifierSouscripteur_Click);
+            // 
+            // sBtnSupprimerSouscripteur
+            // 
+            this.sBtnSupprimerSouscripteur.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.sBtnSupprimerSouscripteur.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.sBtnSupprimerSouscripteur.Appearance.Options.UseForeColor = true;
+            this.sBtnSupprimerSouscripteur.Image = ((System.Drawing.Image)(resources.GetObject("sBtnSupprimerSouscripteur.Image")));
+            this.sBtnSupprimerSouscripteur.Location = new System.Drawing.Point(411, 0);
+            this.sBtnSupprimerSouscripteur.Name = "sBtnSupprimerSouscripteur";
+            this.sBtnSupprimerSouscripteur.Size = new System.Drawing.Size(142, 24);
+            this.sBtnSupprimerSouscripteur.TabIndex = 11;
+            this.sBtnSupprimerSouscripteur.Text = "Supprimer Souscripteur";
+            this.sBtnSupprimerSouscripteur.Click += new System.EventHandler(this.sBtnSupprimerSouscripteur_Click);
+            // 
+            // sBtnEtatSouscVersementDetails
+            // 
+            this.sBtnEtatSouscVersementDetails.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.sBtnEtatSouscVersementDetails.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.sBtnEtatSouscVersementDetails.Appearance.Options.UseForeColor = true;
+            this.sBtnEtatSouscVersementDetails.Image = ((System.Drawing.Image)(resources.GetObject("sBtnEtatSouscVersementDetails.Image")));
+            this.sBtnEtatSouscVersementDetails.Location = new System.Drawing.Point(1138, 2);
+            this.sBtnEtatSouscVersementDetails.Name = "sBtnEtatSouscVersementDetails";
+            this.sBtnEtatSouscVersementDetails.Size = new System.Drawing.Size(140, 22);
+            this.sBtnEtatSouscVersementDetails.TabIndex = 15;
+            this.sBtnEtatSouscVersementDetails.Text = "Etat Versement Détails";
+            this.sBtnEtatSouscVersementDetails.Click += new System.EventHandler(this.sBtnEtatSouscVersementDetails_Click);
+            // 
+            // sBtnExportExcel
+            // 
+            this.sBtnExportExcel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.sBtnExportExcel.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.sBtnExportExcel.Appearance.Options.UseForeColor = true;
+            this.sBtnExportExcel.Image = ((System.Drawing.Image)(resources.GetObject("sBtnExportExcel.Image")));
+            this.sBtnExportExcel.Location = new System.Drawing.Point(556, 0);
+            this.sBtnExportExcel.Name = "sBtnExportExcel";
+            this.sBtnExportExcel.Size = new System.Drawing.Size(113, 24);
+            this.sBtnExportExcel.TabIndex = 13;
+            this.sBtnExportExcel.Text = "Export Excel";
+            this.sBtnExportExcel.Click += new System.EventHandler(this.sBtnExportExcel_Click);
+            // 
+            // sBtnImprimer
+            // 
+            this.sBtnImprimer.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.sBtnImprimer.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.sBtnImprimer.Appearance.Options.UseForeColor = true;
+            this.sBtnImprimer.Image = ((System.Drawing.Image)(resources.GetObject("sBtnImprimer.Image")));
+            this.sBtnImprimer.Location = new System.Drawing.Point(672, 0);
+            this.sBtnImprimer.Name = "sBtnImprimer";
+            this.sBtnImprimer.Size = new System.Drawing.Size(135, 25);
+            this.sBtnImprimer.TabIndex = 12;
+            this.sBtnImprimer.Text = "Etat Souscr. Membres";
+            this.sBtnImprimer.Click += new System.EventHandler(this.sBtnImprimer_Click);
+            // 
+            // sBtnEtatSouscVersement
+            // 
+            this.sBtnEtatSouscVersement.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.sBtnEtatSouscVersement.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.sBtnEtatSouscVersement.Appearance.Options.UseForeColor = true;
+            this.sBtnEtatSouscVersement.Image = ((System.Drawing.Image)(resources.GetObject("sBtnEtatSouscVersement.Image")));
+            this.sBtnEtatSouscVersement.Location = new System.Drawing.Point(985, 1);
+            this.sBtnEtatSouscVersement.Name = "sBtnEtatSouscVersement";
+            this.sBtnEtatSouscVersement.Size = new System.Drawing.Size(150, 24);
+            this.sBtnEtatSouscVersement.TabIndex = 14;
+            this.sBtnEtatSouscVersement.Text = "Etat Souscr. Versement";
+            this.sBtnEtatSouscVersement.Click += new System.EventHandler(this.sBtnEtatSouscVersement_Click);
+            // 
+            // sBtnSousMembreMtant
+            // 
+            this.sBtnSousMembreMtant.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.sBtnSousMembreMtant.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.sBtnSousMembreMtant.Appearance.Options.UseForeColor = true;
+            this.sBtnSousMembreMtant.Image = ((System.Drawing.Image)(resources.GetObject("sBtnSousMembreMtant.Image")));
+            this.sBtnSousMembreMtant.Location = new System.Drawing.Point(810, 1);
+            this.sBtnSousMembreMtant.Name = "sBtnSousMembreMtant";
+            this.sBtnSousMembreMtant.Size = new System.Drawing.Size(172, 24);
+            this.sBtnSousMembreMtant.TabIndex = 16;
+            this.sBtnSousMembreMtant.Text = "Etat Souscr. Membres Mtant";
+            this.sBtnSousMembreMtant.Click += new System.EventHandler(this.sBtnSousMembreMtant_Click);
+            // 
             // layoutControl1
             // 
             this.layoutControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -683,7 +762,7 @@
             this.layoutControl1.Location = new System.Drawing.Point(-11, 157);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(1146, 525);
+            this.layoutControl1.Size = new System.Drawing.Size(1272, 525);
             this.layoutControl1.TabIndex = 3;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -693,9 +772,9 @@
             this.pBoutonsMembre.Controls.Add(this.sBtnDeleteMembre);
             this.pBoutonsMembre.Controls.Add(this.sBtnAjouterMembre);
             this.pBoutonsMembre.Controls.Add(this.sBtnModifierMembre);
-            this.pBoutonsMembre.Location = new System.Drawing.Point(703, 485);
+            this.pBoutonsMembre.Location = new System.Drawing.Point(780, 485);
             this.pBoutonsMembre.Name = "pBoutonsMembre";
-            this.pBoutonsMembre.Size = new System.Drawing.Size(431, 28);
+            this.pBoutonsMembre.Size = new System.Drawing.Size(480, 28);
             this.pBoutonsMembre.TabIndex = 10;
             // 
             // label4
@@ -712,7 +791,7 @@
             // 
             this.sBtnDeleteMembre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sBtnDeleteMembre.Image = ((System.Drawing.Image)(resources.GetObject("sBtnDeleteMembre.Image")));
-            this.sBtnDeleteMembre.Location = new System.Drawing.Point(333, 0);
+            this.sBtnDeleteMembre.Location = new System.Drawing.Point(382, 0);
             this.sBtnDeleteMembre.Name = "sBtnDeleteMembre";
             this.sBtnDeleteMembre.Size = new System.Drawing.Size(96, 23);
             this.sBtnDeleteMembre.TabIndex = 13;
@@ -723,7 +802,7 @@
             // 
             this.sBtnAjouterMembre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sBtnAjouterMembre.Image = ((System.Drawing.Image)(resources.GetObject("sBtnAjouterMembre.Image")));
-            this.sBtnAjouterMembre.Location = new System.Drawing.Point(140, 0);
+            this.sBtnAjouterMembre.Location = new System.Drawing.Point(189, 0);
             this.sBtnAjouterMembre.Name = "sBtnAjouterMembre";
             this.sBtnAjouterMembre.Size = new System.Drawing.Size(96, 23);
             this.sBtnAjouterMembre.TabIndex = 11;
@@ -734,7 +813,7 @@
             // 
             this.sBtnModifierMembre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sBtnModifierMembre.Image = ((System.Drawing.Image)(resources.GetObject("sBtnModifierMembre.Image")));
-            this.sBtnModifierMembre.Location = new System.Drawing.Point(237, 0);
+            this.sBtnModifierMembre.Location = new System.Drawing.Point(286, 0);
             this.sBtnModifierMembre.Name = "sBtnModifierMembre";
             this.sBtnModifierMembre.Size = new System.Drawing.Size(96, 23);
             this.sBtnModifierMembre.TabIndex = 12;
@@ -748,9 +827,9 @@
             this.pBoutonsVersement.Controls.Add(this.sBtnDeleteVersement);
             this.pBoutonsVersement.Controls.Add(this.sBtnAjouterVersement);
             this.pBoutonsVersement.Controls.Add(this.sBtnModifierVersement);
-            this.pBoutonsVersement.Location = new System.Drawing.Point(703, 217);
+            this.pBoutonsVersement.Location = new System.Drawing.Point(780, 217);
             this.pBoutonsVersement.Name = "pBoutonsVersement";
-            this.pBoutonsVersement.Size = new System.Drawing.Size(431, 29);
+            this.pBoutonsVersement.Size = new System.Drawing.Size(480, 29);
             this.pBoutonsVersement.TabIndex = 9;
             // 
             // sBtnExcelVersement
@@ -776,7 +855,7 @@
             // 
             this.sBtnDeleteVersement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sBtnDeleteVersement.Image = ((System.Drawing.Image)(resources.GetObject("sBtnDeleteVersement.Image")));
-            this.sBtnDeleteVersement.Location = new System.Drawing.Point(333, 2);
+            this.sBtnDeleteVersement.Location = new System.Drawing.Point(382, 2);
             this.sBtnDeleteVersement.Name = "sBtnDeleteVersement";
             this.sBtnDeleteVersement.Size = new System.Drawing.Size(96, 23);
             this.sBtnDeleteVersement.TabIndex = 9;
@@ -787,7 +866,7 @@
             // 
             this.sBtnAjouterVersement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sBtnAjouterVersement.Image = ((System.Drawing.Image)(resources.GetObject("sBtnAjouterVersement.Image")));
-            this.sBtnAjouterVersement.Location = new System.Drawing.Point(140, 2);
+            this.sBtnAjouterVersement.Location = new System.Drawing.Point(189, 2);
             this.sBtnAjouterVersement.Name = "sBtnAjouterVersement";
             this.sBtnAjouterVersement.Size = new System.Drawing.Size(96, 23);
             this.sBtnAjouterVersement.TabIndex = 7;
@@ -798,7 +877,7 @@
             // 
             this.sBtnModifierVersement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sBtnModifierVersement.Image = ((System.Drawing.Image)(resources.GetObject("sBtnModifierVersement.Image")));
-            this.sBtnModifierVersement.Location = new System.Drawing.Point(237, 2);
+            this.sBtnModifierVersement.Location = new System.Drawing.Point(286, 2);
             this.sBtnModifierVersement.Name = "sBtnModifierVersement";
             this.sBtnModifierVersement.Size = new System.Drawing.Size(96, 23);
             this.sBtnModifierVersement.TabIndex = 8;
@@ -808,9 +887,9 @@
             // panelControl4
             // 
             this.panelControl4.Controls.Add(this.gridControlMembre);
-            this.panelControl4.Location = new System.Drawing.Point(703, 250);
+            this.panelControl4.Location = new System.Drawing.Point(780, 250);
             this.panelControl4.Name = "panelControl4";
-            this.panelControl4.Size = new System.Drawing.Size(431, 231);
+            this.panelControl4.Size = new System.Drawing.Size(480, 231);
             this.panelControl4.TabIndex = 8;
             // 
             // gridControlMembre
@@ -819,7 +898,7 @@
             this.gridControlMembre.Location = new System.Drawing.Point(2, 2);
             this.gridControlMembre.MainView = this.gridView3;
             this.gridControlMembre.Name = "gridControlMembre";
-            this.gridControlMembre.Size = new System.Drawing.Size(427, 227);
+            this.gridControlMembre.Size = new System.Drawing.Size(476, 227);
             this.gridControlMembre.TabIndex = 0;
             this.gridControlMembre.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView3});
@@ -969,9 +1048,9 @@
             // panelControl3
             // 
             this.panelControl3.Controls.Add(this.gridControlVersement);
-            this.panelControl3.Location = new System.Drawing.Point(703, 12);
+            this.panelControl3.Location = new System.Drawing.Point(780, 12);
             this.panelControl3.Name = "panelControl3";
-            this.panelControl3.Size = new System.Drawing.Size(431, 201);
+            this.panelControl3.Size = new System.Drawing.Size(480, 201);
             this.panelControl3.TabIndex = 7;
             // 
             // gridControlVersement
@@ -980,7 +1059,7 @@
             this.gridControlVersement.Location = new System.Drawing.Point(2, 2);
             this.gridControlVersement.MainView = this.gridView2;
             this.gridControlVersement.Name = "gridControlVersement";
-            this.gridControlVersement.Size = new System.Drawing.Size(427, 197);
+            this.gridControlVersement.Size = new System.Drawing.Size(476, 197);
             this.gridControlVersement.TabIndex = 0;
             this.gridControlVersement.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView2});
@@ -1085,7 +1164,7 @@
             this.gridControlSouscripteur.Name = "gridControlSouscripteur";
             this.gridControlSouscripteur.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.RepositoryItemImageComboBoxSt});
-            this.gridControlSouscripteur.Size = new System.Drawing.Size(687, 501);
+            this.gridControlSouscripteur.Size = new System.Drawing.Size(764, 501);
             this.gridControlSouscripteur.TabIndex = 4;
             this.gridControlSouscripteur.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -1099,6 +1178,7 @@
             this.gridColumnNom,
             this.colmPrenoms,
             this.colmStatutCotisation,
+            this.colMtantAnnuel,
             this.colmMontantVerse,
             this.colmArriere,
             this.colmSurplus,
@@ -1180,6 +1260,16 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.RepositoryItemImageComboBoxSt.Name = "RepositoryItemImageComboBoxSt";
             // 
+            // colMtantAnnuel
+            // 
+            this.colMtantAnnuel.Caption = "Mtant Annuel Souscrit";
+            this.colMtantAnnuel.DisplayFormat.FormatString = "n0";
+            this.colMtantAnnuel.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colMtantAnnuel.FieldName = "mMontantSouscritAnnuel";
+            this.colMtantAnnuel.Name = "colMtantAnnuel";
+            this.colMtantAnnuel.Visible = true;
+            this.colMtantAnnuel.VisibleIndex = 4;
+            // 
             // colmMontantVerse
             // 
             this.colmMontantVerse.Caption = "Montant Versé";
@@ -1188,7 +1278,7 @@
             this.colmMontantVerse.FieldName = "mMontantVerse";
             this.colmMontantVerse.Name = "colmMontantVerse";
             this.colmMontantVerse.Visible = true;
-            this.colmMontantVerse.VisibleIndex = 4;
+            this.colmMontantVerse.VisibleIndex = 5;
             this.colmMontantVerse.Width = 100;
             // 
             // colmArriere
@@ -1199,7 +1289,7 @@
             this.colmArriere.FieldName = "mArriere";
             this.colmArriere.Name = "colmArriere";
             this.colmArriere.Visible = true;
-            this.colmArriere.VisibleIndex = 5;
+            this.colmArriere.VisibleIndex = 6;
             this.colmArriere.Width = 100;
             // 
             // colmSurplus
@@ -1210,7 +1300,7 @@
             this.colmSurplus.FieldName = "mSurplus";
             this.colmSurplus.Name = "colmSurplus";
             this.colmSurplus.Visible = true;
-            this.colmSurplus.VisibleIndex = 6;
+            this.colmSurplus.VisibleIndex = 7;
             this.colmSurplus.Width = 100;
             // 
             // colmStatutFamilial
@@ -1219,7 +1309,7 @@
             this.colmStatutFamilial.FieldName = "mStatutFamilial";
             this.colmStatutFamilial.Name = "colmStatutFamilial";
             this.colmStatutFamilial.Visible = true;
-            this.colmStatutFamilial.VisibleIndex = 7;
+            this.colmStatutFamilial.VisibleIndex = 8;
             this.colmStatutFamilial.Width = 40;
             // 
             // colmSexe
@@ -1228,7 +1318,7 @@
             this.colmSexe.FieldName = "mSexe";
             this.colmSexe.Name = "colmSexe";
             this.colmSexe.Visible = true;
-            this.colmSexe.VisibleIndex = 8;
+            this.colmSexe.VisibleIndex = 9;
             this.colmSexe.Width = 40;
             // 
             // colmDateNaissance
@@ -1237,7 +1327,7 @@
             this.colmDateNaissance.FieldName = "mDateNaissance";
             this.colmDateNaissance.Name = "colmDateNaissance";
             this.colmDateNaissance.Visible = true;
-            this.colmDateNaissance.VisibleIndex = 9;
+            this.colmDateNaissance.VisibleIndex = 10;
             // 
             // colmLieuNaissance
             // 
@@ -1245,7 +1335,7 @@
             this.colmLieuNaissance.FieldName = "mLieuNaissance";
             this.colmLieuNaissance.Name = "colmLieuNaissance";
             this.colmLieuNaissance.Visible = true;
-            this.colmLieuNaissance.VisibleIndex = 10;
+            this.colmLieuNaissance.VisibleIndex = 11;
             // 
             // colmClasseMetho
             // 
@@ -1253,7 +1343,7 @@
             this.colmClasseMetho.FieldName = "mClasseMetho";
             this.colmClasseMetho.Name = "colmClasseMetho";
             this.colmClasseMetho.Visible = true;
-            this.colmClasseMetho.VisibleIndex = 12;
+            this.colmClasseMetho.VisibleIndex = 13;
             // 
             // colmProfession
             // 
@@ -1261,7 +1351,7 @@
             this.colmProfession.FieldName = "mProfession";
             this.colmProfession.Name = "colmProfession";
             this.colmProfession.Visible = true;
-            this.colmProfession.VisibleIndex = 11;
+            this.colmProfession.VisibleIndex = 12;
             // 
             // colmIdClasseMetho
             // 
@@ -1274,7 +1364,7 @@
             this.colmTelephone.FieldName = "mTelephone";
             this.colmTelephone.Name = "colmTelephone";
             this.colmTelephone.Visible = true;
-            this.colmTelephone.VisibleIndex = 13;
+            this.colmTelephone.VisibleIndex = 14;
             // 
             // colmCellulaire
             // 
@@ -1282,7 +1372,7 @@
             this.colmCellulaire.FieldName = "mCellulaire";
             this.colmCellulaire.Name = "colmCellulaire";
             this.colmCellulaire.Visible = true;
-            this.colmCellulaire.VisibleIndex = 14;
+            this.colmCellulaire.VisibleIndex = 15;
             // 
             // colmEmail
             // 
@@ -1290,7 +1380,7 @@
             this.colmEmail.FieldName = "mEmail";
             this.colmEmail.Name = "colmEmail";
             this.colmEmail.Visible = true;
-            this.colmEmail.VisibleIndex = 15;
+            this.colmEmail.VisibleIndex = 16;
             // 
             // colmDateSouscription
             // 
@@ -1298,7 +1388,7 @@
             this.colmDateSouscription.FieldName = "mDateSouscription";
             this.colmDateSouscription.Name = "colmDateSouscription";
             this.colmDateSouscription.Visible = true;
-            this.colmDateSouscription.VisibleIndex = 16;
+            this.colmDateSouscription.VisibleIndex = 17;
             // 
             // colmDistrict
             // 
@@ -1306,7 +1396,7 @@
             this.colmDistrict.FieldName = "mDistrict";
             this.colmDistrict.Name = "colmDistrict";
             this.colmDistrict.Visible = true;
-            this.colmDistrict.VisibleIndex = 17;
+            this.colmDistrict.VisibleIndex = 18;
             // 
             // colmCodeDistrict
             // 
@@ -1314,7 +1404,7 @@
             this.colmCodeDistrict.FieldName = "mCodeDistrict";
             this.colmCodeDistrict.Name = "colmCodeDistrict";
             this.colmCodeDistrict.Visible = true;
-            this.colmCodeDistrict.VisibleIndex = 18;
+            this.colmCodeDistrict.VisibleIndex = 19;
             // 
             // colmCircuit
             // 
@@ -1322,7 +1412,7 @@
             this.colmCircuit.FieldName = "mCircuit";
             this.colmCircuit.Name = "colmCircuit";
             this.colmCircuit.Visible = true;
-            this.colmCircuit.VisibleIndex = 19;
+            this.colmCircuit.VisibleIndex = 20;
             // 
             // colmCodeCircuit
             // 
@@ -1330,7 +1420,7 @@
             this.colmCodeCircuit.FieldName = "mCodeCircuit";
             this.colmCodeCircuit.Name = "colmCodeCircuit";
             this.colmCodeCircuit.Visible = true;
-            this.colmCodeCircuit.VisibleIndex = 20;
+            this.colmCodeCircuit.VisibleIndex = 21;
             // 
             // colmEgliseLocale
             // 
@@ -1338,7 +1428,7 @@
             this.colmEgliseLocale.FieldName = "mEgliseLocale";
             this.colmEgliseLocale.Name = "colmEgliseLocale";
             this.colmEgliseLocale.Visible = true;
-            this.colmEgliseLocale.VisibleIndex = 21;
+            this.colmEgliseLocale.VisibleIndex = 22;
             // 
             // colmCodeEgliseLocale
             // 
@@ -1346,7 +1436,7 @@
             this.colmCodeEgliseLocale.FieldName = "mCodeEgliseLocale";
             this.colmCodeEgliseLocale.Name = "colmCodeEgliseLocale";
             this.colmCodeEgliseLocale.Visible = true;
-            this.colmCodeEgliseLocale.VisibleIndex = 22;
+            this.colmCodeEgliseLocale.VisibleIndex = 23;
             // 
             // colmUserCreation
             // 
@@ -1384,7 +1474,7 @@
             this.layoutControlItem3});
             this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(1146, 525);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(1272, 525);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem1
@@ -1392,43 +1482,43 @@
             this.layoutControlItem1.Control = this.gridControlSouscripteur;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(691, 505);
+            this.layoutControlItem1.Size = new System.Drawing.Size(768, 505);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.panelControl3;
-            this.layoutControlItem4.Location = new System.Drawing.Point(691, 0);
+            this.layoutControlItem4.Location = new System.Drawing.Point(768, 0);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(435, 205);
+            this.layoutControlItem4.Size = new System.Drawing.Size(484, 205);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             this.layoutControlItem5.Control = this.panelControl4;
-            this.layoutControlItem5.Location = new System.Drawing.Point(691, 238);
+            this.layoutControlItem5.Location = new System.Drawing.Point(768, 238);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(435, 235);
+            this.layoutControlItem5.Size = new System.Drawing.Size(484, 235);
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem5.TextVisible = false;
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.pBoutonsVersement;
-            this.layoutControlItem2.Location = new System.Drawing.Point(691, 205);
+            this.layoutControlItem2.Location = new System.Drawing.Point(768, 205);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(435, 33);
+            this.layoutControlItem2.Size = new System.Drawing.Size(484, 33);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.pBoutonsMembre;
-            this.layoutControlItem3.Location = new System.Drawing.Point(691, 473);
+            this.layoutControlItem3.Location = new System.Drawing.Point(768, 473);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(435, 32);
+            this.layoutControlItem3.Size = new System.Drawing.Size(484, 32);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
@@ -1440,7 +1530,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1126, 672);
+            this.ClientSize = new System.Drawing.Size(1252, 672);
             this.Controls.Add(this.layoutControl1);
             this.Controls.Add(this.panelControl2);
             this.Controls.Add(this.panelControl1);
@@ -1452,12 +1542,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FIMECO";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CmbApplication.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
@@ -1637,5 +1729,11 @@
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraEditors.LabelControl lblMontantSouscrit;
         private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraGrid.Columns.GridColumn colMtantAnnuel;
+        private DevExpress.XtraEditors.SimpleButton sBtnEtatSouscVersement;
+        private DevExpress.XtraEditors.SimpleButton sBtnEtatSouscVersementDetails;
+        private DevExpress.XtraEditors.SimpleButton sBtnSousMembreMtant;
+        private System.Windows.Forms.ToolStripMenuItem gestionProfilsToolStripMenuItem;
+        private DevExpress.XtraEditors.LookUpEdit CmbApplication;
     }
 }

@@ -24,14 +24,16 @@ namespace FIMECO.Models
         public string mCellulaire { get; set; }
         public string mEmail { get; set; }
 
-        //Champs à gérer (pas dans la BD)=========================
+        //Champs à gérer (pas dans la BD)==================================================
         public int mStatutCotisation { get; set; }//0 NOK-1 OK
         public long mMontantVerse { get; set; }
         public long mArriere { get; set; }
         public long mSurplus { get; set; }
         public long mImpayesAnPrecedentes { get; set; }//impayé sur les années précédentes 
 
-        //==========================================================
+        public long mMontantSouscritAnnuel { get; set; }//Montant Objectif annuel
+
+        //==================================================================================
 
         public DateTime mDateSouscription { get; set; }
         public string mDistrict { get; set; }
@@ -89,7 +91,8 @@ namespace FIMECO.Models
 
             mIsDelete = 0;
 
-
+            mMontantSouscritAnnuel = 0;
+            
     }
 
 

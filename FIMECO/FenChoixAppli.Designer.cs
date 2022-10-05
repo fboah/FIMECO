@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenChoixAppli));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.sBtnValider = new DevExpress.XtraEditors.SimpleButton();
             this.rAppli = new DevExpress.XtraEditors.RadioGroup();
@@ -59,7 +60,10 @@
             // 
             // sBtnValider
             // 
+            this.sBtnValider.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.sBtnValider.Appearance.Options.UseFont = true;
             this.sBtnValider.Enabled = false;
+            this.sBtnValider.Image = ((System.Drawing.Image)(resources.GetObject("sBtnValider.Image")));
             this.sBtnValider.Location = new System.Drawing.Point(12, 111);
             this.sBtnValider.Name = "sBtnValider";
             this.sBtnValider.Size = new System.Drawing.Size(464, 22);
@@ -82,9 +86,10 @@
             // 
             // labelControl1
             // 
+            this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.labelControl1.Location = new System.Drawing.Point(12, 12);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(235, 13);
+            this.labelControl1.Size = new System.Drawing.Size(262, 13);
             this.labelControl1.StyleController = this.layoutControl1;
             this.labelControl1.TabIndex = 4;
             this.labelControl1.Text = "QUELLE APPLICATION VOULEZ-VOUS UTILISER ?";

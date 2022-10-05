@@ -215,9 +215,7 @@ namespace FIMECO.Authentification
             {
                 Chaine = ChooseAIT.mAliasName;
             }
-
             
-
 
         }
 

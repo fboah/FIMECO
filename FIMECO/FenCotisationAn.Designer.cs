@@ -75,8 +75,8 @@
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 67.28972F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32.71028F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 237F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(693, 345);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 321F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(845, 425);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panelControl1
@@ -86,9 +86,9 @@
             this.panelControl1.Controls.Add(this.sBtnAjoutContribution);
             this.panelControl1.Controls.Add(this.sBtnApercu);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelControl1.Location = new System.Drawing.Point(3, 75);
+            this.panelControl1.Location = new System.Drawing.Point(3, 72);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(687, 29);
+            this.panelControl1.Size = new System.Drawing.Size(839, 28);
             this.panelControl1.TabIndex = 0;
             // 
             // sBtnSupprimerContribution
@@ -97,7 +97,7 @@
             this.sBtnSupprimerContribution.Name = "sBtnSupprimerContribution";
             this.sBtnSupprimerContribution.Size = new System.Drawing.Size(127, 25);
             this.sBtnSupprimerContribution.TabIndex = 3;
-            this.sBtnSupprimerContribution.Text = "Supprimer Contribution";
+            this.sBtnSupprimerContribution.Text = "Supprimer Cotisation";
             this.sBtnSupprimerContribution.Click += new System.EventHandler(this.sBtnSupprimerContribution_Click);
             // 
             // sBtnModifierContribution
@@ -106,7 +106,7 @@
             this.sBtnModifierContribution.Name = "sBtnModifierContribution";
             this.sBtnModifierContribution.Size = new System.Drawing.Size(127, 25);
             this.sBtnModifierContribution.TabIndex = 2;
-            this.sBtnModifierContribution.Text = "Modifier Contribution";
+            this.sBtnModifierContribution.Text = "Modifier Cotisation";
             this.sBtnModifierContribution.Click += new System.EventHandler(this.sBtnModifierContribution_Click);
             // 
             // sBtnAjoutContribution
@@ -115,7 +115,7 @@
             this.sBtnAjoutContribution.Name = "sBtnAjoutContribution";
             this.sBtnAjoutContribution.Size = new System.Drawing.Size(127, 25);
             this.sBtnAjoutContribution.TabIndex = 1;
-            this.sBtnAjoutContribution.Text = "Ajouter Contribution";
+            this.sBtnAjoutContribution.Text = "Ajouter Cotisation";
             this.sBtnAjoutContribution.Click += new System.EventHandler(this.sBtnAjoutContribution_Click);
             // 
             // sBtnApercu
@@ -136,7 +136,7 @@
             this.Années.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Années.Location = new System.Drawing.Point(3, 3);
             this.Années.Name = "Années";
-            this.Années.Size = new System.Drawing.Size(687, 66);
+            this.Années.Size = new System.Drawing.Size(839, 63);
             this.Années.TabIndex = 1;
             this.Années.Text = "Années";
             // 
@@ -192,7 +192,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(277, 34);
+            this.label2.Location = new System.Drawing.Point(277, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(14, 13);
             this.label2.TabIndex = 15;
@@ -202,7 +202,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(86, 34);
+            this.label1.Location = new System.Drawing.Point(86, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(20, 13);
             this.label1.TabIndex = 13;
@@ -211,10 +211,10 @@
             // gridControlCotisationAn
             // 
             this.gridControlCotisationAn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControlCotisationAn.Location = new System.Drawing.Point(3, 110);
+            this.gridControlCotisationAn.Location = new System.Drawing.Point(3, 106);
             this.gridControlCotisationAn.MainView = this.gridView1;
             this.gridControlCotisationAn.Name = "gridControlCotisationAn";
-            this.gridControlCotisationAn.Size = new System.Drawing.Size(687, 232);
+            this.gridControlCotisationAn.Size = new System.Drawing.Size(839, 316);
             this.gridControlCotisationAn.TabIndex = 2;
             this.gridControlCotisationAn.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -237,6 +237,7 @@
             this.gridView1.OptionsBehavior.Editable = false;
             this.gridView1.OptionsCustomization.AllowGroup = false;
             this.gridView1.OptionsCustomization.AllowQuickHideColumns = false;
+            this.gridView1.OptionsFind.AlwaysVisible = true;
             this.gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // gridColumn1colmIdC
@@ -317,7 +318,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(694, 341);
+            this.ClientSize = new System.Drawing.Size(848, 424);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

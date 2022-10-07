@@ -18,7 +18,7 @@ namespace FIMECO
     {
         public string MDPReinit = "2022Jourdain";
 
-        private string Appli = "FIMECO";
+        private string Appli = "VISIONPLUS";
 
         ////  private string Chaine = @"Initial Catalog=AITSOFTWARE;Data Source=FRANCKBOAH-PC\SAGE300;Integrated Security=SSPI";
         private string Chaine;

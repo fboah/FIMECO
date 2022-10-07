@@ -32,7 +32,7 @@ namespace FIMECO
         private bool IsAjout;
 
 
-        public string Appli = "FIMECO";
+        public string Appli = "VISIONPLUS";
 
         public FenProfession()
         {

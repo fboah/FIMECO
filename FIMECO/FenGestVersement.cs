@@ -32,7 +32,7 @@ namespace FIMECO
 
         private int idAppli;
 
-        public string Appli = "FIMECO";
+        public string Appli = "VISIONPLUS";
 
         public FenGestVersement()
         {
@@ -98,12 +98,10 @@ namespace FIMECO
 
                             if (!myObjectIsGestionVersement)
                             {
-
                                 COp.mIdSouscripteur = myObjectIdSouscripteur;
                             }
                             else
                             {
-
                                 COp.mIdSouscripteur = Int32.Parse(CmbSouscripteur.EditValue.ToString());
                             }
 
@@ -114,7 +112,6 @@ namespace FIMECO
                             }
                             else
                             {
-
                                 COp.mIdReceveur = Int32.Parse(CmbReceveur.EditValue.ToString());
                             }
 
@@ -149,8 +146,7 @@ namespace FIMECO
 
 
                                 #endregion
-
-
+                                
                                 MessageBox.Show("Versement créé avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Close();
                             }
@@ -175,7 +171,6 @@ namespace FIMECO
 
                         if (!myObjectAjout && myObjectVersement != null)
                         {
-
                             //tester si la souscription a déjà été faite
 
                             var IsCotAn = myObjectListeCotisation.Exists(c => c.mIdSouscripteur == Int32.Parse(CmbSouscripteur.EditValue.ToString()) && c.mAnnee == dateVersement.DateTime.Year && c.mIdTypeAppli == idAppli);
@@ -225,11 +220,9 @@ namespace FIMECO
                                     bool ret = false;
 
                                     ret = daoReport.AddTrace(Ct, myObjectChaineConFimeco);
-
-
+                                    
                                     #endregion
-
-
+                                    
                                     MessageBox.Show("Versement  modifié avec succès!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     Close();
                                 }

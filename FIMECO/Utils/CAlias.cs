@@ -37,15 +37,15 @@ namespace FIMECO.Utils
             //var dateErreur = "";
             var typeErreur = msgToWrite;
 
-            if (!Directory.Exists(@"C:\FIMECO_Log"))
+            if (!Directory.Exists(@"C:\VISIONPLUS_Log"))
             {
-                Directory.CreateDirectory(@"C:\FIMECO_Log");
+                Directory.CreateDirectory(@"C:\VISIONPLUS_Log");
             }
 
             // string[] msgfinal = { space , dateErreur , typeErreur , space };
             string msgfinal = space + retourLigne + dateErreur + retourLigne + typeErreur + retourLigne + space;
 
-            var fs = new FileStream(@"C:\FIMECO_Log\Log.txt", FileMode.Append, FileAccess.Write, FileShare.None);
+            var fs = new FileStream(@"C:\VISIONPLUS_Log\Log.txt", FileMode.Append, FileAccess.Write, FileShare.None);
 
             var swFromFileStream = new StreamWriter(fs, Encoding.Default);
 
@@ -151,14 +151,14 @@ namespace FIMECO.Utils
                 else
                 {
                     //Configurer les connexions
-                    MessageBox.Show("Veuillez configurer les connexions aux bases de données !", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Veuillez configurer les connexions aux bases de données !", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Une erreur est survenue! Veuillez contacter votre Administrateur!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur est survenue! Veuillez contacter votre Administrateur!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 var msg = "Utils -> CAlias ->GetAliasFIMECO -> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
                 return null;

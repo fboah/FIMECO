@@ -45,7 +45,7 @@ namespace FIMECO
         //Tester si on ajoute ou modif 
         private bool IsAjout;
 
-        public string Appli = "FIMECO";
+        public string Appli = "VISIONPLUS";
 
         public FenVersement(List<CUser> Lus,int idlog,int idap)
         {

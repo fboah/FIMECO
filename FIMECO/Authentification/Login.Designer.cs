@@ -105,17 +105,17 @@
             this.pictureEdit1.Location = new System.Drawing.Point(12, 12);
             this.pictureEdit1.Name = "pictureEdit1";
             this.pictureEdit1.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
-            this.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-            this.pictureEdit1.Size = new System.Drawing.Size(480, 127);
+            this.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
+            this.pictureEdit1.Size = new System.Drawing.Size(480, 125);
             this.pictureEdit1.StyleController = this.layoutControl1;
             this.pictureEdit1.TabIndex = 5;
             // 
             // panelControl1
             // 
             this.panelControl1.Controls.Add(this.layoutControl2);
-            this.panelControl1.Location = new System.Drawing.Point(12, 143);
+            this.panelControl1.Location = new System.Drawing.Point(12, 141);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(480, 58);
+            this.panelControl1.Size = new System.Drawing.Size(480, 60);
             this.panelControl1.TabIndex = 4;
             // 
             // layoutControl2
@@ -195,9 +195,9 @@
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.panelControl1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 131);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 129);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(484, 62);
+            this.layoutControlItem1.Size = new System.Drawing.Size(484, 64);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -206,7 +206,7 @@
             this.layoutControlItem2.Control = this.pictureEdit1;
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(484, 131);
+            this.layoutControlItem2.Size = new System.Drawing.Size(484, 129);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 

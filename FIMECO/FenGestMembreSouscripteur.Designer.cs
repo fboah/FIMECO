@@ -136,6 +136,7 @@
             // 
             // sBtnFermer
             // 
+            this.sBtnFermer.Image = ((System.Drawing.Image)(resources.GetObject("sBtnFermer.Image")));
             this.sBtnFermer.Location = new System.Drawing.Point(327, 181);
             this.sBtnFermer.Name = "sBtnFermer";
             this.sBtnFermer.Size = new System.Drawing.Size(314, 22);
@@ -146,6 +147,7 @@
             // 
             // sBtnEnregistrer
             // 
+            this.sBtnEnregistrer.Image = ((System.Drawing.Image)(resources.GetObject("sBtnEnregistrer.Image")));
             this.sBtnEnregistrer.Location = new System.Drawing.Point(12, 181);
             this.sBtnEnregistrer.Name = "sBtnEnregistrer";
             this.sBtnEnregistrer.Size = new System.Drawing.Size(311, 22);

@@ -19,7 +19,7 @@ namespace FIMECO.DAOFIMECO
         private IDbConnection mConnection;
         private readonly DbProviderFactory mProvider = DbProviderFactories.GetFactory("System.Data.SqlClient");
 
-        private string Appli = "FIMECO";
+        private string Appli = "VISIONPLUS";
 
         static string key { get; set; } = "A!9HHhi%XjjYY4YP2@Nob009X";
 

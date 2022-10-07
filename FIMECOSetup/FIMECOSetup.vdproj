@@ -142,6 +142,12 @@
         "Entry"
         {
         "MsmKey" = "8:_2571FAF00D62B398DC16A6F6E229D419"
+        "OwnerKey" = "8:_2955E088032F1F229BD8137AE7031A9A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2571FAF00D62B398DC16A6F6E229D419"
         "OwnerKey" = "8:_8058677517D5ADD0B3BE3806302CBEAB"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -303,12 +309,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2571FAF00D62B398DC16A6F6E229D419"
-        "OwnerKey" = "8:_2955E088032F1F229BD8137AE7031A9A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2955E088032F1F229BD8137AE7031A9A"
         "OwnerKey" = "8:_17F053DB56DD472E88DE68F42F13B12E"
         "MsmSig" = "8:_UNDEFINED"
@@ -316,7 +316,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2955E088032F1F229BD8137AE7031A9A"
-        "OwnerKey" = "8:_524278EFE493C743B042CC76495F514D"
+        "OwnerKey" = "8:_879CFD8CE5BAAC1CA128CAA0EFD939A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -328,7 +328,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2955E088032F1F229BD8137AE7031A9A"
-        "OwnerKey" = "8:_879CFD8CE5BAAC1CA128CAA0EFD939A3"
+        "OwnerKey" = "8:_524278EFE493C743B042CC76495F514D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -389,12 +389,6 @@
         {
         "MsmKey" = "8:_3CA6ADAD9C7D5D4981938F772557B5D3"
         "OwnerKey" = "8:_17F053DB56DD472E88DE68F42F13B12E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4827714E34B045CBA3A079B2B79AFE07"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -831,6 +825,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_C5E95D5DA9AF41A6B73D8AA1A84188DF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DBBFE7DA5A2CBDA5E0C2D4B71A4BB7A9"
         "OwnerKey" = "8:_598C47C7EB15B7D3FABAB06B59D49E7A"
         "MsmSig" = "8:_UNDEFINED"
@@ -1090,13 +1090,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2955E088032F1F229BD8137AE7031A9A"
+        "OwnerKey" = "8:_17F053DB56DD472E88DE68F42F13B12E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_2571FAF00D62B398DC16A6F6E229D419"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2955E088032F1F229BD8137AE7031A9A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1267,12 +1273,6 @@
         "OwnerKey" = "8:_184F5EA92582D3CF923B982B69DB2CA3"
         "MsmSig" = "8:_UNDEFINED"
         }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_17F053DB56DD472E88DE68F42F13B12E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
     }
     "Configurations"
     {
@@ -1298,6 +1298,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -1322,6 +1330,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
     }
@@ -1584,26 +1600,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4827714E34B045CBA3A079B2B79AFE07"
-            {
-            "SourcePath" = "8:..\\FIMECO\\Images\\Fim146-146-ConvertImage.ico"
-            "TargetName" = "8:Fim146-146-ConvertImage.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_217D69937C0B4923B1102DED050E8FEF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4CB7746346AEAAB9D6E1D1C7D0DA6C2B"
@@ -1970,6 +1966,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C5E95D5DA9AF41A6B73D8AA1A84188DF"
+            {
+            "SourcePath" = "8:..\\FIMECO\\Images\\logo-1-ConvertImage.ico"
+            "TargetName" = "8:logo-1-ConvertImage.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_217D69937C0B4923B1102DED050E8FEF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DBBFE7DA5A2CBDA5E0C2D4B71A4BB7A9"
             {
             "AssemblyRegister" = "3:1"
@@ -2192,7 +2208,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_A005C8FDBAF74BAEA7AAFEFC906B5BD4"
                     {
-                    "Name" = "8:FIMECO"
+                    "Name" = "8:VISIONPLUS"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -2231,11 +2247,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FIMECOSetup"
         "ProductCode" = "8:{E60DA5C3-69EA-4757-8B2D-51EA04204337}"
-        "PackageCode" = "8:{F7E2F0E6-8813-40A5-B7D7-DE72E40A9E80}"
+        "PackageCode" = "8:{CEDF9236-2305-4C1C-AE98-014B9298C48F}"
         "UpgradeCode" = "8:{F836D927-45FA-46E0-ACC3-86E25A75C2D0}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.1"
@@ -2248,7 +2264,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_4827714E34B045CBA3A079B2B79AFE07"
+        "ARPPRODUCTICON" = "8:_C5E95D5DA9AF41A6B73D8AA1A84188DF"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -2353,7 +2369,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_0C320286B29A4BBDA45B892DC90DE839"
             {
-            "Name" = "8:FIMECO"
+            "Name" = "8:VISIONPLUS"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -2362,12 +2378,12 @@
             "Target" = "8:_17F053DB56DD472E88DE68F42F13B12E"
             "Folder" = "8:_217D69937C0B4923B1102DED050E8FEF"
             "WorkingFolder" = "8:_217D69937C0B4923B1102DED050E8FEF"
-            "Icon" = "8:_4827714E34B045CBA3A079B2B79AFE07"
+            "Icon" = "8:_C5E95D5DA9AF41A6B73D8AA1A84188DF"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C7580F2633BD412A8710CCBC9C5C2F31"
             {
-            "Name" = "8:FIMECO"
+            "Name" = "8:VISIONPLUS"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -2376,12 +2392,12 @@
             "Target" = "8:_17F053DB56DD472E88DE68F42F13B12E"
             "Folder" = "8:_A005C8FDBAF74BAEA7AAFEFC906B5BD4"
             "WorkingFolder" = "8:_217D69937C0B4923B1102DED050E8FEF"
-            "Icon" = "8:_4827714E34B045CBA3A079B2B79AFE07"
+            "Icon" = "8:_C5E95D5DA9AF41A6B73D8AA1A84188DF"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FE0A051316854FA0A04B58A67A2A49CB"
             {
-            "Name" = "8:FIMECO"
+            "Name" = "8:VISIONPLUS"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -2390,7 +2406,7 @@
             "Target" = "8:_17F053DB56DD472E88DE68F42F13B12E"
             "Folder" = "8:_DA86C8DC0B09480CBB699B236D8A8354"
             "WorkingFolder" = "8:_217D69937C0B4923B1102DED050E8FEF"
-            "Icon" = "8:_4827714E34B045CBA3A079B2B79AFE07"
+            "Icon" = "8:_C5E95D5DA9AF41A6B73D8AA1A84188DF"
             "Feature" = "8:"
             }
         }

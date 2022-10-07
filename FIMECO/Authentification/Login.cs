@@ -15,7 +15,7 @@ namespace FIMECO.Authentification
 {
     public partial class Login : Form
     {
-        private string Appli = "FIMECO";
+        private string Appli = "VISIONPLUS";
 
         string MDPInit = "2022Jourdain";
        // string MDPInit = "2022Aitek";

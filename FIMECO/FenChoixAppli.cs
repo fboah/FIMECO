@@ -14,7 +14,7 @@ namespace FIMECO
     {
         public int idAppli = 0;
 
-        public string Appli = "FIMECO";
+        public string Appli = "VISIONPLUS";
 
         public FenChoixAppli()
         {

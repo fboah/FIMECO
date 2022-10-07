@@ -21,7 +21,7 @@ namespace FIMECO
         private List<CClasseMetho> myObjectListeClasseMetho;
         private CClasseMetho myObjectClasseMetho;
 
-        private string Appli = "FIMECO";
+        private string Appli = "VISIONPLUS";
 
         public FenGestionClasseMetho()
         {

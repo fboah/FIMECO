@@ -24,7 +24,7 @@ namespace FIMECO
         private List<CProfession> myObjectListeProfession;
         private int myObjectIdSouscripteur;
 
-        private string Appli = "FIMECO";
+        private string Appli = "VISIONPLUS";
 
         public FenGestMembreSouscripteur()
         {

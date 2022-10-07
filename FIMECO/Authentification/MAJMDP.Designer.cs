@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MAJMDP));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.sBtnFermer = new DevExpress.XtraEditors.SimpleButton();
+            this.sBtnValider = new DevExpress.XtraEditors.SimpleButton();
             this.txtMotPasseConfirm = new DevExpress.XtraEditors.TextEdit();
             this.txtMotPasse = new DevExpress.XtraEditors.TextEdit();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.sBtnFermer = new DevExpress.XtraEditors.SimpleButton();
-            this.sBtnValider = new DevExpress.XtraEditors.SimpleButton();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
@@ -63,6 +63,27 @@
             this.layoutControl1.Size = new System.Drawing.Size(496, 98);
             this.layoutControl1.TabIndex = 1;
             this.layoutControl1.Text = "layoutControl1";
+            // 
+            // sBtnFermer
+            // 
+            this.sBtnFermer.Image = ((System.Drawing.Image)(resources.GetObject("sBtnFermer.Image")));
+            this.sBtnFermer.Location = new System.Drawing.Point(250, 60);
+            this.sBtnFermer.Name = "sBtnFermer";
+            this.sBtnFermer.Size = new System.Drawing.Size(234, 22);
+            this.sBtnFermer.StyleController = this.layoutControl1;
+            this.sBtnFermer.TabIndex = 7;
+            this.sBtnFermer.Text = "Fermer";
+            // 
+            // sBtnValider
+            // 
+            this.sBtnValider.Image = ((System.Drawing.Image)(resources.GetObject("sBtnValider.Image")));
+            this.sBtnValider.Location = new System.Drawing.Point(12, 60);
+            this.sBtnValider.Name = "sBtnValider";
+            this.sBtnValider.Size = new System.Drawing.Size(234, 22);
+            this.sBtnValider.StyleController = this.layoutControl1;
+            this.sBtnValider.TabIndex = 6;
+            this.sBtnValider.Text = "Valider";
+            this.sBtnValider.Click += new System.EventHandler(this.sBtnValider_Click);
             // 
             // txtMotPasseConfirm
             // 
@@ -116,27 +137,6 @@
             this.layoutControlItem2.Text = "Confirmer Nouveau Mot de Passe";
             this.layoutControlItem2.TextSize = new System.Drawing.Size(160, 13);
             // 
-            // sBtnFermer
-            // 
-            this.sBtnFermer.Image = ((System.Drawing.Image)(resources.GetObject("sBtnFermer.Image")));
-            this.sBtnFermer.Location = new System.Drawing.Point(250, 60);
-            this.sBtnFermer.Name = "sBtnFermer";
-            this.sBtnFermer.Size = new System.Drawing.Size(234, 22);
-            this.sBtnFermer.StyleController = this.layoutControl1;
-            this.sBtnFermer.TabIndex = 7;
-            this.sBtnFermer.Text = "Fermer";
-            // 
-            // sBtnValider
-            // 
-            this.sBtnValider.Image = ((System.Drawing.Image)(resources.GetObject("sBtnValider.Image")));
-            this.sBtnValider.Location = new System.Drawing.Point(12, 60);
-            this.sBtnValider.Name = "sBtnValider";
-            this.sBtnValider.Size = new System.Drawing.Size(234, 22);
-            this.sBtnValider.StyleController = this.layoutControl1;
-            this.sBtnValider.TabIndex = 6;
-            this.sBtnValider.Text = "Valider";
-            this.sBtnValider.Click += new System.EventHandler(this.sBtnValider_Click);
-            // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.sBtnValider;
@@ -162,6 +162,7 @@
             this.ClientSize = new System.Drawing.Size(497, 98);
             this.Controls.Add(this.layoutControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MAJMDP";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MAJMDP";

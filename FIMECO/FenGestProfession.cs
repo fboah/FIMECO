@@ -21,7 +21,7 @@ namespace FIMECO
         private List<CProfession> myObjectListeProf;
         private CProfession myObjectCProf;
 
-        private string Appli = "FIMECO";
+        private string Appli = "VISIONPLUS";
 
         public FenGestProfession()
         {

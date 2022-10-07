@@ -214,7 +214,7 @@ namespace FIMECO
                 else
                 {
                     //   if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                    MessageBox.Show("Veuillez sélectionner un élément à modifier!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Veuillez sélectionner un élément à modifier!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
 
@@ -238,7 +238,7 @@ namespace FIMECO
 
                 if (Identif > 0)
                 {
-                    var rep = MessageBox.Show("Voulez-vous supprimer la cotisation selectionnée ?", "FIMECO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var rep = MessageBox.Show("Voulez-vous supprimer la cotisation selectionnée ?", "VISIONPLUS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (rep == DialogResult.Yes)
                     {
@@ -267,7 +267,7 @@ namespace FIMECO
                             #endregion
 
                             //if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                            MessageBox.Show("Cotisation supprimée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Cotisation supprimée avec succès!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             RefreshGrid(ChaineConFIMECO);
 
@@ -275,7 +275,7 @@ namespace FIMECO
                         else
                         {
                             // if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
-                            MessageBox.Show("Une erreur est survenue lors de la suppression de l'opération!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Une erreur est survenue lors de la suppression de l'opération!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
 

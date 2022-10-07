@@ -70,7 +70,7 @@ namespace FIMECO
 
         private int myIdTypeAppli;
 
-        public string Appli = "FIMECO";
+        public string Appli = "VISIONPLUS";
 
         //public MainForm()
         //{
@@ -2042,13 +2042,13 @@ namespace FIMECO
 
                         gridControlSouscripteur.ExportToXlsx(chem);
                         //   if (splashScreenManager2.IsSplashFormVisible) splashScreenManager2.CloseWaitForm();
-                        MessageBox.Show("Exportation Excel OK", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Exportation Excel OK", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Pas de données à exporter", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Pas de données à exporter", Appli, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
                 
@@ -2149,7 +2149,7 @@ namespace FIMECO
 
                             //    if (splashScreenManager1.IsSplashFormVisible) splashScreenManager1.CloseWaitForm();
 
-                            MessageBox.Show("Export Excel bien terminé!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Export Excel bien terminé!", Appli, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             excel.Quit();
                             workbook = null;

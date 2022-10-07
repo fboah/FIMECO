@@ -54,7 +54,7 @@ namespace FIMECO.Etats
             }
             catch (Exception ex)
             {
-                var msg = "FIMECO -> XtraReportSousMembre -> TypeErreur: " + ex.Message;
+                var msg = "VISIONPLUS -> XtraReportSousMembre -> TypeErreur: " + ex.Message;
                 CAlias.Log(msg);
             }
         }

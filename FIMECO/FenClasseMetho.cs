@@ -28,7 +28,7 @@ namespace FIMECO
         //Chaine de connexion FIMECO
         private string ChaineConFIMECO;
 
-        public string Appli = "FIMECO";
+        public string Appli = "VISIONPLUS";
 
         //Tester si on ajoute ou modif 
         private bool IsAjout;

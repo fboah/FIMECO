@@ -90,12 +90,12 @@ namespace FIMECO
                                 
                                 #endregion
                                 
-                                MessageBox.Show("Contribution Annuelle ajoutée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Contribution Annuelle ajoutée avec succès!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Close();
                             }
                             else
                             {
-                                MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Une erreur est survenue!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
                         }
@@ -103,7 +103,7 @@ namespace FIMECO
                         {
                             //Objet déjà existant
 
-                            MessageBox.Show("Une Contribution Annuelle existe déjà pour ce souscripteur ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Une Contribution Annuelle existe déjà pour ce souscripteur ! Veuillez vérifier vos données", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         }
 
@@ -157,12 +157,12 @@ namespace FIMECO
 
                                     #endregion
                                     
-                                    MessageBox.Show("Contribution Annuelle modifiée avec succès!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show("Contribution Annuelle modifiée avec succès!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     Close();
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Une erreur est survenue!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Une erreur est survenue!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                 }
                             }
@@ -170,7 +170,7 @@ namespace FIMECO
                             {
                                 //Objet déjà existant
 
-                                MessageBox.Show("Une Contribution Annuelle existe déjà pour ce souscripteur ! Veuillez vérifier vos données", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("Une Contribution Annuelle existe déjà pour ce souscripteur ! Veuillez vérifier vos données", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 
                             }
 
@@ -180,7 +180,7 @@ namespace FIMECO
                 else
                 {
                     //Montant superieur à 0
-                    MessageBox.Show("Le montant doit être supérieur à 0!", "FIMECO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Le montant doit être supérieur à 0!", "VISIONPLUS", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
                 

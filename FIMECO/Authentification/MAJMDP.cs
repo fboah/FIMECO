@@ -19,7 +19,7 @@ namespace FIMECO.Authentification
         private CUser myObjectUser;
         private string myObjectChaineConnex;
 
-        private string Appli = "FIMECO";
+        private string Appli = "VISIONPLUS";
         
 
         private readonly DAOFimeco mDao = new DAOFimeco();
